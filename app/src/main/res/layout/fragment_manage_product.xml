@@ -1,0 +1,45 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dtmweb.etrenaapp.fragments.ManageProductFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="130px" />
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
+            android:layout_height="75px"
+            android:layout_margin="50px"
+            android:background="@drawable/blue_rounded_corner"
+            android:fontFamily="@font/roboto_light"
+            android:paddingLeft="33px"
+            android:tag="42"
+            android:text="+ Add Product"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="42px" />
+
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:horizontalSpacing="10px"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="40px"
+            android:numColumns="2"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="20px" />
+    </LinearLayout>
+
+
+</FrameLayout>
