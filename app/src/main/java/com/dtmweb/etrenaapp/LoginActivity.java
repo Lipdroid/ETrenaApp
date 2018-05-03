@@ -16,7 +16,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CorrectSizeUtil mCorrectSize = null;
     private EditText et_mail = null;
     private EditText et_password = null;
-    private ImageView intagram_login = null;
     private Button btn_go = null;
     private TextView btn_forget_pass = null;
     private TextView btn_sign_up = null;
@@ -43,7 +42,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void findViews() {
         et_mail = (EditText) findViewById(R.id.et_mail);
         et_password = (EditText) findViewById(R.id.et_password);
-        intagram_login = (ImageView) findViewById(R.id.intagram_login);
         btn_go = (Button) findViewById(R.id.btn_go);
         btn_forget_pass = (TextView) findViewById(R.id.btn_forget_pass);
         btn_sign_up = (TextView) findViewById(R.id.btn_sign_up);

@@ -43,12 +43,12 @@
 
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/btn_inta_connect"
-            android:layout_width="428px"
-            android:layout_height="105px"
-            android:layout_marginTop="49px"
-            android:src="@drawable/insta_connect" />
+        <!--<ImageView-->
+            <!--android:id="@+id/btn_inta_connect"-->
+            <!--android:layout_width="428px"-->
+            <!--android:layout_height="105px"-->
+            <!--android:layout_marginTop="49px"-->
+            <!--android:src="@drawable/insta_connect" />-->
 
         <ImageView
             android:id="@+id/btn_image_selection"
@@ -283,6 +283,45 @@
                 android:background="@drawable/gray_rounded_corner"
                 android:fontFamily="@font/roboto"
                 android:hint="Owner's Contact no."
+                android:paddingLeft="30px"
+                android:tag="45"
+                android:textColor="@color/colorAccent"
+                android:textSize="45px"
+                android:typeface="normal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="975px"
+            android:layout_height="105px"
+            android:layout_marginTop="30px"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/et_mail"
+                android:layout_width="975px"
+                android:layout_height="105px"
+                android:layout_marginRight="10px"
+                android:layout_weight="1"
+                android:background="@drawable/gray_rounded_corner"
+                android:fontFamily="@font/roboto"
+                android:hint="Email"
+                android:paddingLeft="30px"
+                android:tag="45"
+                android:textColor="@color/colorAccent"
+                android:textSize="45px"
+                android:typeface="normal" />
+
+            <EditText
+                android:id="@+id/et_instagram"
+                android:layout_width="975px"
+                android:layout_height="105px"
+                android:layout_marginLeft="10px"
+                android:layout_weight="1"
+                android:background="@drawable/gray_rounded_corner"
+                android:fontFamily="@font/roboto"
+                android:hint="Instagram"
                 android:paddingLeft="30px"
                 android:tag="45"
                 android:textColor="@color/colorAccent"

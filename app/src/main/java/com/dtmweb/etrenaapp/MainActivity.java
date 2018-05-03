@@ -13,6 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView btn_back_left = null;
     private ImageView btn_edit_profile = null;
     private ImageView arrow_language = null;
+    private LinearLayout language_layout = null;
+    private LinearLayout btn_arabic = null;
+    private LinearLayout btn_english = null;
 
     //right drawer items
     private EditText et_search = null;
@@ -85,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FragmentTransaction fragTransaction = null;
     private ArrayList<Fragment> mSecondStageFragArray = null;
     private PopupWindow popupWindow = null;
+    private boolean isLanguageVisible = false;
 
 
     @Override
@@ -146,6 +153,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_edit_profile.setOnClickListener(this);
         btn_my_chart.setOnClickListener(this);
         btn_my_orders.setOnClickListener(this);
+        btn_arabic.setOnClickListener(this);
+        btn_english.setOnClickListener(this);
         //right drawer listener
         btn_back_right.setOnClickListener(this);
         btn_right_back.setOnClickListener(this);
@@ -185,6 +194,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_back_left = (ImageView) findViewById(R.id.btn_back_left);
         btn_edit_profile = (ImageView) findViewById(R.id.btn_edit_profile);
         arrow_language = (ImageView) findViewById(R.id.arrow_language);
+        language_layout = (LinearLayout) findViewById(R.id.language_layout);
+        btn_arabic = (LinearLayout) findViewById(R.id.btn_arabic);
+        btn_english = (LinearLayout) findViewById(R.id.btn_english);
 
         //right drawer item
         et_search = (EditText) findViewById(R.id.et_search);
@@ -241,7 +253,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setUpHeaderRightButton(0);
                 break;
             case R.id.btn_language:
-                showPopup(arrow_language);
+                //showPopup(arrow_language);
+                if(!isLanguageVisible) {
+                    language_layout.setVisibility(View.VISIBLE);
+                    rotateView(arrow_language,0,-180);
+                }else {
+                    language_layout.setVisibility(View.GONE);
+                    rotateView(arrow_language,-180,0);
+                }
+                isLanguageVisible = !isLanguageVisible;
                 break;
             case R.id.btn_my_plan:
                 closeLeftDrawer();
@@ -280,6 +300,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_right_cross:
                 afterClickBack();
+            case R.id.btn_arabic:
+                closeLeftDrawer();
+                //change Language to arabic
+            case R.id.btn_english:
+                closeLeftDrawer();
+                //change Language to english
                 break;
         }
     }
@@ -548,10 +574,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setUpLeftDrawer(String userType) {
         switch (userType) {
             case Constants.CATEGORY_BUYER:
-                btn_my_chart.setVisibility(View.VISIBLE);
-                btn_my_orders.setVisibility(View.VISIBLE);
+                btn_my_chart.setVisibility(View.GONE);
+                btn_my_orders.setVisibility(View.GONE);
                 btn_manage_products.setVisibility(View.GONE);
-                btn_manage_orders.setVisibility(View.GONE);
+                btn_manage_orders.setVisibility(View.VISIBLE);
                 btn_my_store.setVisibility(View.GONE);
                 btn_my_plan.setVisibility(View.GONE);
                 break;
@@ -560,7 +586,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 btn_my_orders.setVisibility(View.GONE);
                 btn_manage_products.setVisibility(View.VISIBLE);
                 btn_manage_orders.setVisibility(View.VISIBLE);
-                btn_my_store.setVisibility(View.VISIBLE);
+                btn_my_store.setVisibility(View.GONE);
                 btn_my_plan.setVisibility(View.VISIBLE);
                 break;
         }
@@ -616,6 +642,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void UnlockRightDrawer() {
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
+    private void rotateView(View view,int fromAngle,int toAngle){
+        RotateAnimation rotate = new RotateAnimation(fromAngle, toAngle, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setDuration(300);
+        rotate.setFillAfter(true);
+        rotate.setInterpolator(new LinearInterpolator());
+        view.startAnimation(rotate);
     }
 
 }

@@ -164,8 +164,8 @@
             android:hint="Search"
             android:paddingLeft="33px"
             android:tag="42"
-            android:textColor="#474747"
-            android:textColorHint="#474747"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
             android:textSize="42px" />
     </RelativeLayout>
 </LinearLayout>

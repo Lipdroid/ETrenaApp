@@ -22,9 +22,6 @@ import com.dtmweb.etrenaapp.utils.MultipleScreen;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
-    private ListView product_lv = null;
-    private List<ProductObject> mListProduct = null;
-    private ProductAdapter adapter = null;
     private Context mContext = null;
 
     public HomeFragment() {
@@ -37,16 +34,10 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        product_lv = (ListView) root.findViewById(R.id.product_lv);
         mContext = getActivity();
-        populateList();
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;
     }
 
-    private void populateList() {
-        adapter = new ProductAdapter(mContext, mListProduct);
-        product_lv.setAdapter(adapter);
-    }
 }

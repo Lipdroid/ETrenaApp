@@ -39,7 +39,7 @@
                 android:layout_height="170px"
                 android:layout_marginLeft="48px"
                 android:scaleType="fitXY"
-                android:src="@drawable/default_profile_image" />
+                android:src="@drawable/default_profile_image_shop" />
 
             <LinearLayout
                 android:layout_width="500px"
@@ -54,7 +54,7 @@
                     android:fontFamily="@font/roboto"
                     android:singleLine="true"
                     android:tag="54"
-                    android:text="Habib Abdullah"
+                    android:text="The Fashion Shop"
                     android:textColor="#474747"
                     android:textSize="54px"
                     android:typeface="normal" />
@@ -102,7 +102,8 @@
         <LinearLayout
             android:id="@+id/btn_home"
             android:layout_width="match_parent"
-            android:layout_height="70px">
+            android:layout_height="70px"
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="50px"
@@ -131,7 +132,8 @@
             android:id="@+id/btn_my_chart"
             android:layout_width="match_parent"
             android:layout_height="70px"
-            android:layout_marginTop="40px">
+            android:layout_marginTop="40px"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="50px"
@@ -153,18 +155,19 @@
                 android:textColor="#474747"
                 android:textSize="42px"
                 android:typeface="normal" />
+
             <TextView
                 android:id="@+id/my_chart_badge"
                 android:layout_width="50px"
                 android:layout_height="50px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20px"
                 android:background="@drawable/dark_gray_badge"
                 android:gravity="center"
-                android:layout_gravity="center"
+                android:tag="25"
                 android:text="2"
-                android:layout_marginLeft="20px"
                 android:textColor="#FFF"
                 android:textSize="25px"
-                android:tag="25"
                 android:textStyle="bold"
                 android:visibility="visible" />
 
@@ -174,7 +177,8 @@
             android:id="@+id/btn_my_orders"
             android:layout_width="match_parent"
             android:layout_height="70px"
-            android:layout_marginTop="40px">
+            android:layout_marginTop="40px"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="50px"
@@ -261,7 +265,8 @@
             android:id="@+id/btn_my_store"
             android:layout_width="match_parent"
             android:layout_height="70px"
-            android:layout_marginTop="40px">
+            android:layout_marginTop="40px"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="50px"
@@ -286,44 +291,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/btn_language"
-            android:layout_width="match_parent"
-            android:layout_height="70px"
-            android:layout_marginTop="40px">
-
-            <ImageView
-                android:layout_width="50px"
-                android:layout_height="50px"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="72px"
-                android:scaleType="fitXY"
-                android:src="@drawable/language_icon" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="18px"
-                android:fontFamily="@font/roboto_light"
-                android:singleLine="true"
-                android:tag="42"
-                android:text="Language"
-                android:textColor="#474747"
-                android:textSize="42px"
-                android:typeface="normal" />
-
-            <ImageView
-                android:id="@+id/arrow_language"
-                android:layout_width="25px"
-                android:layout_height="15px"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10px"
-                android:layout_marginTop="5px"
-                android:scaleType="fitXY"
-                android:src="@drawable/downarrow_dark" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btn_my_plan"
@@ -387,7 +354,7 @@
             android:layout_width="match_parent"
             android:layout_height="1.5px"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="70px"
+            android:layout_marginTop="50px"
             android:alpha="0.35"
             android:background="#474747" />
 
@@ -395,7 +362,7 @@
             android:id="@+id/btn_terms"
             android:layout_width="match_parent"
             android:layout_height="70px"
-            android:layout_marginTop="70px">
+            android:layout_marginTop="50px">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -451,6 +418,116 @@
                 android:textColor="#474747"
                 android:textSize="42px"
                 android:typeface="normal" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="50px"
+            android:alpha="0.35"
+            android:background="#474747" />
+
+        <LinearLayout
+            android:id="@+id/btn_language"
+            android:layout_width="match_parent"
+            android:layout_height="70px"
+            android:layout_marginTop="50px">
+
+            <ImageView
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="72px"
+                android:scaleType="fitXY"
+                android:src="@drawable/language_icon"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="90px"
+                android:fontFamily="@font/rubik_medium"
+                android:singleLine="true"
+                android:tag="42"
+                android:text="Language"
+                android:textColor="#474747"
+                android:textSize="48px"
+                android:textStyle="bold"
+                android:typeface="normal" />
+
+            <ImageView
+                android:id="@+id/arrow_language"
+                android:layout_width="25px"
+                android:layout_height="15px"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30px"
+                android:layout_marginTop="5px"
+                android:scaleType="fitXY"
+                android:src="@drawable/downarrow_dark" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/language_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="50px"
+            android:visibility="gone"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:id="@+id/btn_arabic"
+                android:layout_width="300px"
+                android:layout_height="90px"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30px"
+                    android:layout_height="30px"
+                    android:layout_marginLeft="-65px"
+                    android:layout_marginRight="20px"
+                    android:src="@drawable/gray_circle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:tag="42"
+                    android:text="رشيق"
+                    android:textColor="#666666"
+                    android:textSize="42px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_english"
+                android:layout_width="300px"
+                android:layout_height="90px"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30px"
+                    android:layout_height="30px"
+                    android:layout_marginLeft="-20px"
+                    android:layout_marginRight="20px"
+                    android:src="@drawable/black_circle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:tag="42"
+                    android:text="English"
+                    android:textColor="#666666"
+                    android:textSize="42px" />
+            </LinearLayout>
+
 
         </LinearLayout>
     </LinearLayout>

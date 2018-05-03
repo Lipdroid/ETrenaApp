@@ -14,7 +14,6 @@ import com.dtmweb.etrenaapp.utils.CorrectSizeUtil;
 public class SellerRegistrationActivity extends AppCompatActivity implements View.OnClickListener{
     private CorrectSizeUtil mCorrectSize = null;
     private ImageView btn_cross = null;
-    private ImageView btn_inta_connect = null;
     private ImageView btn_image_selection = null;
     private Button btn_go = null;
     private EditText et_store_name = null;
@@ -28,6 +27,8 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
     private EditText et_address = null;
     private EditText et_store_owner_name = null;
     private EditText et_store_owner_contact = null;
+    private EditText et_mail = null;
+    private EditText et_instagram = null;
     private Context mContext = null;
 
     @Override
@@ -49,7 +50,6 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
 
     private void findViews() {
         btn_cross = (ImageView) findViewById(R.id.btn_cross);
-        btn_inta_connect = (ImageView) findViewById(R.id.btn_inta_connect);
         btn_image_selection = (ImageView) findViewById(R.id.btn_image_selection);
         btn_go = (Button) findViewById(R.id.btn_go);
         et_store_name = (EditText) findViewById(R.id.et_store_name);
@@ -63,13 +63,14 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
         et_address = (EditText) findViewById(R.id.et_address);
         et_store_owner_name = (EditText) findViewById(R.id.et_store_owner_name);
         et_store_owner_contact = (EditText) findViewById(R.id.et_store_owner_contact);
+        et_mail = (EditText) findViewById(R.id.et_mail);
+        et_instagram = (EditText) findViewById(R.id.et_instagram);
 
     }
 
     private void initListenersForViews() {
         btn_go.setOnClickListener(this);
         btn_cross.setOnClickListener(this);
-        btn_inta_connect.setOnClickListener(this);
         btn_image_selection.setOnClickListener(this);
         et_country.setOnClickListener(this);
         et_city.setOnClickListener(this);
@@ -84,9 +85,6 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
                 break;
             case R.id.btn_cross:
                 afterClickBack();
-                break;
-            case R.id.btn_inta_connect:
-                afterClickIntaConnect();
                 break;
             case R.id.btn_image_selection:
                 afterClickImageSelection();

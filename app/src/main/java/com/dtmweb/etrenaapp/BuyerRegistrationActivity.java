@@ -11,21 +11,20 @@ import android.widget.ImageView;
 
 import com.dtmweb.etrenaapp.utils.CorrectSizeUtil;
 
-public class BuyerRegistrationActivity extends AppCompatActivity implements View.OnClickListener{
+public class BuyerRegistrationActivity extends AppCompatActivity implements View.OnClickListener {
     private CorrectSizeUtil mCorrectSize = null;
     private ImageView btn_cross = null;
-    private ImageView btn_inta_connect = null;
     private ImageView btn_image_selection = null;
     private Button btn_go = null;
-    private EditText et_store_name = null;
+    private EditText et_full_name = null;
     private EditText et_password = null;
     private EditText et_password_retype = null;
-    private EditText et_bank_name = null;
-    private EditText et_bank_account_name = null;
-    private EditText et_bank_account_number = null;
+    private EditText et_user_name = null;
+    private EditText et_mail = null;
     private EditText et_country = null;
     private EditText et_city = null;
     private EditText et_address = null;
+    private EditText et_contact = null;
     private Context mContext = null;
 
     @Override
@@ -33,6 +32,7 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
         super.onBackPressed();
         afterClickBack();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,25 +46,22 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
 
     private void findViews() {
         btn_cross = (ImageView) findViewById(R.id.btn_cross);
-        btn_inta_connect = (ImageView) findViewById(R.id.btn_inta_connect);
         btn_image_selection = (ImageView) findViewById(R.id.btn_image_selection);
         btn_go = (Button) findViewById(R.id.btn_go);
-        et_store_name = (EditText) findViewById(R.id.et_store_name);
+        et_full_name = (EditText) findViewById(R.id.et_full_name);
         et_password = (EditText) findViewById(R.id.et_password);
         et_password_retype = (EditText) findViewById(R.id.et_password_retype);
-        et_bank_name = (EditText) findViewById(R.id.et_bank_name);
-        et_bank_account_name = (EditText) findViewById(R.id.et_bank_account_name);
-        et_bank_account_number = (EditText) findViewById(R.id.et_bank_account_number);
         et_country = (EditText) findViewById(R.id.et_country);
         et_city = (EditText) findViewById(R.id.et_city);
         et_address = (EditText) findViewById(R.id.et_address);
-
+        et_contact = (EditText) findViewById(R.id.et_contact);
+        et_user_name = (EditText) findViewById(R.id.et_user_name);
+        et_mail = (EditText) findViewById(R.id.et_mail);
     }
 
     private void initListenersForViews() {
         btn_go.setOnClickListener(this);
         btn_cross.setOnClickListener(this);
-        btn_inta_connect.setOnClickListener(this);
         btn_image_selection.setOnClickListener(this);
         et_country.setOnClickListener(this);
         et_city.setOnClickListener(this);
@@ -73,15 +70,12 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_go:
                 afterClickSumbit();
                 break;
             case R.id.btn_cross:
                 afterClickBack();
-                break;
-            case R.id.btn_inta_connect:
-                afterClickIntaConnect();
                 break;
             case R.id.btn_image_selection:
                 afterClickImageSelection();
@@ -117,8 +111,9 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
         //go to main after checking validity and api call
         goToMainPage();
     }
-    private void goToMainPage(){
-        startActivity(new Intent(mContext,MainActivity.class));
-        overridePendingTransition(R.anim.anim_slide_in_right,R.anim.anim_slide_out_left);
+
+    private void goToMainPage() {
+        startActivity(new Intent(mContext, MainActivity.class));
+        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
     }
 }
