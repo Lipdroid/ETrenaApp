@@ -54,7 +54,7 @@
                     android:textColor="#208CA7"
                     android:textSize="25px"
                     android:textStyle="bold"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/header_title"

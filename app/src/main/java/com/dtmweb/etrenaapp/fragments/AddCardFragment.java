@@ -28,6 +28,7 @@ public class AddCardFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_add_card, container, false);
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
-        return root;    }
+        return root;
+    }
 
 }

@@ -1,0 +1,94 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dtmweb.etrenaapp.fragments.BaseFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="130px" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/divider" />
+
+            <RelativeLayout
+                android:id="@+id/content_rl_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/divider" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="5px"
+                android:layout_above="@+id/bottom_tab"
+                android:background="@drawable/gradient_color_bottom" />
+
+            <LinearLayout
+                android:id="@+id/bottom_tab"
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <ImageView
+                    android:id="@+id/btn_home"
+                    android:layout_width="90px"
+                    android:layout_height="90px"
+                    android:layout_weight="1"
+                    android:padding="2px"
+                    android:src="@drawable/home_selected" />
+
+                <ImageView
+                    android:id="@+id/btn_category"
+                    android:layout_width="90px"
+                    android:layout_height="90px"
+                    android:layout_weight="1"
+                    android:padding="6px"
+                    android:src="@drawable/category_unselected" />
+
+                <ImageView
+                    android:id="@+id/btn_fav"
+                    android:layout_width="90px"
+                    android:layout_height="90px"
+                    android:layout_weight="1"
+                    android:padding="2px"
+                    android:src="@drawable/fav_unselected" />
+
+                <ImageView
+                    android:id="@+id/btn_cart"
+                    android:layout_width="90px"
+                    android:layout_height="90px"
+                    android:layout_weight="1"
+                    android:scaleType="center"
+                    android:src="@drawable/cart_unselected" />
+
+                <ImageView
+                    android:id="@+id/btn_profile"
+                    android:layout_width="90px"
+                    android:layout_height="90px"
+                    android:layout_weight="1"
+                    android:paddingTop="2px"
+                    android:src="@drawable/profile_unselected" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</FrameLayout>

@@ -32,7 +32,7 @@ import com.dtmweb.etrenaapp.fragments.AddCardFragment;
 import com.dtmweb.etrenaapp.fragments.AddProductFragment;
 import com.dtmweb.etrenaapp.fragments.ChoosePaymentTypeFragment;
 import com.dtmweb.etrenaapp.fragments.EditProfileFragment;
-import com.dtmweb.etrenaapp.fragments.HomeFragment;
+import com.dtmweb.etrenaapp.fragments.BaseFragment;
 import com.dtmweb.etrenaapp.fragments.ManageOrderFragment;
 import com.dtmweb.etrenaapp.fragments.ManageProductFragment;
 import com.dtmweb.etrenaapp.fragments.MyStoreFragment;
@@ -401,7 +401,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // identify which fragment will be called
         switch (fragId) {
             case Constants.FRAG_HOME:
-                newFrag = new HomeFragment();
+                newFrag = new BaseFragment();
                 break;
             case Constants.FRAG_MANAGE_PRODUCTS:
                 newFrag = new ManageProductFragment();

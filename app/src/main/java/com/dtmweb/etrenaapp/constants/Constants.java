@@ -15,9 +15,15 @@ public class Constants {
     public static final int FRAG_EDIT_PROFILE = 8;
     public static final int FRAG_PRODUCT_DETAILS = 9;
 
-
-
     public static final String CATEGORY_BUYER = "buyerType" ;
     public static final String CATEGORY_SELLER = "sellerType" ;
+    public static final String CATEGORY_NON_LOGGED = "notLoggedIn" ;
+
+    public static final int HOME = 0;
+    public static final int CATEGORY = 1;
+    public static final int FAVOURITE = 2;
+    public static final int CART = 3;
+    public static final int PROFILE = 4;
+
 
 }

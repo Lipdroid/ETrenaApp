@@ -13,10 +13,10 @@ import com.dtmweb.etrenaapp.utils.MultipleScreen;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class CategoryFragment extends Fragment {
 
 
-    public HomeFragment() {
+    public CategoryFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_category, container, false);
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;
