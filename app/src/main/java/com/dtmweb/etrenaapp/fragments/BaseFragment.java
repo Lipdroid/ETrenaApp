@@ -111,7 +111,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 break;
             case Constants.CATEGORY:
                 btn_home.setImageResource(R.drawable.home_unselected);
-                btn_category.setImageResource(R.drawable.category_unselected);
+                btn_category.setImageResource(R.drawable.category_selected);
                 btn_fav.setImageResource(R.drawable.fav_unselected);
                 btn_cart.setImageResource(R.drawable.cart_unselected);
                 if (GlobalUtils.user_type.equals(Constants.CATEGORY_SELLER)) {

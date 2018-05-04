@@ -4,11 +4,64 @@
     android:layout_height="match_parent"
     tools:context="com.dtmweb.etrenaapp.fragments.CategoryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="CATEGORY"
-        android:gravity="center"
-        android:textSize="45px"/>
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300px"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="640px"
+                android:layout_height="120px"
+                android:layout_marginLeft="50px"
+                android:src="@drawable/category_accesoriz" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:background="#BDBDBD" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300px"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="640px"
+                android:layout_height="120px"
+                android:layout_marginLeft="0px"
+                android:src="@drawable/category_clothes" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:background="#BDBDBD" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300px"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="640px"
+                android:layout_height="120px"
+                android:layout_marginLeft="15px"
+                android:src="@drawable/category_perfume" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:background="#BDBDBD" />
+
+    </LinearLayout>
+
 </FrameLayout>

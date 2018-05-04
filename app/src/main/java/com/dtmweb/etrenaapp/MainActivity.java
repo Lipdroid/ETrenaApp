@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FragmentManager mFragManager;
     private Fragment mCurrentFrag;
     private TextView header_title;
+    private ImageView header_image;
     private FragmentTransaction fragTransaction = null;
     private ArrayList<Fragment> mSecondStageFragArray = null;
     private PopupWindow popupWindow = null;
@@ -173,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawer_left_layout = (RelativeLayout) findViewById(R.id.drawer_left);
         drawer_right_layout = (LinearLayout) findViewById(R.id.drawer_right);
         header_title = (TextView) findViewById(R.id.header_title);
+        header_image = (ImageView) findViewById(R.id.header_image);
         btn_right_back = (ImageView) findViewById(R.id.btn_right_back);
         btn_right_cross = (ImageView) findViewById(R.id.btn_right_cross);
         btn_left_drawer = (ImageView) findViewById(R.id.btn_left_drawer);
@@ -446,21 +448,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (fragId) {
             case Constants.FRAG_HOME:
                 header_title.setText("");
+                header_image.setVisibility(View.VISIBLE);
                 break;
             case Constants.FRAG_MANAGE_PRODUCTS:
                 header_title.setText("");
+                header_image.setVisibility(View.VISIBLE);
                 break;
             case Constants.FRAG_MANAGE_ORDERS:
                 header_title.setText("");
+                header_image.setVisibility(View.VISIBLE);
                 break;
             case Constants.FRAG_MY_STORE:
                 header_title.setText("");
+                header_image.setVisibility(View.VISIBLE);
                 break;
             case Constants.FRAG_ADD_PRODUCT:
                 header_title.setText("Add Product");
+                header_image.setVisibility(View.GONE);
                 break;
             case Constants.FRAG_EDIT_PROFILE:
                 header_title.setText("Edit Profile");
+                header_image.setVisibility(View.GONE);
                 break;
             default:
                 break;
