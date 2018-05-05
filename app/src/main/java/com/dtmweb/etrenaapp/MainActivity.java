@@ -1,6 +1,8 @@
 package com.dtmweb.etrenaapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -86,13 +88,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //fragment variables
     private FragmentManager mFragManager;
-    private Fragment mCurrentFrag;
+    public Fragment mCurrentFrag;
     private TextView header_title;
     private ImageView header_image;
     private FragmentTransaction fragTransaction = null;
     private ArrayList<Fragment> mSecondStageFragArray = null;
     private PopupWindow popupWindow = null;
     private boolean isLanguageVisible = false;
+    private BaseFragment mBaseFrag;
+    public int currentTabItemSelected = Constants.HOME;
 
 
     @Override
@@ -237,12 +241,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 closeLeftDrawer();
                 break;
             case R.id.btn_manage_products:
+                /**ACTIVE*/
+                mBaseFrag.changeTabState(Constants.DISSELECT_ALL);
                 closeLeftDrawer();
                 afterClickMenuItem(Constants.FRAG_MANAGE_PRODUCTS);
                 UnlockRightDrawer();
                 setUpHeaderRightButton(0);
                 break;
             case R.id.btn_manage_orders:
+                /**ACTIVE*/
+                mBaseFrag.changeTabState(Constants.DISSELECT_ALL);
                 closeLeftDrawer();
                 afterClickMenuItem(Constants.FRAG_MANAGE_ORDERS);
                 UnlockRightDrawer();
@@ -255,38 +263,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setUpHeaderRightButton(0);
                 break;
             case R.id.btn_language:
+                /**ACTIVE*/
                 //showPopup(arrow_language);
-                if(!isLanguageVisible) {
+                if (!isLanguageVisible) {
                     language_layout.setVisibility(View.VISIBLE);
-                    rotateView(arrow_language,0,-180);
-                }else {
+                    rotateView(arrow_language, 0, -180);
+                } else {
                     language_layout.setVisibility(View.GONE);
-                    rotateView(arrow_language,-180,0);
+                    rotateView(arrow_language, -180, 0);
                 }
                 isLanguageVisible = !isLanguageVisible;
                 break;
             case R.id.btn_my_plan:
+                /**ACTIVE*/
+                mBaseFrag.changeTabState(Constants.DISSELECT_ALL);
                 closeLeftDrawer();
                 UnlockRightDrawer();
                 setUpHeaderRightButton(0);
                 break;
             case R.id.btn_logout:
+                /**ACTIVE*/
                 closeLeftDrawer();
                 afterClickMenuItem(Constants.FRAG_CHOOSE_PAYMENT_METHOD);
                 break;
             case R.id.btn_terms:
+                /**ACTIVE*/
                 closeLeftDrawer();
                 break;
             case R.id.btn_rate:
+                /**ACTIVE*/
                 closeLeftDrawer();
                 break;
             case R.id.btn_about:
+                /**ACTIVE*/
                 closeLeftDrawer();
                 break;
             case R.id.btn_back_left:
                 closeLeftDrawer();
                 break;
             case R.id.btn_edit_profile:
+                /**ACTIVE*/
                 closeLeftDrawer();
                 afterClickMenuItem(Constants.FRAG_EDIT_PROFILE);
                 LockRightDrawer();
@@ -303,9 +319,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_right_cross:
                 afterClickBack();
             case R.id.btn_arabic:
+                /**ACTIVE*/
                 closeLeftDrawer();
                 //change Language to arabic
             case R.id.btn_english:
+                /**ACTIVE*/
                 closeLeftDrawer();
                 //change Language to english
                 break;
@@ -313,15 +331,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void afterClickBack() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        int count = fragmentManager.getBackStackEntryCount();
-        if (count == 0) {
-            finish();
+        FragmentManager fragmentManager = mBaseFrag.mFragManager;
+        if (fragmentManager != null) {
+            int count = fragmentManager.getBackStackEntryCount();
+            if (count == 0) {
+                showExitDialog();
+            } else {
+                //String title = fragmentManager.getBackStackEntryAt(count - 1).getName();
+                fragmentManager.popBackStack();
+                //super.onBackPressed();
+                //updateActionBar(Integer.valueOf(title), null);
+            }
+            //again check its 0 or not
+            count = fragmentManager.getBackStackEntryCount();
+            if (count == 1) {
+                mBaseFrag.changeTabState(currentTabItemSelected);
+            }
         } else {
-            String title = fragmentManager.getBackStackEntryAt(count - 1).getName();
-            super.onBackPressed();
-            updateActionBar(Integer.valueOf(title), null);
+            showExitDialog();
         }
+
+
     }
 
     private void openLeftDrawer() {
@@ -405,29 +435,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case Constants.FRAG_HOME:
                 newFrag = new BaseFragment();
                 break;
-            case Constants.FRAG_MANAGE_PRODUCTS:
-                newFrag = new ManageProductFragment();
-                break;
-            case Constants.FRAG_MANAGE_ORDERS:
-                newFrag = new ManageOrderFragment();
-                break;
-            case Constants.FRAG_MY_STORE:
-                newFrag = new MyStoreFragment();
-                break;
-            case Constants.FRAG_ADD_NEW_CARD:
-                newFrag = new AddCardFragment();
-                break;
-            case Constants.FRAG_CHOOSE_PAYMENT_METHOD:
-                newFrag = new ChoosePaymentTypeFragment();
-                break;
-            case Constants.FRAG_EDIT_PROFILE:
-                newFrag = new EditProfileFragment();
-                break;
             default:
                 break;
         }
 
-        mCurrentFrag = newFrag;
+        mBaseFrag = (BaseFragment) newFrag;
 
         // set animation
         if (isHasAnimation) {
@@ -444,7 +456,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragTransaction.commit();
     }
 
-    private void changeHeaderLayout(int fragId) {
+    public void changeHeaderLayout(int fragId) {
         switch (fragId) {
             case Constants.FRAG_HOME:
                 header_title.setText("");
@@ -476,59 +488,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void afterClickMenuItem(int fragId) {
-        // add fragment by id
-        addFragment(fragId, false);
-        // change header layout
-        changeHeaderLayout(fragId);
+        if (fragId == Constants.FRAG_HOME) {
+            // add fragment by id
+            addFragment(fragId, false);
+            // change header layout
+            changeHeaderLayout(fragId);
+        } else {
+            mBaseFrag.addSecondStageFragment(fragId, null);
+        }
     }
 
-    public void addSecondStageFragment(int destFragId, Object obj) {
-        mFragManager = getSupportFragmentManager();
-        // create transaction
-        fragTransaction = mFragManager.beginTransaction();
-        fragTransaction.setCustomAnimations(R.anim.view_transition_in_left,
-                R.anim.view_transition_out_right, R.anim.view_transition_in_left,
-                R.anim.view_transition_out_right);
 
-        Bundle args = null;
-        if (obj != null) {
-            if (obj.getClass().toString().equals(ProductObject.class.toString())) {
-                args = new Bundle();
-                args.putParcelable(obj.getClass().toString(), (ProductObject) obj);
-            }
-        }
-
-
-        Fragment frag = null;
-        switch (destFragId) {
-            case Constants.FRAG_ADD_PRODUCT:
-                frag = new AddProductFragment();
-                changeHeaderLayout(Constants.FRAG_ADD_PRODUCT);
-                setUpHeaderRightButton(2);
-                LockRightDrawer();
-                break;
-            case Constants.FRAG_PRODUCT_DETAILS:
-                frag = new ProductDetailsFragment();
-                setUpHeaderRightButton(1);
-                LockRightDrawer();
-                break;
-            default:
-                break;
-        }
-        // add argument for sent to other fragment
-        if (args != null) {
-            frag.setArguments(args);
-        }
-
-        mCurrentFrag = frag;
-
-        // param 1: container id, param 2: new fragment, param 3: fragment id
-        fragTransaction.add(R.id.main_container, frag, String.valueOf(destFragId));
-        fragTransaction.addToBackStack(String.valueOf(destFragId));
-        fragTransaction.commit();
-    }
-
-    private void setUpHeaderRightButton(int type) {
+    public void setUpHeaderRightButton(int type) {
         switch (type) {
             case 0:
                 btn_right_drawer.setVisibility(View.VISIBLE);
@@ -600,51 +571,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /* you should refer to a view to stick your popup wherever u want.
-     ** e.g. Button button  = (Button) findviewbyId(R.id.btn);
-     **     if(popupWindow != null)
-     **         showPopup(button);
-     **/
-    public void showPopup(View v) {
-        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View popupView = layoutInflater.inflate(R.layout.popup_language_layout, null);
-        LinearLayout btn_arabic = (LinearLayout) popupView.findViewById(R.id.btn_arabic);
-        LinearLayout btn_english = (LinearLayout) popupView.findViewById(R.id.btn_english);
-        popupWindow = new PopupWindow(
-                popupView,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                //TODO do sth here on dismiss
-                closeLeftDrawer();
-            }
-        });
-        btn_arabic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //set language to arabic
-                popupWindow.dismiss();
-
-            }
-        });
-        btn_english.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //set language to english
-                popupWindow.dismiss();
-
-            }
-        });
-        mCorrectSize.correctSize(popupView);
-        popupWindow.showAsDropDown(v);
-    }
-
-    private void LockRightDrawer() {
+    public void LockRightDrawer() {
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
@@ -652,7 +580,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
-    private void rotateView(View view,int fromAngle,int toAngle){
+    private void rotateView(View view, int fromAngle, int toAngle) {
         RotateAnimation rotate = new RotateAnimation(fromAngle, toAngle, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(300);
         rotate.setFillAfter(true);
@@ -660,4 +588,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         view.startAnimation(rotate);
     }
 
+    private void showExitDialog() {
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    public void addFrag(int frag, Object object) {
+        mBaseFrag.addSecondStageFragment(frag, object);
+    }
 }

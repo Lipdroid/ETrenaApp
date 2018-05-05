@@ -51,6 +51,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (myProgress == 100) {
                     //completed now start the activity
                     goToMainPage();
+                    finish();
                 }
             }
         };

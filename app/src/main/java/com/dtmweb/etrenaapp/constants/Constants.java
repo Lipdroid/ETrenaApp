@@ -24,6 +24,5 @@ public class Constants {
     public static final int FAVOURITE = 2;
     public static final int CART = 3;
     public static final int PROFILE = 4;
-
-
+    public static final int DISSELECT_ALL = 5;
 }

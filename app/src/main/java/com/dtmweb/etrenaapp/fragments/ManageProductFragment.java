@@ -48,7 +48,7 @@ public class ManageProductFragment extends Fragment {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) mContext).addSecondStageFragment(Constants.FRAG_ADD_PRODUCT, null);
+                ((MainActivity) mContext).addFrag(Constants.FRAG_ADD_PRODUCT, null);
             }
         });
         new MultipleScreen(getActivity());

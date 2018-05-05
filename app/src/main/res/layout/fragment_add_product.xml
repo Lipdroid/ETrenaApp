@@ -11,10 +11,6 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="130px" />
-
         <EditText
             android:layout_width="975px"
             android:layout_height="105px"

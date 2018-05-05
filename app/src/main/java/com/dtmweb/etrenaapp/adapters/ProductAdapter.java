@@ -75,8 +75,7 @@ public class ProductAdapter extends BaseAdapter {
         mHolder.main_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                ((MainActivity) mContext).addSecondStageFragment(Constants.FRAG_PRODUCT_DETAILS, mListData.get(position));
-                ((MainActivity) mContext).addSecondStageFragment(Constants.FRAG_PRODUCT_DETAILS, null);
+                ((MainActivity) mContext).addFrag(Constants.FRAG_PRODUCT_DETAILS, null);
 
             }
         });
