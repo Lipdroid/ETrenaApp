@@ -85,30 +85,35 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 changeTabState(Constants.HOME);
                 mViewPager.setCurrentItem(Constants.HOME);
                 dismissAllFragmentStack();
+                activity.changeHeaderLayout(Constants.FRAG_HOME);
                 break;
             case R.id.btn_category:
                 activity.currentTabItemSelected = Constants.CATEGORY;
                 changeTabState(Constants.CATEGORY);
                 mViewPager.setCurrentItem(Constants.CATEGORY);
                 dismissAllFragmentStack();
+                activity.changeHeaderLayout(Constants.FRAG_HOME);
                 break;
             case R.id.btn_fav:
                 activity.currentTabItemSelected = Constants.FAVOURITE;
                 changeTabState(Constants.FAVOURITE);
                 mViewPager.setCurrentItem(Constants.FAVOURITE);
                 dismissAllFragmentStack();
+                activity.changeHeaderLayout(Constants.FRAG_HOME);
                 break;
             case R.id.btn_cart:
                 activity.currentTabItemSelected = Constants.CART;
                 changeTabState(Constants.CART);
                 mViewPager.setCurrentItem(Constants.CART);
                 dismissAllFragmentStack();
+                activity.changeHeaderLayout(Constants.FRAG_HOME);
                 break;
             case R.id.btn_profile:
                 activity.currentTabItemSelected = Constants.PROFILE;
                 changeTabState(Constants.PROFILE);
                 mViewPager.setCurrentItem(Constants.PROFILE);
                 dismissAllFragmentStack();
+                activity.changeHeaderLayout(Constants.FRAG_HOME);
                 break;
         }
     }
@@ -207,6 +212,11 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 args = new Bundle();
                 args.putParcelable(obj.getClass().toString(), (ProductObject) obj);
             }
+
+            if (obj.getClass().toString().equals(String.class.toString())) {
+                args = new Bundle();
+                args.putString(obj.getClass().toString(), (String) obj);
+            }
         }
 
 
@@ -225,6 +235,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 break;
             case Constants.FRAG_MANAGE_PRODUCTS:
                 frag = new ManageProductFragment();
+                activity.changeHeaderLayout(Constants.FRAG_MANAGE_PRODUCTS);
                 break;
             case Constants.FRAG_MANAGE_ORDERS:
                 frag = new ManageOrderFragment();
@@ -240,6 +251,9 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 break;
             case Constants.FRAG_EDIT_PROFILE:
                 frag = new EditProfileFragment();
+                break;
+            case Constants.FRAG_BROWSE_PRODUCT:
+                frag = new BrowseProductFragment();
                 break;
             default:
                 break;

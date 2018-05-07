@@ -337,15 +337,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (count == 0) {
                 showExitDialog();
             } else {
-                //String title = fragmentManager.getBackStackEntryAt(count - 1).getName();
+                String title = fragmentManager.getBackStackEntryAt(count - 1).getName();
                 fragmentManager.popBackStack();
                 //super.onBackPressed();
-                //updateActionBar(Integer.valueOf(title), null);
+                updateActionBar(Integer.valueOf(title), null);
             }
             //again check its 0 or not
             count = fragmentManager.getBackStackEntryCount();
             if (count == 1) {
                 mBaseFrag.changeTabState(currentTabItemSelected);
+                changeHeaderLayout(Constants.FRAG_HOME);
             }
         } else {
             showExitDialog();
@@ -464,7 +465,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case Constants.FRAG_MANAGE_PRODUCTS:
                 header_title.setText("");
-                header_image.setVisibility(View.VISIBLE);
+                header_image.setVisibility(View.INVISIBLE);
                 break;
             case Constants.FRAG_MANAGE_ORDERS:
                 header_title.setText("");
