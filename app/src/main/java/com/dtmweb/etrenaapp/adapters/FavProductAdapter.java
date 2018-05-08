@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.dtmweb.etrenaapp.MainActivity;
 import com.dtmweb.etrenaapp.R;
 import com.dtmweb.etrenaapp.constants.Constants;
+import com.dtmweb.etrenaapp.holders.FavProductHolder;
 import com.dtmweb.etrenaapp.holders.ProductHolder;
 import com.dtmweb.etrenaapp.models.ProductObject;
 import com.dtmweb.etrenaapp.utils.MultipleScreen;
@@ -24,7 +25,7 @@ public class FavProductAdapter extends BaseAdapter {
     private Context mContext = null;
     private Activity mActivity = null;
     private List<ProductObject> mListData = null;
-    private ProductHolder mHolder = null;
+    private FavProductHolder mHolder = null;
 
 
     @Override
@@ -54,7 +55,7 @@ public class FavProductAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
         if (convertView == null) {
             convertView = mActivity.getLayoutInflater().inflate(R.layout.item_favourite, viewGroup, false);
-            mHolder = new ProductHolder();
+            mHolder = new FavProductHolder();
             mHolder.main_root = (LinearLayout) convertView.findViewById(R.id.main_root);
 
             new MultipleScreen(mActivity);
@@ -62,7 +63,7 @@ public class FavProductAdapter extends BaseAdapter {
 
             convertView.setTag(mHolder);
         } else {
-            mHolder = (ProductHolder) convertView.getTag();
+            mHolder = (FavProductHolder) convertView.getTag();
         }
 
         setListenersForViews(position);

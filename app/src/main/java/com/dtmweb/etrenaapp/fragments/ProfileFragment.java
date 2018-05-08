@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dtmweb.etrenaapp.R;
+import com.dtmweb.etrenaapp.constants.Constants;
+import com.dtmweb.etrenaapp.utils.GlobalUtils;
 import com.dtmweb.etrenaapp.utils.MultipleScreen;
 
 /**
@@ -25,7 +27,15 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_profile, container, false);
+        View root = null;
+        switch (GlobalUtils.user_type) {
+            case Constants.CATEGORY_BUYER:
+                root = inflater.inflate(R.layout.fragment_profile_buyer, container, false);
+                break;
+            case Constants.CATEGORY_SELLER:
+                root = inflater.inflate(R.layout.fragment_profile_seller, container, false);
+                break;
+        }
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;

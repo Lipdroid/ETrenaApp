@@ -21,7 +21,7 @@
             android:tag="42"
             android:text="+ Add Product"
             android:textAllCaps="false"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/darker_gray"
             android:textSize="42px" />
 
         <GridView xmlns:android="http://schemas.android.com/apk/res/android"

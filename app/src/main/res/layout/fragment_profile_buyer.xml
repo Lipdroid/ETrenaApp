@@ -1,0 +1,157 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dtmweb.etrenaapp.fragments.ProfileFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0px"
+        android:layout_marginTop="50px"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginLeft="40px"
+            android:layout_marginBottom="30px"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="800px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:tag="60"
+                android:text="Nisrat Habiba Jami"
+                android:textColor="#474747"
+                android:textSize="60px"
+                android:typeface="normal"
+                android:layout_marginBottom="20px"
+                tools:fontFamily="@font/rubik" />
+
+            <ImageView
+                android:id="@+id/btn_edit_profile"
+                android:layout_width="48px"
+                android:layout_height="48px"
+                android:layout_marginRight="0px"
+                android:layout_marginTop="15px"
+                android:layout_marginLeft="100px"
+                android:gravity="right"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_edit" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:singleLine="true"
+            android:tag="48"
+            android:text="+09 333 33 333"
+            android:textColor="#474747"
+            android:layout_marginBottom="40px"
+            android:layout_marginLeft="40px"
+            android:textSize="48px"
+            android:typeface="normal" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:layout_marginBottom="40px"
+            android:layout_below="@+id/main_root"
+            android:background="#D6D6D6" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:singleLine="true"
+            android:tag="48"
+            android:layout_marginBottom="40px"
+            android:layout_marginLeft="40px"
+            android:text="33,King Road,Riyad"
+            android:textColor="#474747"
+            android:textSize="48px"
+            android:typeface="normal" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:layout_marginBottom="30px"
+            android:layout_below="@+id/main_root"
+            android:background="#D6D6D6" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:singleLine="true"
+            android:layout_marginBottom="50px"
+            android:layout_marginLeft="40px"
+            android:tag="48"
+            android:text="Active Card"
+            android:textColor="#474747"
+            android:textSize="48px"
+            android:typeface="normal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginBottom="30px"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="800px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto_light"
+                android:singleLine="true"
+                android:tag="48"
+                android:layout_marginLeft="40px"
+                android:text="********786"
+                android:textColor="#474747"
+                android:textSize="48px"
+                android:typeface="normal" />
+
+            <ImageView
+                android:layout_width="58px"
+                android:layout_height="58px"
+                android:layout_marginRight="0px"
+                android:layout_marginTop="15px"
+                android:layout_marginLeft="60px"
+                android:gravity="right"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_cancel_round" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:singleLine="true"
+            android:tag="48"
+            android:text="Add Card"
+            android:layout_marginBottom="30px"
+            android:layout_marginLeft="40px"
+            android:textColor="#474747"
+            android:textSize="48px"
+            android:typeface="normal" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:layout_below="@+id/main_root"
+            android:background="#D6D6D6" />
+    </LinearLayout>
+
+
+</RelativeLayout>

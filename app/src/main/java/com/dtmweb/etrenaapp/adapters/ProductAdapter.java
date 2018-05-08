@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class ProductAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mActivity.getLayoutInflater().inflate(R.layout.item_product_main, viewGroup, false);
             mHolder = new ProductHolder();
-            mHolder.main_root = (LinearLayout) convertView.findViewById(R.id.main_root);
+            mHolder.main_root = (RelativeLayout) convertView.findViewById(R.id.main_root);
 
             new MultipleScreen(mActivity);
             MultipleScreen.resizeAllView((ViewGroup) convertView);

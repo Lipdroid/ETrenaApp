@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import com.dtmweb.etrenaapp.MainActivity;
 import com.dtmweb.etrenaapp.R;
+import com.dtmweb.etrenaapp.constants.Constants;
 import com.dtmweb.etrenaapp.holders.ProductHolder;
 import com.dtmweb.etrenaapp.models.ProductObject;
 import com.dtmweb.etrenaapp.utils.MultipleScreen;
@@ -62,6 +65,7 @@ public class ProductGridAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mActivity.getLayoutInflater().inflate(R.layout.item_product, viewGroup, false);
             mHolder = new ProductHolder();
+            mHolder.main_root = (RelativeLayout) convertView.findViewById(R.id.main_root);
 
             new MultipleScreen(mActivity);
             MultipleScreen.resizeAllView((ViewGroup) convertView);
@@ -71,8 +75,19 @@ public class ProductGridAdapter extends BaseAdapter {
             mHolder = (ProductHolder) convertView.getTag();
         }
 
+        setListenersForViews(position);
 
         return convertView;
+    }
+
+    private void setListenersForViews(final int position) {
+        mHolder.main_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) mContext).addFrag(Constants.FRAG_PRODUCT_DETAILS, null);
+
+            }
+        });
     }
 
 }

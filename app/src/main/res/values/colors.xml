@@ -16,6 +16,7 @@
 
     <color name="gradient_strong">#80AAAAAA</color>
     <color name="gradient_weak">#00555555</color>
+    <color name="darker_gray">#666666</color>
     <!--Hex Opacity Values-->
 
     <!--100% — FF-->

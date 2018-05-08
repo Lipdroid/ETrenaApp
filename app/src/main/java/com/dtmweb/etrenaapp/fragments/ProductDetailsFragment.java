@@ -22,7 +22,7 @@ import com.dtmweb.etrenaapp.utils.MultipleScreen;
 public class ProductDetailsFragment extends Fragment {
 
     private ViewPager product_pager = null;
-    private static final Integer[] IMAGES = {R.drawable.test_pager_image, R.drawable.test_pager_image, R.drawable.test_pager_image, R.drawable.test_pager_image};
+    private static final Integer[] IMAGES = {R.drawable.demo_image_clothing, R.drawable.demo_image_clothing_two, R.drawable.demo_image_clothing, R.drawable.demo_image_clothing_two};
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
 
     public ProductDetailsFragment() {
