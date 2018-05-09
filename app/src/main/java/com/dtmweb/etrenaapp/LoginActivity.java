@@ -32,6 +32,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mCorrectSize.correctSize();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        afterClickBack();
+    }
+
+    private void afterClickBack() {
+        finish();
+        overridePendingTransition(R.anim.anim_scale_to_center,R.anim.anim_slide_out_bottom);
+    }
+
     private void initListenersForViews() {
         btn_go.setOnClickListener(this);
         btn_forget_pass.setOnClickListener(this);
@@ -71,10 +82,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void afterClickSumbit() {
-        goToMainPage();
+        //goToMainPage();
+        afterClickBack();
     }
 
     private void goToMainPage(){
+
         startActivity(new Intent(mContext,MainActivity.class));
         overridePendingTransition(R.anim.anim_slide_in_right,R.anim.anim_slide_out_left);
     }

@@ -5,10 +5,195 @@
     tools:context="com.dtmweb.etrenaapp.fragments.CartFragment">
 
     <ImageView
+        android:id="@+id/image_no_data"
         android:layout_width="500px"
         android:layout_height="110px"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/icon_empty_cart"/>
+        android:src="@drawable/icon_empty_cart"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/list_ln"
+        android:layout_width="match_parent"
+        android:layout_height="920px"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/cart_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null">
+
+        </ListView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/list_ln"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px"
+        android:layout_marginTop="20px"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10px"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_weight="1"
+                android:fontFamily="@font/rubik_light"
+                android:gravity="left"
+                android:singleLine="true"
+                android:tag="42"
+                android:text="Subtotal"
+                android:textColor="@color/darker_gray"
+                android:textSize="42px" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_weight="1"
+                android:fontFamily="@font/rubik_light"
+                android:gravity="right"
+                android:singleLine="true"
+                android:tag="42"
+                android:text="SAR 1200"
+                android:textColor="@color/darker_gray"
+                android:textSize="42px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10px"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_weight="1"
+                android:fontFamily="@font/rubik_light"
+                android:gravity="left"
+                android:singleLine="true"
+                android:tag="42"
+                android:text="Discount(0%)"
+                android:textColor="@color/darker_gray"
+                android:textSize="42px" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_weight="1"
+                android:fontFamily="@font/rubik_light"
+                android:gravity="right"
+                android:singleLine="true"
+                android:tag="42"
+                android:text="SAR 0.0"
+                android:textColor="@color/darker_gray"
+                android:textSize="42px" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:layout_marginBottom="10px"
+            android:background="#D6D6D6" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10px"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_weight="1"
+                android:fontFamily="@font/rubik_light"
+                android:gravity="left"
+                android:singleLine="true"
+                android:tag="42"
+                android:text="Unpaid"
+                android:textColor="@color/darker_gray"
+                android:textSize="42px" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_weight="1"
+                android:fontFamily="@font/rubik_light"
+                android:gravity="right"
+                android:singleLine="true"
+                android:tag="42"
+                android:text="SAR 2400"
+                android:textColor="@color/darker_gray"
+                android:textSize="42px" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:layout_marginBottom="10px"
+            android:background="#D6D6D6" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20px"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_weight="1"
+                android:fontFamily="@font/rubik_light"
+                android:gravity="left"
+                android:singleLine="true"
+                android:tag="42"
+                android:text="Grandtotal"
+                android:textColor="@color/darker_gray"
+                android:textSize="42px" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_weight="1"
+                android:fontFamily="@font/rubik_light"
+                android:gravity="right"
+                android:singleLine="true"
+                android:tag="42"
+                android:text="SAR 2400"
+                android:textColor="@color/darker_gray"
+                android:textSize="42px" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_marginLeft="0px"
+            android:layout_marginRight="0px"
+            android:layout_marginTop="20px"
+            android:background="@drawable/btn_gray_white_selector"
+            android:fontFamily="@font/roboto_light"
+            android:paddingLeft="33px"
+            android:tag="50"
+            android:text="ChECKOUT"
+            android:textAllCaps="true"
+            android:textColor="@color/darker_gray"
+            android:textSize="50px" />
+
+    </LinearLayout>
 
 </RelativeLayout>

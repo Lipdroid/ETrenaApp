@@ -2,6 +2,7 @@ package com.dtmweb.etrenaapp.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.dtmweb.etrenaapp.LoginActivity;
 import com.dtmweb.etrenaapp.MainActivity;
 import com.dtmweb.etrenaapp.R;
 import com.dtmweb.etrenaapp.adapters.MainPagerAdapter;
@@ -109,11 +111,17 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 activity.changeHeaderLayout(Constants.FRAG_HOME);
                 break;
             case R.id.btn_profile:
-                activity.currentTabItemSelected = Constants.PROFILE;
-                changeTabState(Constants.PROFILE);
-                mViewPager.setCurrentItem(Constants.PROFILE);
-                dismissAllFragmentStack();
-                activity.changeHeaderLayout(Constants.FRAG_HOME);
+                if(!GlobalUtils.user_type.equals(Constants.CATEGORY_NON_LOGGED)) {
+                    activity.currentTabItemSelected = Constants.PROFILE;
+                    changeTabState(Constants.PROFILE);
+                    mViewPager.setCurrentItem(Constants.PROFILE);
+                    dismissAllFragmentStack();
+                    activity.changeHeaderLayout(Constants.FRAG_HOME);
+                }else{
+                    //Show Login Screens
+                    startActivity(new Intent(activity, LoginActivity.class));
+                    activity.overridePendingTransition(R.anim.anim_slide_in_bottom,R.anim.anim_scale_to_center);
+                }
                 break;
         }
     }

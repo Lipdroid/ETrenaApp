@@ -2,14 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dtmweb.etrenaapp.fragments.HomeFragment">
+    tools:context="com.dtmweb.etrenaapp.fragments.FavouriteFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="HOME"
-        android:gravity="center"
-        android:textSize="45px"/>
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/banner_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null">
+        </ListView>
+    </LinearLayout>
 
 </FrameLayout>

@@ -41,6 +41,7 @@ import com.dtmweb.etrenaapp.fragments.MyStoreFragment;
 import com.dtmweb.etrenaapp.fragments.ProductDetailsFragment;
 import com.dtmweb.etrenaapp.models.ProductObject;
 import com.dtmweb.etrenaapp.utils.CorrectSizeUtil;
+import com.dtmweb.etrenaapp.utils.GlobalUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private CorrectSizeUtil mCorrectSize = null;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout language_layout = null;
     private LinearLayout btn_arabic = null;
     private LinearLayout btn_english = null;
+    private RelativeLayout user_info = null;
 
     //right drawer items
     private EditText et_search = null;
@@ -98,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BaseFragment mBaseFrag;
     public int currentTabItemSelected = Constants.HOME;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mContext = this;
         mSecondStageFragArray = new ArrayList<Fragment>();
         findViews();
-        setUpLeftDrawer(Constants.CATEGORY_SELLER);
+        setUpLeftDrawer(GlobalUtils.user_type);
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
         setSupportActionBar(mToolBar);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -203,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         language_layout = (LinearLayout) findViewById(R.id.language_layout);
         btn_arabic = (LinearLayout) findViewById(R.id.btn_arabic);
         btn_english = (LinearLayout) findViewById(R.id.btn_english);
+        user_info = (RelativeLayout) findViewById(R.id.user_info);
 
         //right drawer item
         et_search = (EditText) findViewById(R.id.et_search);
@@ -462,6 +464,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case Constants.FRAG_HOME:
                 header_title.setText("");
                 header_image.setVisibility(View.VISIBLE);
+                setUpHeaderRightButton(0);
                 break;
             case Constants.FRAG_MANAGE_PRODUCTS:
                 header_title.setText("");
@@ -560,6 +563,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 btn_manage_orders.setVisibility(View.VISIBLE);
                 btn_my_store.setVisibility(View.GONE);
                 btn_my_plan.setVisibility(View.GONE);
+                user_info.setVisibility(View.VISIBLE);
                 break;
             case Constants.CATEGORY_SELLER:
                 btn_my_chart.setVisibility(View.GONE);
@@ -568,6 +572,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 btn_manage_orders.setVisibility(View.VISIBLE);
                 btn_my_store.setVisibility(View.GONE);
                 btn_my_plan.setVisibility(View.VISIBLE);
+                user_info.setVisibility(View.VISIBLE);
+                break;
+            case Constants.CATEGORY_NON_LOGGED:
+                btn_my_chart.setVisibility(View.GONE);
+                btn_my_orders.setVisibility(View.GONE);
+                btn_manage_products.setVisibility(View.GONE);
+                btn_manage_orders.setVisibility(View.GONE);
+                btn_my_store.setVisibility(View.GONE);
+                btn_my_plan.setVisibility(View.GONE);
+                btn_logout.setVisibility(View.GONE);
+                user_info.setVisibility(View.GONE);
                 break;
         }
     }

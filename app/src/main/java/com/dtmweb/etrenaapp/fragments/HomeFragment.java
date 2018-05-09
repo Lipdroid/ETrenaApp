@@ -1,20 +1,30 @@
 package com.dtmweb.etrenaapp.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.dtmweb.etrenaapp.R;
+import com.dtmweb.etrenaapp.adapters.FavProductAdapter;
+import com.dtmweb.etrenaapp.adapters.HomeAdapter;
+import com.dtmweb.etrenaapp.models.ProductObject;
 import com.dtmweb.etrenaapp.utils.MultipleScreen;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
-
+    private ListView banner_lv = null;
+    private List<ProductObject> mListBanner = null;
+    private HomeAdapter adapter = null;
+    private Context mContext = null;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -26,9 +36,17 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        banner_lv = (ListView) root.findViewById(R.id.banner_lv);
+        mContext = getActivity();
+        populateList();
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;
+    }
+
+    private void populateList() {
+        adapter = new HomeAdapter(mContext, mListBanner);
+        banner_lv.setAdapter(adapter);
     }
 
 }
