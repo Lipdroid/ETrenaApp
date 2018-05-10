@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.dtmweb.etrenaapp.constants.Constants;
 import com.dtmweb.etrenaapp.utils.CorrectSizeUtil;
+import com.dtmweb.etrenaapp.utils.GlobalUtils;
 
 public class SellerRegistrationActivity extends AppCompatActivity implements View.OnClickListener{
     private CorrectSizeUtil mCorrectSize = null;
@@ -119,6 +121,8 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
     private void afterClickSumbit() {
         //go to main after checking validity and api call
         goToMainPage();
+        GlobalUtils.user_type = Constants.CATEGORY_SELLER;
+
     }
     private void goToMainPage(){
         startActivity(new Intent(mContext,MainActivity.class));

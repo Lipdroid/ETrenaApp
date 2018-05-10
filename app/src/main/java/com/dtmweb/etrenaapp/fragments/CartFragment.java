@@ -7,12 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.dtmweb.etrenaapp.MainActivity;
 import com.dtmweb.etrenaapp.R;
 import com.dtmweb.etrenaapp.adapters.CartAdapter;
 import com.dtmweb.etrenaapp.adapters.FavProductAdapter;
+import com.dtmweb.etrenaapp.constants.Constants;
 import com.dtmweb.etrenaapp.models.ProductObject;
 import com.dtmweb.etrenaapp.utils.MultipleScreen;
 
@@ -27,6 +30,7 @@ public class CartFragment extends Fragment {
     private CartAdapter adapter = null;
     private Context mContext = null;
     private ImageView image_no_data = null;
+    private Button btn_check_out = null;
 
     public CartFragment() {
         // Required empty public constructor
@@ -39,9 +43,18 @@ public class CartFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_cart, container, false);
         cart_lv = (ListView) root.findViewById(R.id.cart_lv);
-        image_no_data = (ImageView) root.findViewById(R.id.image_no_data) ;
+        image_no_data = (ImageView) root.findViewById(R.id.image_no_data);
+        btn_check_out = (Button) root.findViewById(R.id.btn_check_out);
         mContext = getActivity();
         populateList();
+        btn_check_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //open address fragment
+                ((MainActivity) mContext).addFrag(Constants.FRAG_BILLING_ADDRESS, null);
+
+            }
+        });
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;

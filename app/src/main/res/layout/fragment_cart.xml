@@ -179,7 +179,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_add"
+            android:id="@+id/btn_check_out"
             android:layout_width="match_parent"
             android:layout_height="120px"
             android:layout_marginLeft="0px"

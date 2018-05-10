@@ -126,7 +126,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void dismissAllFragmentStack() {
+    public void dismissAllFragmentStack() {
         if (mFragManager != null) {
             for (int i = 0; i < mFragManager.getBackStackEntryCount(); ++i) {
                 mFragManager.popBackStack();
@@ -262,6 +262,9 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 break;
             case Constants.FRAG_BROWSE_PRODUCT:
                 frag = new BrowseProductFragment();
+                break;
+            case Constants.FRAG_BILLING_ADDRESS:
+                frag = new AddressFragment();
                 break;
             default:
                 break;

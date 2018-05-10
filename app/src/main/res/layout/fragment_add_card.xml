@@ -80,7 +80,7 @@
             android:typeface="normal" />
 
         <Button
-            android:id="@+id/btn_go"
+            android:id="@+id/btn_done"
             android:layout_width="510px"
             android:layout_height="90px"
             android:layout_marginTop="80px"

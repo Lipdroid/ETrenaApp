@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.dtmweb.etrenaapp.constants.Constants;
 import com.dtmweb.etrenaapp.utils.CorrectSizeUtil;
+import com.dtmweb.etrenaapp.utils.GlobalUtils;
 
 public class UserCategoryActivity extends AppCompatActivity implements View.OnClickListener {
 

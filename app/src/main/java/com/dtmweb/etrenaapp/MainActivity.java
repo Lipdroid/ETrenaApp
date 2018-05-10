@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Fragment> mSecondStageFragArray = null;
     private PopupWindow popupWindow = null;
     private boolean isLanguageVisible = false;
-    private BaseFragment mBaseFrag;
+    public BaseFragment mBaseFrag;
     public int currentTabItemSelected = Constants.HOME;
 
     @Override
@@ -286,7 +286,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_logout:
                 /**ACTIVE*/
                 closeLeftDrawer();
-                afterClickMenuItem(Constants.FRAG_CHOOSE_PAYMENT_METHOD);
                 break;
             case R.id.btn_terms:
                 /**ACTIVE*/

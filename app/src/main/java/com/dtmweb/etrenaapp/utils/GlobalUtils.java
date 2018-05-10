@@ -7,5 +7,5 @@ import com.dtmweb.etrenaapp.constants.Constants;
  */
 
 public class GlobalUtils {
-    public static String user_type = Constants.CATEGORY_BUYER;
+    public static String user_type = Constants.CATEGORY_NON_LOGGED;
 }
