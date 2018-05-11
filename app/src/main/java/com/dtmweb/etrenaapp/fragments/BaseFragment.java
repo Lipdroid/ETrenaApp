@@ -74,6 +74,10 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
         mViewPager.setAdapter(new MainPagerAdapter(
                 getChildFragmentManager()));
 
+        if(activity.gotExtraData){
+            addSecondStageFragment(Constants.FRAG_CHOOSE_PLAN,null);
+        }
+
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;
@@ -265,6 +269,12 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 break;
             case Constants.FRAG_BILLING_ADDRESS:
                 frag = new AddressFragment();
+                break;
+            case Constants.FRAG_MY_PLAN:
+                frag = new MyPlanFragment();
+                break;
+            case Constants.FRAG_CHOOSE_PLAN:
+                frag = new ChoosePlanFragment();
                 break;
             default:
                 break;

@@ -100,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public BaseFragment mBaseFrag;
     public int currentTabItemSelected = Constants.HOME;
 
+
+    public boolean gotExtraData = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +117,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setListenersForViews();
         //show the initial home page
         afterClickMenuItem(Constants.FRAG_HOME);
+        try {
+            String extra = getIntent().getExtras().getString(Constants.EXTRA_FROM_CHOOSE_PLAN);
+            if (extra != null) {
+                gotExtraData = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         mCorrectSize = CorrectSizeUtil.getInstance(this);
         mCorrectSize.correctSize();
@@ -279,6 +290,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_my_plan:
                 /**ACTIVE*/
                 mBaseFrag.changeTabState(Constants.DISSELECT_ALL);
+                afterClickMenuItem(Constants.FRAG_MY_PLAN);
                 closeLeftDrawer();
                 UnlockRightDrawer();
                 setUpHeaderRightButton(0);

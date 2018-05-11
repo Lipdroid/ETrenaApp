@@ -1,0 +1,85 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    tools:context="com.dtmweb.etrenaapp.fragments.MyPlanFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
+            android:layout_height="66px"
+            android:layout_margin="50px"
+            android:background="@drawable/black_rounded_corner"
+            android:fontFamily="@font/roboto_light"
+            android:paddingLeft="33px"
+            android:tag="42"
+            android:text="Renew Plan"
+            android:textAllCaps="false"
+            android:textColor="@color/darker_gray"
+            android:textSize="42px" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60px"
+            android:layout_marginBottom="10px"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="25px"
+            android:layout_marginTop="10px"
+            android:fontFamily="@font/roboto"
+            android:singleLine="true"
+            android:tag="50"
+            android:text="Active Plan"
+            android:textColor="@color/black"
+            android:textSize="50px" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10px"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
+            android:layout_marginTop="20px"
+            android:weightSum="2">
+
+            <ImageView
+                android:layout_width="36px"
+                android:layout_height="36px"
+                android:layout_marginTop="10px"
+                android:src="@drawable/icon_round_gray"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto_light"
+                android:gravity="left"
+                android:singleLine="true"
+                android:layout_marginLeft="20px"
+                android:tag="42"
+                android:text="SAR 300/Month"
+                android:textColor="#FF0000"
+                android:textSize="42px" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto_light"
+                android:gravity="right"
+                android:singleLine="true"
+                android:tag="42"
+                android:text="Renew:15.05.2018"
+                android:textColor="@color/darker_gray"
+                android:textSize="42px" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

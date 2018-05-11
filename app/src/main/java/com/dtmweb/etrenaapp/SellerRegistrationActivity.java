@@ -125,7 +125,8 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
 
     }
     private void goToMainPage(){
-        startActivity(new Intent(mContext,MainActivity.class));
-        overridePendingTransition(R.anim.anim_slide_in_right,R.anim.anim_slide_out_left);
+        Intent i = new Intent(mContext,MainActivity.class);
+        i.putExtra(Constants.EXTRA_FROM_CHOOSE_PLAN,Constants.EXTRA_FROM_CHOOSE_PLAN);
+        startActivity(i);
     }
 }

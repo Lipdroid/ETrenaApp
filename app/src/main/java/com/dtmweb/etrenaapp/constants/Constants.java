@@ -16,6 +16,9 @@ public class Constants {
     public static final int FRAG_PRODUCT_DETAILS = 9;
     public static final int FRAG_BROWSE_PRODUCT = 10;
     public static final int FRAG_BILLING_ADDRESS = 11;
+    public static final int FRAG_MY_PLAN = 12;
+    public static final int FRAG_CHOOSE_PLAN = 13;
+
 
     public static final String CATEGORY_BUYER = "buyerType" ;
     public static final String CATEGORY_SELLER = "sellerType" ;
@@ -32,4 +35,5 @@ public class Constants {
     public static final String CATEGORY_CLOTHES = "clothes";
     public static final String CATEGORY_PERFUME = "perfume";
 
+    public static final String EXTRA_FROM_CHOOSE_PLAN = "from_choose_plan_page";
 }
