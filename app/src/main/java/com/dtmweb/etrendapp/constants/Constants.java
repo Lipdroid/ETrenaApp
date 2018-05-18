@@ -36,4 +36,13 @@ public class Constants {
     public static final String CATEGORY_PERFUME = "perfume";
 
     public static final String EXTRA_FROM_CHOOSE_PLAN = "from_choose_plan_page";
+
+    public static final String AUTH_USERNAME = null;
+    public static final String AUTH_PASSWORD = null;
+    public static final int CONNECTION_TIME_OUT = 10000;
+
+    public static final int REST_POST = 0;
+    public static final int REST_GET = 1;
+    public static final int REST_PUT = 2;
+    public static final int REST_DELETE = 3;
 }
