@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dtmweb.etrenaapp.fragments.MyStoreFragment">
+    tools:context="com.dtmweb.etrendapp.fragments.MyStoreFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.dtmweb.etrenaapp.customViews.CircleImageView
+                <com.dtmweb.etrendapp.customViews.CircleImageView
                     android:layout_width="200px"
                     android:layout_height="200px"
                     android:layout_marginLeft="0px"

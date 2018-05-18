@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    tools:context="com.dtmweb.etrenaapp.fragments.ChoosePaymentTypeFragment">
+    tools:context="com.dtmweb.etrendapp.fragments.ChoosePaymentTypeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

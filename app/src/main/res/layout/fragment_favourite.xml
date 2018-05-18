@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dtmweb.etrenaapp.fragments.FavouriteFragment">
+    tools:context="com.dtmweb.etrendapp.fragments.FavouriteFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

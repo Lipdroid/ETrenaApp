@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.dtmweb.etrenaapp.fragments.ChoosePaymentTypeFragment">
+    tools:context="com.dtmweb.etrendapp.fragments.ChoosePaymentTypeFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -161,10 +161,10 @@
                         android:background="@drawable/btn_gray_white_selector"
                         android:layout_weight="1">
 
-                        <com.dtmweb.etrenaapp.customViews.ValueSelector
+                        <com.dtmweb.etrendapp.customViews.ValueSelector
                             android:id="@+id/valueSelector"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"></com.dtmweb.etrenaapp.customViews.ValueSelector>
+                            android:layout_height="wrap_content"></com.dtmweb.etrendapp.customViews.ValueSelector>
                     </RelativeLayout>
 
                     <RelativeLayout

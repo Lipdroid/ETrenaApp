@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dtmweb.etrenaapp.fragments.CartFragment">
+    tools:context="com.dtmweb.etrendapp.fragments.CartFragment">
 
     <ImageView
         android:id="@+id/image_no_data"
