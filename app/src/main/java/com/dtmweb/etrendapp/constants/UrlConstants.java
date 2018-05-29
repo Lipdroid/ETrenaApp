@@ -5,8 +5,7 @@ package com.dtmweb.etrendapp.constants;
  */
 
 public class UrlConstants {
-    public static final String USER_PROFILE_URL = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,public-profile-url,picture-url,email-address,picture-urls::(original),industry,positions)";
-    //public static final String BASE_URL = "http://piedpiperhub.com/AudienceApp/api.php";
-    public static final String BASE_URL = "http://researchlime.org/AudienceApp/api.php";
-
+    public static final String BASE_URL = "http://206.189.209.193";
+    public static final String REGISTRATION_URL_SELLER = BASE_URL + "/api/v1/sellers/registration/";
+    public static final String REGISTRATION_URL_BUYER = BASE_URL + "/api/v1/buyers/registration/";
 }

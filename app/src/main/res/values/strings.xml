@@ -6,4 +6,6 @@
     <string name="dialog_error_title">Error</string>
     <string name="dialog_no_internet_connection">No Internet Connection</string>
     <string name="common_loading">Loading</string>
+    <string name="dialog_choose_image_title">Choose Image</string>
+
 </resources>

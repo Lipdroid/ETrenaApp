@@ -50,7 +50,7 @@
             <!--android:layout_marginTop="49px"-->
             <!--android:src="@drawable/insta_connect" />-->
 
-        <ImageView
+        <com.dtmweb.etrendapp.customViews.CircleImageView
             android:id="@+id/btn_image_selection"
             android:layout_width="189px"
             android:layout_height="189px"
@@ -196,7 +196,7 @@
                     android:layout_width="35px"
                     android:layout_height="25px"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="240px"
+                    android:layout_marginRight="40px"
                     android:layout_marginTop="45px"
                     android:scaleType="fitXY"
                     android:src="@drawable/downarrow" />
@@ -229,7 +229,7 @@
                     android:layout_width="35px"
                     android:layout_height="25px"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="310px"
+                    android:layout_marginRight="40px"
                     android:layout_marginTop="45px"
                     android:scaleType="fitXY"
                     android:src="@drawable/downarrow" />

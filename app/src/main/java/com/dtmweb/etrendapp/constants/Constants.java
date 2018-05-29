@@ -45,4 +45,12 @@ public class Constants {
     public static final int REST_GET = 1;
     public static final int REST_PUT = 2;
     public static final int REST_DELETE = 3;
+
+    public static final int TIME_OUT = 30000;
+
+    public static final String PARAM_JSON_DATA = "jsonData";
+    public static final int REQUEST_REGISTER_SELLER = 1;
+    public static final int TYPE_COUNTRY = 0;
+    public static final int TYPE_CITY = 1;
+    public static final int REQUEST_REGISTER_BUYER = 2;
 }

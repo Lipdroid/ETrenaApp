@@ -91,7 +91,6 @@
                 android:hint="Username"
                 android:paddingLeft="30px"
                 android:tag="45"
-                android:inputType="textPassword"
                 android:textColor="@color/colorAccent"
                 android:textSize="45px"
                 android:typeface="normal" />
@@ -105,7 +104,6 @@
                 android:background="@drawable/gray_rounded_corner"
                 android:fontFamily="@font/roboto"
                 android:hint="Email"
-                android:inputType="textPassword"
                 android:paddingLeft="30px"
                 android:tag="45"
                 android:textColor="@color/colorAccent"
@@ -239,7 +237,7 @@
                     android:layout_width="35px"
                     android:layout_height="25px"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="240px"
+                    android:layout_marginRight="40px"
                     android:layout_marginTop="45px"
                     android:scaleType="fitXY"
                     android:src="@drawable/downarrow" />
@@ -272,7 +270,7 @@
                     android:layout_width="35px"
                     android:layout_height="25px"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="310px"
+                    android:layout_marginRight="40px"
                     android:layout_marginTop="45px"
                     android:scaleType="fitXY"
                     android:src="@drawable/downarrow" />
@@ -313,7 +311,6 @@
                 android:hint="Contact Number"
                 android:paddingLeft="30px"
                 android:tag="45"
-                android:inputType="textPassword"
                 android:textColor="@color/colorAccent"
                 android:textSize="45px"
                 android:typeface="normal" />

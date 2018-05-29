@@ -17,6 +17,9 @@ import com.dtmweb.etrendapp.customViews.CustomDialog;
 import com.dtmweb.etrendapp.customViews.CustomProgressDialog;
 import com.dtmweb.etrendapp.interfaces.DialogCallback;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by mdmunirhossain on 5/4/18.
  */
@@ -84,6 +87,19 @@ public class GlobalUtils {
         });
 
         infoDialog.show();
+    }
+
+
+    public static boolean isValidPassword(final String password) {
+
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
+
     }
 
 

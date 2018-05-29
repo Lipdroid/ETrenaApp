@@ -6,6 +6,7 @@ import android.util.Log;
 
 
 import com.dtmweb.etrendapp.constants.Constants;
+import com.dtmweb.etrendapp.constants.UrlConstants;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -49,42 +50,20 @@ public class RequestData {
 
         switch (typeOfRequest) {
 
-//
-//            case Constants.REQUEST_UPDATE_PROFILE:
-//                mRestType = Constants.REST_POST;
-//                REQUEST_DATA_URL = ConstantURLS.UPDATE_PROFILE;
-//
-//                if (parameters.containsKey(Constants.PARAM_POST_IMAGE)) {
-//                    // create hash map to save avatar bitmap
-//                    Map.Entry<String, Bitmap> hashIcon = new Map.Entry<String, Bitmap>() {
-//
-//                        @Override
-//                        public String getKey() {
-//                            // TODO Auto-generated method stub
-//                            return Constants.PARAM_POST_IMAGE;
-//                        }
-//
-//                        @Override
-//                        public Bitmap getValue() {
-//                            // TODO Auto-generated method stub
-//                            return (Bitmap) parameters.get(Constants.PARAM_POST_IMAGE);
-//                        }
-//
-//                        @Override
-//                        public Bitmap setValue(Bitmap object) {
-//                            // TODO Auto-generated method stub
-//                            return (Bitmap) parameters.get(Constants.PARAM_POST_IMAGE);
-//                        }
-//                    };
-//
-//                    bitmapParams.add(hashIcon);
-//                }
-//
-//                GlobalUtils.addAditionalHeader = true;
-//                GlobalUtils.additionalHeaderTag = "Authorization";
-//                GlobalUtils.additionalHeaderValue = "bearer " + SharedPreferencesUtils.getString(mContex, Constants.TOKEN, null);
-//
-//                break;
+
+            case Constants.REQUEST_REGISTER_SELLER:
+                mRestType = Constants.REST_POST;
+                REQUEST_DATA_URL = UrlConstants.REGISTRATION_URL_SELLER;
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_JSON_DATA,
+                        (String) parameters.get(Constants.PARAM_JSON_DATA)));
+                break;
+            case Constants.REQUEST_REGISTER_BUYER:
+                mRestType = Constants.REST_POST;
+                REQUEST_DATA_URL = UrlConstants.REGISTRATION_URL_BUYER;
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_JSON_DATA,
+                        (String) parameters.get(Constants.PARAM_JSON_DATA)));
+                break;
+
 //
 //            case Constants.REQUEST_SUBMIT_POST:
 //                mRestType = Constants.REST_POST;
