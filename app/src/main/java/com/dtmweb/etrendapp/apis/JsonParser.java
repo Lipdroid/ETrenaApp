@@ -68,15 +68,7 @@ public class JsonParser {
 
         // Making HTTP request
         try {
-            // authen string
-            String authStr = null;
-            String authStrEncoded = null;
-            if (Constants.AUTH_USERNAME != null && Constants.AUTH_PASSWORD != null) {
-                authStr = Constants.AUTH_USERNAME + ":" + Constants.AUTH_PASSWORD;
-                authStrEncoded = Base64
-                        .encodeToString(authStr.getBytes("UTF-8"), Base64.NO_WRAP);
-            }
-            Boolean addExtraHeader = GlobalUtils.addAditionalHeader;
+
 
             // defaultHttpClient
             HttpClient httpClient = getNewHttpClient();
@@ -89,14 +81,6 @@ public class JsonParser {
             HttpResponse httpResponse = null;
             if (restType == Constants.REST_POST) {
                 HttpPost httpPost = new HttpPost(url);
-                if (authStrEncoded != null) {
-                    httpPost.addHeader("Authorization", "Basic " + authStrEncoded);
-                }
-                if (addExtraHeader) {
-                    GlobalUtils.addAditionalHeader = false;
-                    httpPost.addHeader(GlobalUtils.additionalHeaderTag, GlobalUtils.additionalHeaderValue);
-                    Log.e("HeaderAddedPOST", GlobalUtils.additionalHeaderValue);
-                }
 
                 // httpPost.setEntity(new UrlEncodedFormEntity(params));
                 // set entity
@@ -132,28 +116,10 @@ public class JsonParser {
                 httpResponse = httpClient.execute(httpPost);
             } else if (restType == Constants.REST_GET) {
                 HttpGet httpGet = new HttpGet(url);
-                if (authStrEncoded != null) {
-                    httpGet.addHeader("Authorization", "Basic " + authStrEncoded);
-                }
-                if (addExtraHeader) {
-                    GlobalUtils.addAditionalHeader = false;
-                    httpGet.addHeader(GlobalUtils.additionalHeaderTag, GlobalUtils.additionalHeaderValue);
-                    Log.e("HeaderAddedGET", GlobalUtils.additionalHeaderValue);
-                }
-
                 //http execute
                 httpResponse = httpClient.execute(httpGet);
             } else if (restType == Constants.REST_PUT) {
                 HttpPut httpPut = new HttpPut(url);
-                if (authStrEncoded != null) {
-                    httpPut.addHeader("Authorization", "Basic " + authStrEncoded);
-                }
-
-                if (addExtraHeader) {
-                    GlobalUtils.addAditionalHeader = false;
-                    httpPut.addHeader(GlobalUtils.additionalHeaderTag, GlobalUtils.additionalHeaderValue);
-                    Log.e("HeaderAddedPUT", GlobalUtils.additionalHeaderValue);
-                }
 
                 ArrayList<NameValuePair> nameValuesParams = (ArrayList<NameValuePair>) multiParams
                         .get(0);
@@ -195,14 +161,6 @@ public class JsonParser {
                 httpResponse = httpClient.execute(httpPut);
             } else if (restType == Constants.REST_DELETE) {
                 HttpDelete httpDelete = new HttpDelete(url);
-                if (authStrEncoded != null) {
-                    httpDelete.addHeader("Authorization", "Basic " + authStrEncoded);
-                }
-                if (addExtraHeader) {
-                    GlobalUtils.addAditionalHeader = false;
-                    httpDelete.addHeader(GlobalUtils.additionalHeaderTag, GlobalUtils.additionalHeaderValue);
-                    Log.e("HeaderAddedDELETE", GlobalUtils.additionalHeaderValue);
-                }
 
                 //http execute
                 httpResponse = httpClient.execute(httpDelete);

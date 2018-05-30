@@ -63,6 +63,12 @@ public class RequestData {
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_JSON_DATA,
                         (String) parameters.get(Constants.PARAM_JSON_DATA)));
                 break;
+            case Constants.REQUEST_LOGIN:
+                mRestType = Constants.REST_POST;
+                REQUEST_DATA_URL = UrlConstants.LOGIN_URL;
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_JSON_DATA,
+                        (String) parameters.get(Constants.PARAM_JSON_DATA)));
+                break;
 
 //
 //            case Constants.REQUEST_SUBMIT_POST:

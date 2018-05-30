@@ -8,4 +8,5 @@ public class UrlConstants {
     public static final String BASE_URL = "http://206.189.209.193";
     public static final String REGISTRATION_URL_SELLER = BASE_URL + "/api/v1/sellers/registration/";
     public static final String REGISTRATION_URL_BUYER = BASE_URL + "/api/v1/buyers/registration/";
+    public static String LOGIN_URL = BASE_URL + "/api/v1/rest-auth/login/";
 }
