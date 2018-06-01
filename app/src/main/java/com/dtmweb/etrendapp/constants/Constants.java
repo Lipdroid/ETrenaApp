@@ -51,7 +51,30 @@ public class Constants {
     public static final String PARAM_JSON_DATA = "jsonData";
     public static final int TYPE_COUNTRY = 0;
     public static final int TYPE_CITY = 1;
+
+    //Requests
     public static final int REQUEST_REGISTER_SELLER = 1;
     public static final int REQUEST_REGISTER_BUYER = 2;
     public static final int REQUEST_LOGIN = 3;
+    public static final int REQUEST_SELLER_PROFILE = 4;
+
+    //params
+    public static final String PARAM_EMAIL = "email";
+    public static final String PARAM_PASSWORD = "password";
+    public static final String PARAM_USERNAME = "username";
+    public static final String PARAM_IMG = "pro_img";
+    public static final String PARAM_STORE_NAME = "store_name";
+    public static final String PARAM_BANK_NAME = "bank_name";
+    public static final String PARAM_ACC_NAME = "bank_acc_name";
+    public static final String PARAM_ACC_NUMBER = "bank_acc_number";
+    public static final String PARAM_COUNTRY = "country";
+    public static final String PARAM_CITY = "city";
+    public static final String PARAM_ADDRESS = "address";
+    public static final String PARAM_STORE_OWNER = "store_owner";
+    public static final String PARAM_CONTACT_NO = "contact_no";
+    public static final String PARAM_INSTAGRAM = "instagram";
+
+    //prefs
+    public static final String PREF_TOKEN = "prefs_token";
+
 }

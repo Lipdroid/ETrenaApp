@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.constants.UrlConstants;
+import com.dtmweb.etrendapp.utils.GlobalUtils;
+import com.dtmweb.etrendapp.utils.SharedPreferencesUtils;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -54,8 +56,61 @@ public class RequestData {
             case Constants.REQUEST_REGISTER_SELLER:
                 mRestType = Constants.REST_POST;
                 REQUEST_DATA_URL = UrlConstants.REGISTRATION_URL_SELLER;
-                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_JSON_DATA,
-                        (String) parameters.get(Constants.PARAM_JSON_DATA)));
+
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_EMAIL,
+                        (String) parameters.get(Constants.PARAM_EMAIL)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_PASSWORD,
+                        (String) parameters.get(Constants.PARAM_PASSWORD)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_USERNAME,
+                        (String) parameters.get(Constants.PARAM_USERNAME)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_STORE_NAME,
+                        (String) parameters.get(Constants.PARAM_STORE_NAME)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_BANK_NAME,
+                        (String) parameters.get(Constants.PARAM_BANK_NAME)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ACC_NAME,
+                        (String) parameters.get(Constants.PARAM_ACC_NAME)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ACC_NUMBER,
+                        (String) parameters.get(Constants.PARAM_ACC_NUMBER)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_COUNTRY,
+                        (String) parameters.get(Constants.PARAM_COUNTRY)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_CITY,
+                        (String) parameters.get(Constants.PARAM_CITY)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ADDRESS,
+                        (String) parameters.get(Constants.PARAM_ADDRESS)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_STORE_OWNER,
+                        (String) parameters.get(Constants.PARAM_STORE_OWNER)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_CONTACT_NO,
+                        (String) parameters.get(Constants.PARAM_CONTACT_NO)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_INSTAGRAM,
+                        (String) parameters.get(Constants.PARAM_INSTAGRAM)));
+
+
+
+                if (parameters.containsKey(Constants.PARAM_IMG)) {
+                    // create hash map to save avatar bitmap
+                    Map.Entry<String, Bitmap> hashIcon = new Map.Entry<String, Bitmap>() {
+
+                        @Override
+                        public String getKey() {
+                            // TODO Auto-generated method stub
+                            return Constants.PARAM_IMG;
+                        }
+
+                        @Override
+                        public Bitmap getValue() {
+                            // TODO Auto-generated method stub
+                            return (Bitmap) parameters.get(Constants.PARAM_IMG);
+                        }
+
+                        @Override
+                        public Bitmap setValue(Bitmap object) {
+                            // TODO Auto-generated method stub
+                            return (Bitmap) parameters.get(Constants.PARAM_IMG);
+                        }
+                    };
+
+                    bitmapParams.add(hashIcon);
+                }
                 break;
             case Constants.REQUEST_REGISTER_BUYER:
                 mRestType = Constants.REST_POST;
@@ -66,8 +121,19 @@ public class RequestData {
             case Constants.REQUEST_LOGIN:
                 mRestType = Constants.REST_POST;
                 REQUEST_DATA_URL = UrlConstants.LOGIN_URL;
-                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_JSON_DATA,
-                        (String) parameters.get(Constants.PARAM_JSON_DATA)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_EMAIL,
+                        (String) parameters.get(Constants.PARAM_EMAIL)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_PASSWORD,
+                        (String) parameters.get(Constants.PARAM_PASSWORD)));
+                break;
+
+            case Constants.REQUEST_SELLER_PROFILE:
+                mRestType = Constants.REST_GET;
+                REQUEST_DATA_URL = UrlConstants.URL_SELLER_PROFILE;
+
+                GlobalUtils.addAditionalHeader = true;
+                GlobalUtils.additionalHeaderTag = "Authorization";
+                GlobalUtils.additionalHeaderValue = "Token " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
                 break;
 
 //

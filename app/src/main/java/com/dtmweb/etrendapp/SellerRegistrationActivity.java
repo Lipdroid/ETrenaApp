@@ -28,6 +28,7 @@ import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.constants.UrlConstants;
 import com.dtmweb.etrendapp.customViews.CircleImageView;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
+import com.dtmweb.etrendapp.interfaces.DialogCallback;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.ImageUtils;
@@ -90,6 +91,8 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
     String store_owner_contact = null;
     String email = null;
     String instagram = null;
+
+    private Bitmap pro_img = null;
 
     public static final int TYPE_UPLOAD_PHOTO = 999;
     private int MY_REQUEST_CODE = 111;
@@ -265,6 +268,10 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
             Log.e(TAG, "confirm password do not match");
             GlobalUtils.showInfoDialog(mContext, "Error", "confirm password do not match", "OK", null);
             return;
+        } else if (pro_img == null) {
+            Log.e(TAG, "missing profile image");
+            GlobalUtils.showInfoDialog(mContext, "Error", "profile picture is missing", "OK", null);
+            return;
         }
 
         requestToSighUp();
@@ -272,41 +279,65 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
     }
 
     private void requestToSighUp() {
-        JSONObject jsonParams = new JSONObject();
-        try {
-            JSONObject jsonobject_seller = new JSONObject();
-
-            jsonobject_seller.put("store_name", store_name);
-            jsonobject_seller.put("bank_name", bank_name);
-            jsonobject_seller.put("bank_acc_name", bank_account_name);
-            jsonobject_seller.put("bank_acc_number", bank_account_number);
-            jsonobject_seller.put("country", country);
-            jsonobject_seller.put("city", city);
-            jsonobject_seller.put("postal_code", "dfd");
-            jsonobject_seller.put("address", address);
-            jsonobject_seller.put("store_owner", store_owner_name);
-            jsonobject_seller.put("contact_no", store_owner_contact);
-            jsonobject_seller.put("instagram", instagram);
-
-            jsonParams.put("email", email);
-            jsonParams.put("password", password);
-            jsonParams.put("username", "ddf");
-            jsonParams.put("seller", jsonobject_seller);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.PARAM_JSON_DATA, jsonParams.toString());
+        params.put(Constants.PARAM_EMAIL, email);
+        params.put(Constants.PARAM_PASSWORD, password);
+        params.put(Constants.PARAM_USERNAME, email);
+        params.put(Constants.PARAM_IMG, pro_img);
+        params.put(Constants.PARAM_STORE_NAME, store_name);
+        params.put(Constants.PARAM_BANK_NAME, bank_name);
+        params.put(Constants.PARAM_ACC_NAME, bank_account_name);
+        params.put(Constants.PARAM_ACC_NUMBER, bank_account_number);
+        params.put(Constants.PARAM_COUNTRY, country);
+        params.put(Constants.PARAM_CITY, city);
+        params.put(Constants.PARAM_ADDRESS, address);
+        params.put(Constants.PARAM_STORE_OWNER, store_owner_name);
+        params.put(Constants.PARAM_CONTACT_NO, store_owner_contact);
+        params.put(Constants.PARAM_INSTAGRAM, instagram);
 
 
         RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REGISTER_SELLER, params, new AsyncCallback() {
             @SuppressLint("LongLogTag")
             @Override
             public void done(String result) {
-                Log.e(TAG, result);
                 GlobalUtils.dismissLoadingProgress();
+                Log.e(TAG, result);
+                if(result != null){
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        if(jsonObject.has("success") && jsonObject.getString("success").equals("true")){
+                            GlobalUtils.showInfoDialog(mContext, "Registration", "The user has been successfully registered.", "OK", new DialogCallback() {
+                                @Override
+                                public void onAction1() {
+                                    afterClickBack();
+                                }
+
+                                @Override
+                                public void onAction2() {
+
+                                }
+
+                                @Override
+                                public void onAction3() {
+
+                                }
+
+                                @Override
+                                public void onAction4() {
+
+                                }
+                            });
+                        }else if(jsonObject.has("success") && jsonObject.get("success").equals("false")){
+                            String error = jsonObject.getString("error_message");
+                            GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
+
+                }
 
 
             }
@@ -409,6 +440,7 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
 
                     Bitmap thumbBitmap = ImageUtils.getBitmapThumb(bitmap, 1080, Math.round(1080 / ratio));
                     btn_image_selection.setImageBitmap(thumbBitmap);
+                    pro_img = thumbBitmap;
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

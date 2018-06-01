@@ -57,11 +57,13 @@ public class UserCategoryActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void afterClickBuyer() {
+        finish();
         startActivity(new Intent(mContext, BuyerRegistrationActivity.class));
         overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
     }
 
     private void afterClickSeller() {
+        finish();
         startActivity(new Intent(mContext, SellerRegistrationActivity.class));
         overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
     }

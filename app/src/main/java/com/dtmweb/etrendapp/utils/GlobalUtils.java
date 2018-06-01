@@ -16,6 +16,7 @@ import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.customViews.CustomDialog;
 import com.dtmweb.etrendapp.customViews.CustomProgressDialog;
 import com.dtmweb.etrendapp.interfaces.DialogCallback;
+import com.dtmweb.etrendapp.models.SellerObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,6 +31,7 @@ public class GlobalUtils {
     public static String additionalHeaderTag = null;
     public static String additionalHeaderValue = null;
     private static CustomProgressDialog sPdLoading = null;
+    private static SellerObject mUserObjSeller = null;
 
     public static boolean isNetworkConnected() {
         try {
@@ -132,6 +134,15 @@ public class GlobalUtils {
         } else {
             CustomProgressDialog.sPdCount--;
         }
+    }
+
+
+    public static void saveCurrentUserSeller(SellerObject sellerObject){
+        mUserObjSeller = sellerObject;
+    }
+
+    public static SellerObject getCurrentSeller(){
+        return mUserObjSeller;
     }
 
 }
