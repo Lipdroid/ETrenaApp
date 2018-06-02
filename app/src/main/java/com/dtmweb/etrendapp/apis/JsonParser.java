@@ -206,6 +206,14 @@ public class JsonParser {
 
             HttpEntity httpEntity = httpResponse.getEntity();
             mJson = EntityUtils.toString(httpEntity);
+            //check for the [] braces and remove it
+            // converting String to StringBuilder
+            StringBuilder builder = new StringBuilder(mJson);
+            if(mJson.startsWith("[") && mJson.endsWith("]")){
+                builder.deleteCharAt(mJson.length() - 1);
+                builder.deleteCharAt(0);
+                mJson = builder.toString();
+            }
             Log.e("jsonResponse:", mJson);
             mJObj = new JSONObject(mJson);
         } catch (Exception e) {

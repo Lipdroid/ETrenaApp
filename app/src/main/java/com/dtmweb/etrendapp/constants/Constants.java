@@ -57,6 +57,7 @@ public class Constants {
     public static final int REQUEST_REGISTER_BUYER = 2;
     public static final int REQUEST_LOGIN = 3;
     public static final int REQUEST_SELLER_PROFILE = 4;
+    public static final int REQUEST_LOGOUT = 5;
 
     //params
     public static final String PARAM_EMAIL = "email";
@@ -73,6 +74,7 @@ public class Constants {
     public static final String PARAM_STORE_OWNER = "store_owner";
     public static final String PARAM_CONTACT_NO = "contact_no";
     public static final String PARAM_INSTAGRAM = "instagram";
+    public static final String PARAM_FULL_NAME = "full_name";
 
     //prefs
     public static final String PREF_TOKEN = "prefs_token";

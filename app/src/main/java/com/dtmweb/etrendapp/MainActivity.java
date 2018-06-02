@@ -1,5 +1,6 @@
 package com.dtmweb.etrendapp;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -25,11 +27,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.dtmweb.etrendapp.apis.RequestAsyncTask;
 import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.fragments.BaseFragment;
+import com.dtmweb.etrendapp.interfaces.AsyncCallback;
+import com.dtmweb.etrendapp.models.SellerObject;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private CorrectSizeUtil mCorrectSize = null;
@@ -90,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public boolean gotExtraData = false;
+    private String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -286,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_logout:
                 /**ACTIVE*/
                 closeLeftDrawer();
+                callLogoutAPI();
                 break;
             case R.id.btn_terms:
                 /**ACTIVE*/
@@ -618,5 +630,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void addFrag(int frag, Object object) {
         mBaseFrag.addSecondStageFragment(frag, object);
+    }
+
+    public void callLogoutAPI(){
+        HashMap<String, Object> params = new HashMap<String, Object>();
+
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_LOGOUT, params, new AsyncCallback() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void done(String result) {
+                Log.e(TAG, result);
+                GlobalUtils.dismissLoadingProgress();
+                if (result != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        if (jsonObject.has("success") && jsonObject.getString("success").equals("true")) {
+                            //LOGOUT + CLEAR THE USER + CLEAR EVERYTHING RELATED TO USER
+
+                        } else if (jsonObject.has("success") && jsonObject.get("success").equals("false")) {
+                            String error = jsonObject.getString("error_message");
+                            GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
+
+                }
+            }
+
+            @Override
+            public void progress() {
+                GlobalUtils.showLoadingProgress(mContext);
+            }
+
+            @Override
+            public void onInterrupted(Exception e) {
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+        });
+
+        mRequestAsync.execute();
     }
 }

@@ -10,4 +10,7 @@ public class UrlConstants {
     public static final String REGISTRATION_URL_BUYER = BASE_URL + "/api/v1/buyers/registration/";
     public static String LOGIN_URL = BASE_URL + "/api/v1/login/";
     public static String URL_SELLER_PROFILE = BASE_URL + "/api/v1/seller/profile/" ;
+    public static String LOGOUT_URL = BASE_URL + "/api/v1/rest-auth/logout/" ;
+
+
 }

@@ -115,8 +115,22 @@ public class RequestData {
             case Constants.REQUEST_REGISTER_BUYER:
                 mRestType = Constants.REST_POST;
                 REQUEST_DATA_URL = UrlConstants.REGISTRATION_URL_BUYER;
-                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_JSON_DATA,
-                        (String) parameters.get(Constants.PARAM_JSON_DATA)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_EMAIL,
+                        (String) parameters.get(Constants.PARAM_EMAIL)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_PASSWORD,
+                        (String) parameters.get(Constants.PARAM_PASSWORD)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_USERNAME,
+                        (String) parameters.get(Constants.PARAM_USERNAME)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_COUNTRY,
+                        (String) parameters.get(Constants.PARAM_COUNTRY)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_CITY,
+                        (String) parameters.get(Constants.PARAM_CITY)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ADDRESS,
+                        (String) parameters.get(Constants.PARAM_ADDRESS)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_CONTACT_NO,
+                        (String) parameters.get(Constants.PARAM_CONTACT_NO)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_FULL_NAME,
+                        (String) parameters.get(Constants.PARAM_FULL_NAME)));
                 break;
             case Constants.REQUEST_LOGIN:
                 mRestType = Constants.REST_POST;
@@ -136,6 +150,14 @@ public class RequestData {
                 GlobalUtils.additionalHeaderValue = "Token " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
                 break;
 
+                case Constants.REQUEST_LOGOUT:
+                mRestType = Constants.REST_POST;
+                REQUEST_DATA_URL = UrlConstants.LOGOUT_URL;
+
+                GlobalUtils.addAditionalHeader = true;
+                GlobalUtils.additionalHeaderTag = "Authorization";
+                GlobalUtils.additionalHeaderValue = "Token " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+                break;
 //
 //            case Constants.REQUEST_SUBMIT_POST:
 //                mRestType = Constants.REST_POST;

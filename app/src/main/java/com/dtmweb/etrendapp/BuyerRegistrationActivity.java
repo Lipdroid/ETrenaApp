@@ -220,26 +220,17 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
 
     private void requestToSighUp() {
         JSONObject jsonParams = new JSONObject();
-        try {
-            JSONObject jsonobject_buyer = new JSONObject();
-
-            jsonobject_buyer.put("full_name", fullname);
-            jsonobject_buyer.put("country", country);
-            jsonobject_buyer.put("city", city);
-            jsonobject_buyer.put("address", address);
-            jsonobject_buyer.put("contact_no", contact);
-
-            jsonParams.put("email", email);
-            jsonParams.put("password", password);
-            jsonParams.put("username", userName);
-            jsonParams.put("buyer", jsonobject_buyer);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.PARAM_JSON_DATA, jsonParams.toString());
+
+        params.put(Constants.PARAM_EMAIL, email);
+        params.put(Constants.PARAM_PASSWORD, password);
+        params.put(Constants.PARAM_USERNAME, userName);
+        params.put(Constants.PARAM_COUNTRY, country);
+        params.put(Constants.PARAM_CITY, city);
+        params.put(Constants.PARAM_ADDRESS, address);
+        params.put(Constants.PARAM_FULL_NAME, fullname);
+        params.put(Constants.PARAM_CONTACT_NO, contact);
 
 
         RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REGISTER_BUYER, params, new AsyncCallback() {
