@@ -55,7 +55,7 @@ public class RequestData {
 
             case Constants.REQUEST_REGISTER_SELLER:
                 mRestType = Constants.REST_POST;
-                REQUEST_DATA_URL = UrlConstants.REGISTRATION_URL_SELLER;
+                REQUEST_DATA_URL = UrlConstants.REGISTRATION_URL;
 
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_EMAIL,
                         (String) parameters.get(Constants.PARAM_EMAIL)));
@@ -114,7 +114,7 @@ public class RequestData {
                 break;
             case Constants.REQUEST_REGISTER_BUYER:
                 mRestType = Constants.REST_POST;
-                REQUEST_DATA_URL = UrlConstants.REGISTRATION_URL_BUYER;
+                REQUEST_DATA_URL = UrlConstants.REGISTRATION_URL;
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_EMAIL,
                         (String) parameters.get(Constants.PARAM_EMAIL)));
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_PASSWORD,
