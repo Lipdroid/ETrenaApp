@@ -212,67 +212,67 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
         email = et_mail.getText().toString();
         instagram = et_instagram.getText().toString();
 
-        if (store_name == null || store_name.equals("")) {
-            Log.e(TAG, "store name input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "store name input is empty", "OK", null);
-            return;
-        } else if (password == null || password.equals("")) {
-            Log.e(TAG, "password input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "password input is empty", "OK", null);
-            return;
-        } else if (password.length() < 8 && !GlobalUtils.isValidPassword(password)) {
-            Log.e(TAG, "password is not Valid(Minimum 8 digit)");
-            GlobalUtils.showInfoDialog(mContext, "Error", "password is not Valid(Minimum 8 digit)", "OK", null);
-            return;
-        } else if (password_retype == null || password_retype.equals("")) {
-            Log.e(TAG, "password retype input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "password retype input is empty", "OK", null);
-            return;
-        } else if (bank_name == null || bank_name.equals("")) {
-            Log.e(TAG, "bank name input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "bank name input is empty", "OK", null);
-            return;
-        } else if (bank_account_name == null || bank_account_name.equals("")) {
-            Log.e(TAG, "bank account name input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "bank account name input is empty", "OK", null);
-            return;
-        } else if (bank_account_number == null || bank_account_number.equals("")) {
-            Log.e(TAG, "bank account number input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "bank account number input is empty", "OK", null);
-            return;
-        } else if (country == null || country.equals("")) {
-            Log.e(TAG, "country input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "country name input is empty", "OK", null);
-            return;
-        } else if (city == null || store_owner_name.equals("")) {
-            Log.e(TAG, "city input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "city name input is empty", "OK", null);
-            return;
-        } else if (store_owner_name == null || address.equals("")) {
-            Log.e(TAG, "store owner name input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "store owner name input is empty", "OK", null);
-            return;
-        } else if (store_owner_contact == null || store_owner_contact.equals("")) {
-            Log.e(TAG, "store owner contact input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "store owner contact input is empty", "OK", null);
-            return;
-        } else if (email == null || email.equals("")) {
-            Log.e(TAG, "email input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "email input is empty", "OK", null);
-            return;
-        } else if (instagram == null || instagram.equals("")) {
-            Log.e(TAG, "instagram input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "instagram input is empty", "OK", null);
-            return;
-        } else if (!password.equals(password_retype)) {
-            Log.e(TAG, "confirm password do not match");
-            GlobalUtils.showInfoDialog(mContext, "Error", "confirm password do not match", "OK", null);
-            return;
-        } else if (pro_img == null) {
-            Log.e(TAG, "missing profile image");
-            GlobalUtils.showInfoDialog(mContext, "Error", "profile picture is missing", "OK", null);
-            return;
-        }
+//        if (store_name == null || store_name.equals("")) {
+//            Log.e(TAG, "store name input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "store name input is empty", "OK", null);
+//            return;
+//        } else if (password == null || password.equals("")) {
+//            Log.e(TAG, "password input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "password input is empty", "OK", null);
+//            return;
+//        } else if (password.length() < 8 && !GlobalUtils.isValidPassword(password)) {
+//            Log.e(TAG, "password is not Valid(Minimum 8 digit)");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "password is not Valid(Minimum 8 digit)", "OK", null);
+//            return;
+//        } else if (password_retype == null || password_retype.equals("")) {
+//            Log.e(TAG, "password retype input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "password retype input is empty", "OK", null);
+//            return;
+//        } else if (bank_name == null || bank_name.equals("")) {
+//            Log.e(TAG, "bank name input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "bank name input is empty", "OK", null);
+//            return;
+//        } else if (bank_account_name == null || bank_account_name.equals("")) {
+//            Log.e(TAG, "bank account name input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "bank account name input is empty", "OK", null);
+//            return;
+//        } else if (bank_account_number == null || bank_account_number.equals("")) {
+//            Log.e(TAG, "bank account number input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "bank account number input is empty", "OK", null);
+//            return;
+//        } else if (country == null || country.equals("")) {
+//            Log.e(TAG, "country input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "country name input is empty", "OK", null);
+//            return;
+//        } else if (city == null || store_owner_name.equals("")) {
+//            Log.e(TAG, "city input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "city name input is empty", "OK", null);
+//            return;
+//        } else if (store_owner_name == null || address.equals("")) {
+//            Log.e(TAG, "store owner name input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "store owner name input is empty", "OK", null);
+//            return;
+//        } else if (store_owner_contact == null || store_owner_contact.equals("")) {
+//            Log.e(TAG, "store owner contact input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "store owner contact input is empty", "OK", null);
+//            return;
+//        } else if (email == null || email.equals("")) {
+//            Log.e(TAG, "email input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "email input is empty", "OK", null);
+//            return;
+//        } else if (instagram == null || instagram.equals("")) {
+//            Log.e(TAG, "instagram input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "instagram input is empty", "OK", null);
+//            return;
+//        } else if (!password.equals(password_retype)) {
+//            Log.e(TAG, "confirm password do not match");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "confirm password do not match", "OK", null);
+//            return;
+//        } else if (pro_img == null) {
+//            Log.e(TAG, "missing profile image");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "profile picture is missing", "OK", null);
+//            return;
+//        }
 
         requestToSighUp();
 
@@ -280,20 +280,11 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
 
     private void requestToSighUp() {
         HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.PARAM_EMAIL, email);
-        params.put(Constants.PARAM_PASSWORD, password);
-        params.put(Constants.PARAM_USERNAME, email);
+        params.put(Constants.PARAM_EMAIL, "test78zx 4923@gmail.com");
+        params.put(Constants.PARAM_PASSWORD, "qwe34857493");
+        params.put(Constants.PARAM_PASSWORD2, "qwe34857493");
         params.put(Constants.PARAM_IMG, pro_img);
-        params.put(Constants.PARAM_STORE_NAME, store_name);
-        params.put(Constants.PARAM_BANK_NAME, bank_name);
-        params.put(Constants.PARAM_ACC_NAME, bank_account_name);
-        params.put(Constants.PARAM_ACC_NUMBER, bank_account_number);
-        params.put(Constants.PARAM_COUNTRY, country);
-        params.put(Constants.PARAM_CITY, city);
-        params.put(Constants.PARAM_ADDRESS, address);
-        params.put(Constants.PARAM_STORE_OWNER, store_owner_name);
-        params.put(Constants.PARAM_CONTACT_NO, store_owner_contact);
-        params.put(Constants.PARAM_INSTAGRAM, instagram);
+        params.put(Constants.PARAM_INSTAGRAM, "kkjkj");
 
 
         RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REGISTER_SELLER, params, new AsyncCallback() {

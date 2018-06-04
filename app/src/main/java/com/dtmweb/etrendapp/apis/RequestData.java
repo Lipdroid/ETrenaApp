@@ -61,6 +61,8 @@ public class RequestData {
                         (String) parameters.get(Constants.PARAM_EMAIL)));
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_PASSWORD,
                         (String) parameters.get(Constants.PARAM_PASSWORD)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_PASSWORD2,
+                        (String) parameters.get(Constants.PARAM_PASSWORD2)));
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_USERNAME,
                         (String) parameters.get(Constants.PARAM_USERNAME)));
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_STORE_NAME,

@@ -61,7 +61,7 @@ public class Constants {
 
     //params
     public static final String PARAM_EMAIL = "email";
-    public static final String PARAM_PASSWORD = "password";
+    public static final String PARAM_PASSWORD = "password1";
     public static final String PARAM_USERNAME = "username";
     public static final String PARAM_IMG = "pro_img";
     public static final String PARAM_STORE_NAME = "store_name";
@@ -79,4 +79,5 @@ public class Constants {
     //prefs
     public static final String PREF_TOKEN = "prefs_token";
 
+    public static final String PARAM_PASSWORD2 = "password2";
 }
