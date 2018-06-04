@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,43 +17,39 @@ import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.dtmweb.etrendapp.apis.RequestAsyncTask;
+import com.dtmweb.etrendapp.apis.ApiClient;
+import com.dtmweb.etrendapp.apis.ApiService;
 import com.dtmweb.etrendapp.constants.Constants;
-import com.dtmweb.etrendapp.constants.UrlConstants;
 import com.dtmweb.etrendapp.customViews.CircleImageView;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
 import com.dtmweb.etrendapp.interfaces.DialogCallback;
+import com.dtmweb.etrendapp.models.SellerObject;
+import com.dtmweb.etrendapp.models.StoreObject;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.ImageUtils;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
+import org.apache.http.entity.mime.content.FileBody;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SellerRegistrationActivity extends AppCompatActivity implements View.OnClickListener {
     private CorrectSizeUtil mCorrectSize = null;
@@ -96,6 +91,7 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
 
     public static final int TYPE_UPLOAD_PHOTO = 999;
     private int MY_REQUEST_CODE = 111;
+    private SellerObject mUserObj = null;
 
     @Override
     public void onBackPressed() {
@@ -212,156 +208,191 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
         email = et_mail.getText().toString();
         instagram = et_instagram.getText().toString();
 
-        if (store_name == null || store_name.equals("")) {
-            Log.e(TAG, "store name input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "store name input is empty", "OK", null);
-            return;
-        } else if (password == null || password.equals("")) {
-            Log.e(TAG, "password input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "password input is empty", "OK", null);
-            return;
-        } else if (password.length() < 8 && !GlobalUtils.isValidPassword(password)) {
-            Log.e(TAG, "password is not Valid(Minimum 8 digit)");
-            GlobalUtils.showInfoDialog(mContext, "Error", "password is not Valid(Minimum 8 digit)", "OK", null);
-            return;
-        } else if (password_retype == null || password_retype.equals("")) {
-            Log.e(TAG, "password retype input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "password retype input is empty", "OK", null);
-            return;
-        } else if (bank_name == null || bank_name.equals("")) {
-            Log.e(TAG, "bank name input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "bank name input is empty", "OK", null);
-            return;
-        } else if (bank_account_name == null || bank_account_name.equals("")) {
-            Log.e(TAG, "bank account name input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "bank account name input is empty", "OK", null);
-            return;
-        } else if (bank_account_number == null || bank_account_number.equals("")) {
-            Log.e(TAG, "bank account number input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "bank account number input is empty", "OK", null);
-            return;
-        } else if (country == null || country.equals("")) {
-            Log.e(TAG, "country input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "country name input is empty", "OK", null);
-            return;
-        } else if (city == null || store_owner_name.equals("")) {
-            Log.e(TAG, "city input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "city name input is empty", "OK", null);
-            return;
-        } else if (store_owner_name == null || address.equals("")) {
-            Log.e(TAG, "store owner name input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "store owner name input is empty", "OK", null);
-            return;
-        } else if (store_owner_contact == null || store_owner_contact.equals("")) {
-            Log.e(TAG, "store owner contact input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "store owner contact input is empty", "OK", null);
-            return;
-        } else if (email == null || email.equals("")) {
-            Log.e(TAG, "email input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "email input is empty", "OK", null);
-            return;
-        } else if (instagram == null || instagram.equals("")) {
-            Log.e(TAG, "instagram input is empty");
-            GlobalUtils.showInfoDialog(mContext, "Error", "instagram input is empty", "OK", null);
-            return;
-        } else if (!password.equals(password_retype)) {
-            Log.e(TAG, "confirm password do not match");
-            GlobalUtils.showInfoDialog(mContext, "Error", "confirm password do not match", "OK", null);
-            return;
-        } else if (pro_img == null) {
-            Log.e(TAG, "missing profile image");
-            GlobalUtils.showInfoDialog(mContext, "Error", "profile picture is missing", "OK", null);
-            return;
-        }
+//        if (store_name == null || store_name.equals("")) {
+//            Log.e(TAG, "store name input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "store name input is empty", "OK", null);
+//            return;
+//        } else if (password == null || password.equals("")) {
+//            Log.e(TAG, "password input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "password input is empty", "OK", null);
+//            return;
+//        } else if (password.length() < 8 && !GlobalUtils.isValidPassword(password)) {
+//            Log.e(TAG, "password is not Valid(Minimum 8 digit)");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "password is not Valid(Minimum 8 digit)", "OK", null);
+//            return;
+//        } else if (password_retype == null || password_retype.equals("")) {
+//            Log.e(TAG, "password retype input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "password retype input is empty", "OK", null);
+//            return;
+//        } else if (bank_name == null || bank_name.equals("")) {
+//            Log.e(TAG, "bank name input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "bank name input is empty", "OK", null);
+//            return;
+//        } else if (bank_account_name == null || bank_account_name.equals("")) {
+//            Log.e(TAG, "bank account name input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "bank account name input is empty", "OK", null);
+//            return;
+//        } else if (bank_account_number == null || bank_account_number.equals("")) {
+//            Log.e(TAG, "bank account number input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "bank account number input is empty", "OK", null);
+//            return;
+//        } else if (country == null || country.equals("")) {
+//            Log.e(TAG, "country input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "country name input is empty", "OK", null);
+//            return;
+//        } else if (city == null || store_owner_name.equals("")) {
+//            Log.e(TAG, "city input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "city name input is empty", "OK", null);
+//            return;
+//        } else if (store_owner_name == null || address.equals("")) {
+//            Log.e(TAG, "store owner name input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "store owner name input is empty", "OK", null);
+//            return;
+//        } else if (store_owner_contact == null || store_owner_contact.equals("")) {
+//            Log.e(TAG, "store owner contact input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "store owner contact input is empty", "OK", null);
+//            return;
+//        } else if (email == null || email.equals("")) {
+//            Log.e(TAG, "email input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "email input is empty", "OK", null);
+//            return;
+//        } else if (instagram == null || instagram.equals("")) {
+//            Log.e(TAG, "instagram input is empty");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "instagram input is empty", "OK", null);
+//            return;
+//        } else if (!password.equals(password_retype)) {
+//            Log.e(TAG, "confirm password do not match");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "confirm password do not match", "OK", null);
+//            return;
+//        } else if (pro_img == null) {
+//            Log.e(TAG, "missing profile image");
+//            GlobalUtils.showInfoDialog(mContext, "Error", "profile picture is missing", "OK", null);
+//            return;
+//        }
 
         requestToSighUp();
 
     }
 
     private void requestToSighUp() {
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.PARAM_EMAIL, email);
-        params.put(Constants.PARAM_PASSWORD, password);
-        params.put(Constants.PARAM_USERNAME, email);
-        params.put(Constants.PARAM_IMG, pro_img);
-        params.put(Constants.PARAM_STORE_NAME, store_name);
-        params.put(Constants.PARAM_BANK_NAME, bank_name);
-        params.put(Constants.PARAM_ACC_NAME, bank_account_name);
-        params.put(Constants.PARAM_ACC_NUMBER, bank_account_number);
-        params.put(Constants.PARAM_COUNTRY, country);
-        params.put(Constants.PARAM_CITY, city);
-        params.put(Constants.PARAM_ADDRESS, address);
-        params.put(Constants.PARAM_STORE_OWNER, store_owner_name);
-        params.put(Constants.PARAM_CONTACT_NO, store_owner_contact);
-        params.put(Constants.PARAM_INSTAGRAM, instagram);
+        GlobalUtils.showLoadingProgress(mContext);
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        try {
+            final Map<String, String> requestBody = new HashMap<>();
+            requestBody.put("email", "test78668@gmail.com");
+            requestBody.put("password1", "456qwert");
+            requestBody.put("password2", "456qwert");
+            requestBody.put("phone", "dfdsfds");
+            requestBody.put("name", "dfdsfsd");
+            requestBody.put("instagram", "dfdsfds");
+            requestBody.put("is_buyer", "false");
+            requestBody.put("is_seller", "true");
+            File file = null;
+            try {
+                Bitmap bm = pro_img;
+                file = ImageUtils.bitmapToFile(bm);
+            } catch (Exception e) {
 
+            }
 
-        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REGISTER_SELLER, params, new AsyncCallback() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void done(String result) {
-                GlobalUtils.dismissLoadingProgress();
-                Log.e(TAG, result);
-                if(result != null){
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        if(jsonObject.has("success") && jsonObject.getString("success").equals("true")){
-                            GlobalUtils.showInfoDialog(mContext, "Registration", "The user has been successfully registered.", "OK", new DialogCallback() {
-                                @Override
-                                public void onAction1() {
-                                    afterClickBack();
-                                }
+            Call<SellerObject> registration = apiService.registerUser(requestBody, file);
+            registration.enqueue(new Callback<SellerObject>() {
+                @Override
+                public void onResponse(Call<SellerObject> call, Response<SellerObject> response) {
+                    GlobalUtils.dismissLoadingProgress();
+                    if (response.isSuccessful()) {
+                        mUserObj = response.body();
+                        Log.e("Success", mUserObj.getToken());
+                        //store the token
+                        GlobalUtils.token = mUserObj.getToken();
+                        createStore();
 
-                                @Override
-                                public void onAction2() {
-
-                                }
-
-                                @Override
-                                public void onAction3() {
-
-                                }
-
-                                @Override
-                                public void onAction4() {
-
-                                }
-                            });
-                        }else if(jsonObject.has("success") && jsonObject.get("success").equals("false")){
-                            String error = jsonObject.getString("error_message");
-                            GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                    } else {
+                        JSONObject jObjError = null;
+                        try {
+                            jObjError = new JSONObject(response.errorBody().string());
+                            parseErrors(requestBody, jObjError);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                }else{
-                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
-
                 }
 
+                @Override
+                public void onFailure(Call<SellerObject> call, Throwable t) {
+                    GlobalUtils.dismissLoadingProgress();
+                    Log.e("Error ", this.getClass().getSimpleName() + t.toString());
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void createStore() {
+        GlobalUtils.showLoadingProgress(mContext);
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        try {
+            final Map<String, String> requestBody = new HashMap<>();
+            requestBody.put("name", "dsfs");
+            requestBody.put("address", "sds");
+            requestBody.put("city", "sdsad");
+            requestBody.put("country", "asdsad");
+            requestBody.put("bank_name", "asdsad");
+            requestBody.put("account_name", "sadsad");
+            requestBody.put("account_number", "asdasd");
+
+            Call<StoreObject> registration = apiService.registerStore(requestBody, "JWT " + GlobalUtils.token);
+            registration.enqueue(new Callback<StoreObject>() {
+                @Override
+                public void onResponse(Call<StoreObject> call, Response<StoreObject> response) {
+                    GlobalUtils.dismissLoadingProgress();
+                    if (response.isSuccessful()) {
+                        StoreObject storeObject = response.body();
+                        Log.e("Success", "");
+                        //createSeller();
+                        mUserObj.setStoreObject(storeObject);
+                        GlobalUtils.showInfoDialog(mContext, "Info", "Registration Complete", "OK", null);
+                    } else {
+                        JSONObject jObjError = null;
+                        try {
+                            jObjError = new JSONObject(response.errorBody().string());
+                            parseErrors(requestBody, jObjError);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<StoreObject> call, Throwable t) {
+                    GlobalUtils.dismissLoadingProgress();
+                    Log.e("Error ", this.getClass().getSimpleName() + t.toString());
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void parseErrors(Map<String, String> requestBody, JSONObject jObjError) {
+
+        for (String key : requestBody.keySet()) {
+            if (jObjError.has(key)) {
+                String error = null;
+                try {
+                    error = jObjError.getJSONArray(key).get(0).toString();
+                    Log.e("Error ", this.getClass().getSimpleName() + error);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-
-            @Override
-            public void progress() {
-                GlobalUtils.showLoadingProgress(mContext);
-            }
-
-            @Override
-            public void onInterrupted(Exception e) {
-                GlobalUtils.dismissLoadingProgress();
-
-            }
-
-            @Override
-            public void onException(Exception e) {
-
-                GlobalUtils.dismissLoadingProgress();
-
-            }
-        });
-
-        mRequestAsync.execute();
+        }
 
     }
 

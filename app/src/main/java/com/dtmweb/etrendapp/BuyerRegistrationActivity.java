@@ -1,12 +1,8 @@
 package com.dtmweb.etrendapp;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,18 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.dtmweb.etrendapp.apis.RequestAsyncTask;
 import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
-import com.dtmweb.etrendapp.utils.ImageUtils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.HashMap;
 
 public class BuyerRegistrationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -219,51 +210,6 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
     }
 
     private void requestToSighUp() {
-        JSONObject jsonParams = new JSONObject();
-
-        HashMap<String, Object> params = new HashMap<String, Object>();
-
-        params.put(Constants.PARAM_EMAIL, email);
-        params.put(Constants.PARAM_PASSWORD, password);
-        params.put(Constants.PARAM_USERNAME, userName);
-        params.put(Constants.PARAM_COUNTRY, country);
-        params.put(Constants.PARAM_CITY, city);
-        params.put(Constants.PARAM_ADDRESS, address);
-        params.put(Constants.PARAM_FULL_NAME, fullname);
-        params.put(Constants.PARAM_CONTACT_NO, contact);
-
-
-        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REGISTER_BUYER, params, new AsyncCallback() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void done(String result) {
-                Log.e(TAG, result);
-                GlobalUtils.dismissLoadingProgress();
-
-
-            }
-
-            @Override
-            public void progress() {
-                GlobalUtils.showLoadingProgress(mContext);
-            }
-
-            @Override
-            public void onInterrupted(Exception e) {
-                GlobalUtils.dismissLoadingProgress();
-
-            }
-
-            @Override
-            public void onException(Exception e) {
-
-                GlobalUtils.dismissLoadingProgress();
-
-            }
-        });
-
-        mRequestAsync.execute();
-
     }
 
     private void moveToChoosenActivity(int type) {

@@ -32,6 +32,8 @@ public class GlobalUtils {
     public static String additionalHeaderValue = null;
     private static CustomProgressDialog sPdLoading = null;
     private static SellerObject mUserObjSeller = null;
+    public static boolean isUserLoggedIn= false;
+    public static String token= "";
 
     public static boolean isNetworkConnected() {
         try {
