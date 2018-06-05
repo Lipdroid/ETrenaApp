@@ -53,21 +53,23 @@ public class Constants {
     public static final int TYPE_CITY = 1;
 
     //Requests
-    public static final int REQUEST_REGISTER_SELLER = 1;
-    public static final int REQUEST_REGISTER_BUYER = 2;
+    public static final int REQUEST_REGISTER_USER = 1;
+    public static final int REQUEST_CREATE_SELLER = 2;
     public static final int REQUEST_LOGIN = 3;
     public static final int REQUEST_SELLER_PROFILE = 4;
     public static final int REQUEST_LOGOUT = 5;
+    public static final int REQUEST_GET_USER = 6;
+
 
     //params
     public static final String PARAM_EMAIL = "email";
-    public static final String PARAM_PASSWORD = "password1";
+    public static final String PARAM_PASSWORD = "password";
     public static final String PARAM_USERNAME = "username";
     public static final String PARAM_IMG = "pro_img";
-    public static final String PARAM_STORE_NAME = "store_name";
+    public static final String PARAM_STORE_NAME = "name";
     public static final String PARAM_BANK_NAME = "bank_name";
-    public static final String PARAM_ACC_NAME = "bank_acc_name";
-    public static final String PARAM_ACC_NUMBER = "bank_acc_number";
+    public static final String PARAM_ACC_NAME = "account_name";
+    public static final String PARAM_ACC_NUMBER = "account_number";
     public static final String PARAM_COUNTRY = "country";
     public static final String PARAM_CITY = "city";
     public static final String PARAM_ADDRESS = "address";
@@ -75,9 +77,14 @@ public class Constants {
     public static final String PARAM_CONTACT_NO = "contact_no";
     public static final String PARAM_INSTAGRAM = "instagram";
     public static final String PARAM_FULL_NAME = "full_name";
+    public static final String PARAM_PASSWORD1 = "password1";
+    public static final String PARAM_PASSWORD2 = "password2";
+    public static final String PARAM_PHONE = "phone";
+    public static final String PARAM_SELLER = "is_seller";
+    public static final String PARAM_BUYER = "is_buyer";
 
     //prefs
     public static final String PREF_TOKEN = "prefs_token";
 
-    public static final String PARAM_PASSWORD2 = "password2";
+
 }

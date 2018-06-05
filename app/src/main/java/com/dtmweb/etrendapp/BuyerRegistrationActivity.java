@@ -233,7 +233,7 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
         params.put(Constants.PARAM_CONTACT_NO, contact);
 
 
-        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REGISTER_BUYER, params, new AsyncCallback() {
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REGISTER_USER, params, new AsyncCallback() {
             @SuppressLint("LongLogTag")
             @Override
             public void done(String result) {

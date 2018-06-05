@@ -34,8 +34,10 @@ import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.fragments.BaseFragment;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
 import com.dtmweb.etrendapp.models.SellerObject;
+import com.dtmweb.etrendapp.models.UserObject;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
+import com.dtmweb.etrendapp.utils.SharedPreferencesUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout btn_english = null;
     private RelativeLayout user_info = null;
 
+    private TextView tv_username = null;
+    private TextView tv_phone = null;
+    private TextView tv_address = null;
+
     //right drawer items
     private EditText et_search = null;
     private EditText et_price = null;
@@ -102,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean gotExtraData = false;
     private String TAG = "MainActivity";
 
+    private UserObject mUserObj = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mContext = this;
         mSecondStageFragArray = new ArrayList<Fragment>();
         findViews();
-        setUpLeftDrawer(GlobalUtils.user_type);
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
         setSupportActionBar(mToolBar);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -129,6 +136,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mCorrectSize.correctSize();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String token = SharedPreferencesUtils.getString(mContext, Constants.PREF_TOKEN, null);
+        if (token != null) {
+            GlobalUtils.isLoggedIn = true;
+            mUserObj = GlobalUtils.getCurrentUser();
+            if (mUserObj != null) {
+                setUpHome(mUserObj.getUser_type());
+            } else {
+                //get User
+                requestGetUserAPI();
+            }
+
+        } else {
+            GlobalUtils.isLoggedIn = false;
+            GlobalUtils.user_type = Constants.CATEGORY_NON_LOGGED;
+            SharedPreferencesUtils.removeComponent(mContext, Constants.PREF_TOKEN);
+            setUpHome(Constants.CATEGORY_NON_LOGGED);
+            GlobalUtils.saveCurrentUser(null);
+        }
+
+    }
+
+
+    private void setUpHome(String type) {
+        GlobalUtils.user_type = type;
+        setUpLeftDrawer(GlobalUtils.user_type);
+        if (mBaseFrag != null) {
+            mBaseFrag.setUpBottomTabs();
+        }
+
+        if (mUserObj != null) {
+            tv_username.setText(mUserObj.getUsername());
+            tv_phone.setText(mUserObj.getContact_no());
+            //tv_address.setText(mUserObj.getAd);
+        }
+    }
 
     private void setListenersForViews() {
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -215,6 +260,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_arabic = (LinearLayout) findViewById(R.id.btn_arabic);
         btn_english = (LinearLayout) findViewById(R.id.btn_english);
         user_info = (RelativeLayout) findViewById(R.id.user_info);
+
+        tv_username = (TextView) findViewById(R.id.tv_username);
+        tv_phone = (TextView) findViewById(R.id.tv_phone);
+        tv_address = (TextView) findViewById(R.id.tv_address);
+
 
         //right drawer item
         et_search = (EditText) findViewById(R.id.et_search);
@@ -575,6 +625,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 btn_my_store.setVisibility(View.GONE);
                 btn_my_plan.setVisibility(View.GONE);
                 user_info.setVisibility(View.VISIBLE);
+                btn_logout.setVisibility(View.VISIBLE);
                 break;
             case Constants.CATEGORY_SELLER:
                 btn_my_chart.setVisibility(View.GONE);
@@ -584,6 +635,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 btn_my_store.setVisibility(View.GONE);
                 btn_my_plan.setVisibility(View.VISIBLE);
                 user_info.setVisibility(View.VISIBLE);
+                btn_logout.setVisibility(View.VISIBLE);
                 break;
             case Constants.CATEGORY_NON_LOGGED:
                 btn_my_chart.setVisibility(View.GONE);
@@ -632,7 +684,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBaseFrag.addSecondStageFragment(frag, object);
     }
 
-    public void callLogoutAPI(){
+    public void callLogoutAPI() {
         HashMap<String, Object> params = new HashMap<String, Object>();
 
         RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_LOGOUT, params, new AsyncCallback() {
@@ -644,12 +696,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (result != null) {
                     try {
                         JSONObject jsonObject = new JSONObject(result);
-                        if (jsonObject.has("success") && jsonObject.getString("success").equals("true")) {
-                            //LOGOUT + CLEAR THE USER + CLEAR EVERYTHING RELATED TO USER
-
-                        } else if (jsonObject.has("success") && jsonObject.get("success").equals("false")) {
-                            String error = jsonObject.getString("error_message");
-                            GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                        if (jsonObject.has("detail")) {
+                            GlobalUtils.isLoggedIn = false;
+                            GlobalUtils.user_type = Constants.CATEGORY_NON_LOGGED;
+                            SharedPreferencesUtils.removeComponent(mContext, Constants.PREF_TOKEN);
+                            String response = jsonObject.getString("detail");
+                            setUpHome(Constants.CATEGORY_NON_LOGGED);
+                            GlobalUtils.saveCurrentUser(null);
+                            GlobalUtils.showInfoDialog(mContext, "Info", response, "OK", null);
+                            return;
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -681,4 +736,82 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mRequestAsync.execute();
     }
+
+
+    private void requestGetUserAPI() {
+        final HashMap<String, Object> params = new HashMap<String, Object>();
+
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_GET_USER, params, new AsyncCallback() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void done(String result) {
+                GlobalUtils.dismissLoadingProgress();
+                Log.e(TAG, result);
+                if (result != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        if (jsonObject.has("id")) {
+                            mUserObj = new UserObject();
+                            if (jsonObject.has("id")) {
+                                mUserObj.setUserId(jsonObject.getString("id"));
+                            }
+                            if (jsonObject.has("name")) {
+                                mUserObj.setUsername(jsonObject.getString("name"));
+                            }
+                            if (jsonObject.has("email")) {
+                                mUserObj.setEmail(jsonObject.getString("email"));
+                            }
+                            if (jsonObject.has("phone")) {
+                                mUserObj.setContact_no(jsonObject.getString("phone"));
+                            }
+                            if (jsonObject.has("image")) {
+                                mUserObj.setPro_img(jsonObject.getString("image"));
+                            }
+                            if (jsonObject.has("instagram")) {
+                                mUserObj.setInstagram(jsonObject.getString("instagram"));
+                            }
+
+                            mUserObj.setUser_type(false, true);
+                            //save the current user
+                            GlobalUtils.saveCurrentUser(mUserObj);
+                            setUpHome(mUserObj.getUser_type());
+                        } else {
+                            //parse errors
+                            GlobalUtils.parseErrors(mContext, params, jsonObject);
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
+
+                }
+
+
+            }
+
+            @Override
+            public void progress() {
+                GlobalUtils.showLoadingProgress(mContext);
+            }
+
+            @Override
+            public void onInterrupted(Exception e) {
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+        });
+
+        mRequestAsync.execute();
+
+    }
+
 }

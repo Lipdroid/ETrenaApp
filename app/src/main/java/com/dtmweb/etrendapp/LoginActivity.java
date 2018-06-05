@@ -17,6 +17,7 @@ import com.dtmweb.etrendapp.constants.UrlConstants;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
 import com.dtmweb.etrendapp.interfaces.DialogCallback;
 import com.dtmweb.etrendapp.models.SellerObject;
+import com.dtmweb.etrendapp.models.UserObject;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.SharedPreferencesUtils;
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String password = null;
     private String email = null;
     private static final String TAG = "LoginActivity";
+    private UserObject mUserObj = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +133,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void requestToLogin() {
 
-        HashMap<String, Object> params = new HashMap<String, Object>();
+        final HashMap<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.PARAM_EMAIL, email);
         params.put(Constants.PARAM_PASSWORD, password);
 
@@ -144,25 +146,55 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (result != null) {
                     try {
                         JSONObject jsonObject = new JSONObject(result);
-                        if (jsonObject.has("success") && jsonObject.getString("success").equals("true")) {
-                            SellerObject mUserObj = new SellerObject();
-                            if (jsonObject.has("seller")) {
-                                String pro_img = jsonObject.getString("seller");
-                                mUserObj.setPro_img(UrlConstants.BASE_URL + pro_img);
-                                GlobalUtils.saveCurrentUserSeller(mUserObj);
-                            }
+                        if (jsonObject.has("token")) {
+                            String token = jsonObject.getString("token");
+                            //save the token in preference for furthur api call
+                            SharedPreferencesUtils.putString(mContext, Constants.PREF_TOKEN, token);
+                            //Parse the User data
+                            if (jsonObject.has("user")) {
+                                mUserObj = new UserObject();
+                                JSONObject userJson = jsonObject.getJSONObject("user");
 
-                            if (jsonObject.has("Token")) {
-                                String token = jsonObject.getString("Token");
-                                //save the token in preference for furthur api call
-                                SharedPreferencesUtils.putString(mContext, Constants.PREF_TOKEN, token);
-                            }
+                                if (userJson.has("id")) {
+                                    mUserObj.setUserId(userJson.getString("id"));
+                                }
+                                if (userJson.has("name")) {
+                                    mUserObj.setUsername(userJson.getString("name"));
+                                }
+                                if (userJson.has("email")) {
+                                    mUserObj.setEmail(userJson.getString("email"));
+                                }
+                                if (userJson.has("phone")) {
+                                    mUserObj.setContact_no(userJson.getString("phone"));
+                                }
+                                if (userJson.has("image")) {
+                                    mUserObj.setPro_img(userJson.getString("image"));
+                                }
+                                //set the type
+                                Boolean is_seller = false;
+                                Boolean is_buyer = false;
+                                if (userJson.has("is_buyer")) {
+                                    is_buyer = userJson.getBoolean("is_buyer");
+                                }
+                                if (userJson.has("is_seller ")) {
+                                    is_seller = userJson.getBoolean("is_seller");
+                                }
 
-                            //call profile api to get the seller details
-                            requestToGetUserDetails();
-                        } else if (jsonObject.has("success") && jsonObject.get("success").equals("false")) {
-                            String error = jsonObject.getString("error_message");
-                            GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+
+                                mUserObj.setUser_type(is_buyer,true);
+
+                            }
+                            //save the current user
+                            GlobalUtils.saveCurrentUser(mUserObj);
+                            //logged in
+                            GlobalUtils.isLoggedIn = true;
+
+                            afterClickBack();
+
+                        } else {
+                            //parse errors
+                            GlobalUtils.parseErrors(mContext,params, jsonObject);
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -248,7 +280,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                 }
 
-                                GlobalUtils.saveCurrentUserSeller(mUserObj);
+                                //GlobalUtils.sa(mUserObj);
                             }
                             afterClickBack();
 

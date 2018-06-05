@@ -23,6 +23,42 @@ public class SellerObject implements Parcelable {
     private String contact_no = null;
     private String instagram = null;
     private String user_type = null;
+    private String cover_photo = null;
+    private Boolean is_superUser = false;
+    private Boolean is_Active = false;
+    private Boolean is_subscribed = false;
+
+    public Boolean getIs_Active() {
+        return is_Active;
+    }
+
+    public void setIs_Active(Boolean is_Active) {
+        this.is_Active = is_Active;
+    }
+
+    public Boolean getIs_subscribed() {
+        return is_subscribed;
+    }
+
+    public void setIs_subscribed(Boolean is_subscribed) {
+        this.is_subscribed = is_subscribed;
+    }
+
+    public String getCover_photo() {
+        return cover_photo;
+    }
+
+    public void setCover_photo(String cover_photo) {
+        this.cover_photo = cover_photo;
+    }
+
+    public Boolean getIs_superUser() {
+        return is_superUser;
+    }
+
+    public void setIs_superUser(Boolean is_superUser) {
+        this.is_superUser = is_superUser;
+    }
 
     public String getUserId() {
         return userId;

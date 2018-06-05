@@ -29,9 +29,13 @@ import com.dtmweb.etrendapp.constants.UrlConstants;
 import com.dtmweb.etrendapp.customViews.CircleImageView;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
 import com.dtmweb.etrendapp.interfaces.DialogCallback;
+import com.dtmweb.etrendapp.models.SellerObject;
+import com.dtmweb.etrendapp.models.StoreObject;
+import com.dtmweb.etrendapp.models.UserObject;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.ImageUtils;
+import com.dtmweb.etrendapp.utils.SharedPreferencesUtils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -96,6 +100,8 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
 
     public static final int TYPE_UPLOAD_PHOTO = 999;
     private int MY_REQUEST_CODE = 111;
+    private StoreObject mStoreObj = null;
+    private UserObject mUserObj = null;
 
     @Override
     public void onBackPressed() {
@@ -212,91 +218,221 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
         email = et_mail.getText().toString();
         instagram = et_instagram.getText().toString();
 
-//        if (store_name == null || store_name.equals("")) {
-//            Log.e(TAG, "store name input is empty");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "store name input is empty", "OK", null);
-//            return;
-//        } else if (password == null || password.equals("")) {
-//            Log.e(TAG, "password input is empty");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "password input is empty", "OK", null);
-//            return;
-//        } else if (password.length() < 8 && !GlobalUtils.isValidPassword(password)) {
-//            Log.e(TAG, "password is not Valid(Minimum 8 digit)");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "password is not Valid(Minimum 8 digit)", "OK", null);
-//            return;
-//        } else if (password_retype == null || password_retype.equals("")) {
-//            Log.e(TAG, "password retype input is empty");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "password retype input is empty", "OK", null);
-//            return;
-//        } else if (bank_name == null || bank_name.equals("")) {
-//            Log.e(TAG, "bank name input is empty");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "bank name input is empty", "OK", null);
-//            return;
-//        } else if (bank_account_name == null || bank_account_name.equals("")) {
-//            Log.e(TAG, "bank account name input is empty");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "bank account name input is empty", "OK", null);
-//            return;
-//        } else if (bank_account_number == null || bank_account_number.equals("")) {
-//            Log.e(TAG, "bank account number input is empty");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "bank account number input is empty", "OK", null);
-//            return;
-//        } else if (country == null || country.equals("")) {
-//            Log.e(TAG, "country input is empty");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "country name input is empty", "OK", null);
-//            return;
-//        } else if (city == null || store_owner_name.equals("")) {
-//            Log.e(TAG, "city input is empty");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "city name input is empty", "OK", null);
-//            return;
-//        } else if (store_owner_name == null || address.equals("")) {
-//            Log.e(TAG, "store owner name input is empty");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "store owner name input is empty", "OK", null);
-//            return;
-//        } else if (store_owner_contact == null || store_owner_contact.equals("")) {
-//            Log.e(TAG, "store owner contact input is empty");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "store owner contact input is empty", "OK", null);
-//            return;
-//        } else if (email == null || email.equals("")) {
-//            Log.e(TAG, "email input is empty");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "email input is empty", "OK", null);
-//            return;
-//        } else if (instagram == null || instagram.equals("")) {
-//            Log.e(TAG, "instagram input is empty");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "instagram input is empty", "OK", null);
-//            return;
-//        } else if (!password.equals(password_retype)) {
-//            Log.e(TAG, "confirm password do not match");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "confirm password do not match", "OK", null);
-//            return;
-//        } else if (pro_img == null) {
-//            Log.e(TAG, "missing profile image");
-//            GlobalUtils.showInfoDialog(mContext, "Error", "profile picture is missing", "OK", null);
-//            return;
-//        }
+        if (store_name == null || store_name.equals("")) {
+            Log.e(TAG, "store name input is empty");
+            GlobalUtils.showInfoDialog(mContext, "Error", "store name input is empty", "OK", null);
+            return;
+        } else if (password == null || password.equals("")) {
+            Log.e(TAG, "password input is empty");
+            GlobalUtils.showInfoDialog(mContext, "Error", "password input is empty", "OK", null);
+            return;
+        } else if (password.length() < 8 && !GlobalUtils.isValidPassword(password)) {
+            Log.e(TAG, "password is not Valid(Minimum 8 digit)");
+            GlobalUtils.showInfoDialog(mContext, "Error", "password is not Valid(Minimum 8 digit)", "OK", null);
+            return;
+        } else if (password_retype == null || password_retype.equals("")) {
+            Log.e(TAG, "password retype input is empty");
+            GlobalUtils.showInfoDialog(mContext, "Error", "password retype input is empty", "OK", null);
+            return;
+        } else if (bank_name == null || bank_name.equals("")) {
+            Log.e(TAG, "bank name input is empty");
+            GlobalUtils.showInfoDialog(mContext, "Error", "bank name input is empty", "OK", null);
+            return;
+        } else if (bank_account_name == null || bank_account_name.equals("")) {
+            Log.e(TAG, "bank account name input is empty");
+            GlobalUtils.showInfoDialog(mContext, "Error", "bank account name input is empty", "OK", null);
+            return;
+        } else if (bank_account_number == null || bank_account_number.equals("")) {
+            Log.e(TAG, "bank account number input is empty");
+            GlobalUtils.showInfoDialog(mContext, "Error", "bank account number input is empty", "OK", null);
+            return;
+        } else if (country == null || country.equals("")) {
+            Log.e(TAG, "country input is empty");
+            GlobalUtils.showInfoDialog(mContext, "Error", "country name input is empty", "OK", null);
+            return;
+        } else if (city == null || store_owner_name.equals("")) {
+            Log.e(TAG, "city input is empty");
+            GlobalUtils.showInfoDialog(mContext, "Error", "city name input is empty", "OK", null);
+            return;
+        } else if (store_owner_name == null || address.equals("")) {
+            Log.e(TAG, "store owner name input is empty");
+            GlobalUtils.showInfoDialog(mContext, "Error", "store owner name input is empty", "OK", null);
+            return;
+        } else if (store_owner_contact == null || store_owner_contact.equals("")) {
+            Log.e(TAG, "store owner contact input is empty");
+            GlobalUtils.showInfoDialog(mContext, "Error", "store owner contact input is empty", "OK", null);
+            return;
+        } else if (email == null || email.equals("")) {
+            Log.e(TAG, "email input is empty");
+            GlobalUtils.showInfoDialog(mContext, "Error", "email input is empty", "OK", null);
+            return;
+        } else if (instagram == null || instagram.equals("")) {
+            Log.e(TAG, "instagram input is empty");
+            GlobalUtils.showInfoDialog(mContext, "Error", "instagram input is empty", "OK", null);
+            return;
+        } else if (!password.equals(password_retype)) {
+            Log.e(TAG, "confirm password do not match");
+            GlobalUtils.showInfoDialog(mContext, "Error", "confirm password do not match", "OK", null);
+            return;
+        } else if (pro_img == null) {
+            Log.e(TAG, "missing profile image");
+            GlobalUtils.showInfoDialog(mContext, "Error", "profile picture is missing", "OK", null);
+            return;
+        }
 
         requestToSighUp();
 
     }
 
     private void requestToSighUp() {
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.PARAM_EMAIL, "test78zx 4923@gmail.com");
-        params.put(Constants.PARAM_PASSWORD, "qwe34857493");
-        params.put(Constants.PARAM_PASSWORD2, "qwe34857493");
+        final HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put(Constants.PARAM_EMAIL, email);
+        params.put(Constants.PARAM_PASSWORD1, password);
+        params.put(Constants.PARAM_PASSWORD2, password_retype);
+        params.put(Constants.PARAM_PHONE, store_owner_contact);
+        params.put(Constants.PARAM_STORE_NAME, store_owner_name);
+        params.put(Constants.PARAM_INSTAGRAM, instagram);
         params.put(Constants.PARAM_IMG, pro_img);
-        params.put(Constants.PARAM_INSTAGRAM, "kkjkj");
+        params.put(Constants.PARAM_SELLER, "true");
+        params.put(Constants.PARAM_BUYER, "false");
 
-
-        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REGISTER_SELLER, params, new AsyncCallback() {
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REGISTER_USER, params, new AsyncCallback() {
             @SuppressLint("LongLogTag")
             @Override
             public void done(String result) {
                 GlobalUtils.dismissLoadingProgress();
                 Log.e(TAG, result);
-                if(result != null){
+                if (result != null) {
                     try {
                         JSONObject jsonObject = new JSONObject(result);
-                        if(jsonObject.has("success") && jsonObject.getString("success").equals("true")){
+                        if (jsonObject.has("token")) {
+                            String token = jsonObject.getString("token");
+                            //save the token in preference for furthur api call
+                            SharedPreferencesUtils.putString(mContext, Constants.PREF_TOKEN, token);
+                            //Parse the User data
+                            if (jsonObject.has("user")) {
+                                mUserObj = new UserObject();
+                                JSONObject userJson = jsonObject.getJSONObject("user");
+
+                                if (userJson.has("id")) {
+                                    mUserObj.setUserId(userJson.getString("id"));
+                                }
+                                if (jsonObject.has("name")) {
+                                    mUserObj.setUsername(jsonObject.getString("name"));
+                                }
+                                if (userJson.has("email")) {
+                                    mUserObj.setEmail(userJson.getString("email"));
+                                }
+                                if (userJson.has("phone")) {
+                                    mUserObj.setContact_no(userJson.getString("phone"));
+                                }
+                                if (userJson.has("image")) {
+                                    mUserObj.setPro_img(userJson.getString("image"));
+                                }
+                                if (userJson.has("instagram")) {
+                                    mUserObj.setInstagram(userJson.getString("instagram"));
+                                }
+
+                                mUserObj.setUser_type(false,true);
+
+                            }
+                            //save the current user
+                            GlobalUtils.saveCurrentUser(mUserObj);
+                            //create the store
+                            createStoreAPI();
+                        } else {
+                            //parse errors
+                            parseErrors(params, jsonObject);
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
+
+                }
+
+
+            }
+
+            @Override
+            public void progress() {
+                GlobalUtils.showLoadingProgress(mContext);
+            }
+
+            @Override
+            public void onInterrupted(Exception e) {
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+        });
+
+        mRequestAsync.execute();
+
+    }
+
+    private void createStoreAPI() {
+        final HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put(Constants.PARAM_STORE_NAME, store_name);
+        params.put(Constants.PARAM_ADDRESS, address);
+        params.put(Constants.PARAM_CITY, city);
+        params.put(Constants.PARAM_COUNTRY, country);
+        params.put(Constants.PARAM_BANK_NAME, bank_name);
+        params.put(Constants.PARAM_ACC_NAME, bank_account_name);
+        params.put(Constants.PARAM_ACC_NUMBER, bank_account_number);
+
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_CREATE_SELLER, params, new AsyncCallback() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void done(String result) {
+                GlobalUtils.dismissLoadingProgress();
+                Log.e(TAG, result);
+                if (result != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        if (jsonObject.has("id")) {
+                            if (jsonObject.has("name")) {
+                                mStoreObj.setStore_name(jsonObject.getString("name"));
+                            }
+                            if (jsonObject.has("cover_photo")) {
+                                mStoreObj.setCover_photo(jsonObject.getString("cover_photo"));
+                            }
+                            if (jsonObject.has("is_active")) {
+                                mStoreObj.setIs_Active(jsonObject.getBoolean("is_active"));
+                            }
+                            if (jsonObject.has("is_subscribed")) {
+                                mStoreObj.setIs_subscribed(jsonObject.getBoolean("is_subscribed"));
+                            }
+                            if (jsonObject.has("address")) {
+                                mStoreObj.setAddress(jsonObject.getString("address"));
+                            }
+                            if (jsonObject.has("city")) {
+                                mStoreObj.setCity(jsonObject.getString("city"));
+                            }
+                            if (jsonObject.has("country")) {
+                                mStoreObj.setCountry(jsonObject.getString("country"));
+                            }
+                            if (jsonObject.has("bank_name")) {
+                                mStoreObj.setBank_name(jsonObject.getString("bank_name"));
+                            }
+                            if (jsonObject.has("account_name")) {
+                                mStoreObj.setBank_acc_name(jsonObject.getString("account_name"));
+                            }
+                            if (jsonObject.has("account_number")) {
+                                mStoreObj.setBank_acc_number(jsonObject.getString("account_number"));
+                            }
+
+                            //save the seller
+                            GlobalUtils.saveCurrentStore(mStoreObj);
+                            //show popup success
                             GlobalUtils.showInfoDialog(mContext, "Registration", "The user has been successfully registered.", "OK", new DialogCallback() {
                                 @Override
                                 public void onAction1() {
@@ -318,14 +454,15 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
 
                                 }
                             });
-                        }else if(jsonObject.has("success") && jsonObject.get("success").equals("false")){
-                            String error = jsonObject.getString("error_message");
-                            GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+
+                        } else {
+                            //parse errors
+                            parseErrors(params, jsonObject);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
                     GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
 
                 }
@@ -470,5 +607,35 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
         Intent chooserIntent = Intent.createChooser(takePictureIntent, getResources().getString(R.string.dialog_choose_image_title));
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
         startActivityForResult(chooserIntent, TYPE_UPLOAD_PHOTO);
+    }
+
+    private void parseErrors(HashMap<String, Object> requestBody, JSONObject jObjError) {
+        try {
+            for (String key : requestBody.keySet()) {
+                if (jObjError.has(key)) {
+                    String error = null;
+                    error = jObjError.getJSONArray(key).get(0).toString();
+                    Log.e("Error ", this.getClass().getSimpleName() + error);
+                    GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                    return;
+                }
+            }
+            if (jObjError.has("non_field_errors")) {
+                String error = jObjError.getJSONArray("non_field_errors").get(0).toString();
+                if (error != null) {
+                    GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                    return;
+                }
+            }
+
+            if (jObjError.has("detail")) {
+                String error = jObjError.getString("detail");
+                GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                return;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -64,12 +64,6 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
         btn_cart.setOnClickListener(this);
         btn_profile.setOnClickListener(this);
 
-        //set the profile or shop icon
-        if (GlobalUtils.user_type.equals(Constants.CATEGORY_SELLER)) {
-            btn_profile.setImageResource(R.drawable.shop_unselected);
-        }
-
-
         /** set the adapter for ViewPager */
         mViewPager.setAdapter(new MainPagerAdapter(
                 getChildFragmentManager()));
@@ -81,6 +75,15 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;
+    }
+
+    public void setUpBottomTabs(){
+        //set the profile or shop icon
+        if (GlobalUtils.user_type.equals(Constants.CATEGORY_SELLER)) {
+            btn_profile.setImageResource(R.drawable.shop_unselected);
+        }else{
+            btn_profile.setImageResource(R.drawable.profile_unselected);
+        }
     }
 
     @Override

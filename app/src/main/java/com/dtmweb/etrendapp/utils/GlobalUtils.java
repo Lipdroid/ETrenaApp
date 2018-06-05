@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,13 @@ import com.dtmweb.etrendapp.customViews.CustomDialog;
 import com.dtmweb.etrendapp.customViews.CustomProgressDialog;
 import com.dtmweb.etrendapp.interfaces.DialogCallback;
 import com.dtmweb.etrendapp.models.SellerObject;
+import com.dtmweb.etrendapp.models.StoreObject;
+import com.dtmweb.etrendapp.models.UserObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,7 +38,9 @@ public class GlobalUtils {
     public static String additionalHeaderTag = null;
     public static String additionalHeaderValue = null;
     private static CustomProgressDialog sPdLoading = null;
-    private static SellerObject mUserObjSeller = null;
+    private static StoreObject mStoreObject = null;
+    private static UserObject mUserObj = null;
+    public static Boolean isLoggedIn = false;
 
     public static boolean isNetworkConnected() {
         try {
@@ -137,12 +146,49 @@ public class GlobalUtils {
     }
 
 
-    public static void saveCurrentUserSeller(SellerObject sellerObject){
-        mUserObjSeller = sellerObject;
+    public static void saveCurrentStore(StoreObject storeObject){
+        mStoreObject = storeObject;
     }
 
-    public static SellerObject getCurrentSeller(){
-        return mUserObjSeller;
+    public static UserObject getCurrentUser(){
+        return mUserObj;
     }
 
+    public static void saveCurrentUser(UserObject userObject){
+        mUserObj = userObject;
+    }
+
+    public static StoreObject getCurrentStore(){
+        return mStoreObject;
+    }
+
+    public static void parseErrors(Context mContext,HashMap<String, Object> requestBody, JSONObject jObjError) {
+        try {
+            for (String key : requestBody.keySet()) {
+                if (jObjError.has(key)) {
+                    String error = null;
+                    error = jObjError.getJSONArray(key).get(0).toString();
+                    Log.e("Error ", mContext.getClass().getSimpleName() + error);
+                    showInfoDialog(mContext, "Failed", error, "OK", null);
+                    return;
+                }
+            }
+            if (jObjError.has("non_field_errors")) {
+                String error = jObjError.getJSONArray("non_field_errors").get(0).toString();
+                if (error != null) {
+                    showInfoDialog(mContext, "Failed", error, "OK", null);
+                    return;
+                }
+            }
+
+            if (jObjError.has("detail")) {
+                String error = jObjError.getString("detail");
+                showInfoDialog(mContext, "Failed", error, "OK", null);
+                return;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
