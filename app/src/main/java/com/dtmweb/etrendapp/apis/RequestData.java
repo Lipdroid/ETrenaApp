@@ -136,6 +136,11 @@ public class RequestData {
                 GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
 
                 break;
+
+            case Constants.REQUEST_GET_BANNER:
+                mRestType = Constants.REST_GET;
+                REQUEST_DATA_URL = UrlConstants.BANNER_URL;
+                break;
             case Constants.REQUEST_LOGIN:
                 mRestType = Constants.REST_POST;
                 REQUEST_DATA_URL = UrlConstants.LOGIN_URL;

@@ -11,6 +11,8 @@ public class UrlConstants {
     public static final String URL_GET_USER = BASE_URL+"/api/v1/auth/user/";
     public static final String LOGIN_URL = BASE_URL + "/api/v1/auth/login/";
     public static final String LOGOUT_URL = BASE_URL + "/api/v1/auth/logout/";
+    public static final String BANNER_URL = BASE_URL + "/api/v1/banners/";
+
 
 
     public static String URL_SELLER_PROFILE = BASE_URL + "/api/v1/seller/profile/" ;

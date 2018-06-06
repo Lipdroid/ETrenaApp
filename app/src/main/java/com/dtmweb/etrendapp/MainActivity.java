@@ -31,6 +31,7 @@ import java.util.HashMap;
 
 import com.dtmweb.etrendapp.apis.RequestAsyncTask;
 import com.dtmweb.etrendapp.constants.Constants;
+import com.dtmweb.etrendapp.customViews.CircleImageView;
 import com.dtmweb.etrendapp.fragments.BaseFragment;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
 import com.dtmweb.etrendapp.models.SellerObject;
@@ -38,6 +39,7 @@ import com.dtmweb.etrendapp.models.UserObject;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.SharedPreferencesUtils;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tv_username = null;
     private TextView tv_phone = null;
     private TextView tv_address = null;
+    private CircleImageView pro_image = null;
 
     //right drawer items
     private EditText et_search = null;
@@ -151,13 +154,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         } else {
-            GlobalUtils.isLoggedIn = false;
-            GlobalUtils.user_type = Constants.CATEGORY_NON_LOGGED;
-            SharedPreferencesUtils.removeComponent(mContext, Constants.PREF_TOKEN);
-            setUpHome(Constants.CATEGORY_NON_LOGGED);
-            GlobalUtils.saveCurrentUser(null);
+           clearData();
         }
 
+    }
+
+    private void clearData(){
+        GlobalUtils.isLoggedIn = false;
+        GlobalUtils.user_type = Constants.CATEGORY_NON_LOGGED;
+        SharedPreferencesUtils.removeComponent(mContext, Constants.PREF_TOKEN);
+        setUpHome(Constants.CATEGORY_NON_LOGGED);
+        GlobalUtils.saveCurrentUser(null);
     }
 
 
@@ -172,6 +179,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tv_username.setText(mUserObj.getUsername());
             tv_phone.setText(mUserObj.getContact_no());
             //tv_address.setText(mUserObj.getAd);
+            Picasso.get()
+                    .load(mUserObj.getPro_img())
+                    .placeholder(R.drawable.default_profile_image_shop)
+                    .error(R.drawable.default_profile_image_shop)
+                    .into(pro_image);
         }
     }
 
@@ -264,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_username = (TextView) findViewById(R.id.tv_username);
         tv_phone = (TextView) findViewById(R.id.tv_phone);
         tv_address = (TextView) findViewById(R.id.tv_address);
-
+        pro_image = (CircleImageView) findViewById(R.id.pro_image);
 
         //right drawer item
         et_search = (EditText) findViewById(R.id.et_search);
@@ -697,12 +709,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         if (jsonObject.has("detail")) {
-                            GlobalUtils.isLoggedIn = false;
-                            GlobalUtils.user_type = Constants.CATEGORY_NON_LOGGED;
-                            SharedPreferencesUtils.removeComponent(mContext, Constants.PREF_TOKEN);
+                            clearData();
                             String response = jsonObject.getString("detail");
-                            setUpHome(Constants.CATEGORY_NON_LOGGED);
-                            GlobalUtils.saveCurrentUser(null);
                             GlobalUtils.showInfoDialog(mContext, "Info", response, "OK", null);
                             return;
                         }
@@ -771,14 +779,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 mUserObj.setInstagram(jsonObject.getString("instagram"));
                             }
 
-                            mUserObj.setUser_type(false, true);
+                            //set the type
+                            Boolean is_seller = false;
+                            Boolean is_buyer = false;
+                            if (jsonObject.has("is_buyer")) {
+                                is_buyer = jsonObject.getBoolean("is_buyer");
+                            }
+                            if (jsonObject.has("is_seller ")) {
+                                is_seller = jsonObject.getBoolean("is_seller");
+                            }
+
+
+                            mUserObj.setUser_type(is_buyer,is_seller);
                             //save the current user
                             GlobalUtils.saveCurrentUser(mUserObj);
                             setUpHome(mUserObj.getUser_type());
                         } else {
                             //parse errors
                             GlobalUtils.parseErrors(mContext, params, jsonObject);
-
+                            clearData();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

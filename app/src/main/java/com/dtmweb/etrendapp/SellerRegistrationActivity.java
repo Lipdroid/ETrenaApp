@@ -327,7 +327,7 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
                                     mUserObj.setContact_no(userJson.getString("phone"));
                                 }
                                 if (userJson.has("image")) {
-                                    mUserObj.setPro_img(userJson.getString("image"));
+                                    mUserObj.setPro_img(UrlConstants.BASE_URL+userJson.getString("image"));
                                 }
                                 if (userJson.has("instagram")) {
                                     mUserObj.setInstagram(userJson.getString("instagram"));
@@ -399,6 +399,7 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         if (jsonObject.has("id")) {
+                            mStoreObj = new StoreObject();
                             if (jsonObject.has("name")) {
                                 mStoreObj.setStore_name(jsonObject.getString("name"));
                             }

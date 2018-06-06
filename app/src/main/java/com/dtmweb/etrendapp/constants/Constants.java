@@ -59,13 +59,14 @@ public class Constants {
     public static final int REQUEST_SELLER_PROFILE = 4;
     public static final int REQUEST_LOGOUT = 5;
     public static final int REQUEST_GET_USER = 6;
+    public static final int REQUEST_GET_BANNER = 7;
 
 
     //params
     public static final String PARAM_EMAIL = "email";
     public static final String PARAM_PASSWORD = "password";
     public static final String PARAM_USERNAME = "username";
-    public static final String PARAM_IMG = "pro_img";
+    public static final String PARAM_IMG = "image";
     public static final String PARAM_STORE_NAME = "name";
     public static final String PARAM_BANK_NAME = "bank_name";
     public static final String PARAM_ACC_NAME = "account_name";

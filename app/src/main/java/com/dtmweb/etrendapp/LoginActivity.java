@@ -181,7 +181,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 }
 
 
-                                mUserObj.setUser_type(is_buyer,true);
+                                mUserObj.setUser_type(is_buyer,is_seller);
 
                             }
                             //save the current user

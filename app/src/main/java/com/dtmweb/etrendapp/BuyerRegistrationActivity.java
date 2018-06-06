@@ -18,10 +18,13 @@ import android.widget.ImageView;
 
 import com.dtmweb.etrendapp.apis.RequestAsyncTask;
 import com.dtmweb.etrendapp.constants.Constants;
+import com.dtmweb.etrendapp.constants.UrlConstants;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
+import com.dtmweb.etrendapp.models.UserObject;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.ImageUtils;
+import com.dtmweb.etrendapp.utils.SharedPreferencesUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +60,7 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
     String contact = null;
 
     private static final String TAG = "BuyerRegistrationActivity";
+    private UserObject mUserObj = null;
 
 
     @Override
@@ -219,26 +223,70 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
     }
 
     private void requestToSighUp() {
-        JSONObject jsonParams = new JSONObject();
-
-        HashMap<String, Object> params = new HashMap<String, Object>();
-
+        final HashMap<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.PARAM_EMAIL, email);
-        params.put(Constants.PARAM_PASSWORD, password);
-        params.put(Constants.PARAM_USERNAME, userName);
-        params.put(Constants.PARAM_COUNTRY, country);
-        params.put(Constants.PARAM_CITY, city);
-        params.put(Constants.PARAM_ADDRESS, address);
-        params.put(Constants.PARAM_FULL_NAME, fullname);
-        params.put(Constants.PARAM_CONTACT_NO, contact);
-
+        params.put(Constants.PARAM_PASSWORD1, password);
+        params.put(Constants.PARAM_PASSWORD2, password_retype);
+        params.put(Constants.PARAM_PHONE, contact);
+        params.put(Constants.PARAM_STORE_NAME, fullname);
+        params.put(Constants.PARAM_SELLER, "false");
+        params.put(Constants.PARAM_BUYER, "true");
 
         RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REGISTER_USER, params, new AsyncCallback() {
             @SuppressLint("LongLogTag")
             @Override
             public void done(String result) {
-                Log.e(TAG, result);
                 GlobalUtils.dismissLoadingProgress();
+                Log.e(TAG, result);
+                if (result != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        if (jsonObject.has("token")) {
+                            String token = jsonObject.getString("token");
+                            //save the token in preference for furthur api call
+                            SharedPreferencesUtils.putString(mContext, Constants.PREF_TOKEN, token);
+                            //Parse the User data
+                            if (jsonObject.has("user")) {
+                                mUserObj = new UserObject();
+                                JSONObject userJson = jsonObject.getJSONObject("user");
+
+                                if (userJson.has("id")) {
+                                    mUserObj.setUserId(userJson.getString("id"));
+                                }
+                                if (jsonObject.has("name")) {
+                                    mUserObj.setUsername(jsonObject.getString("name"));
+                                }
+                                if (userJson.has("email")) {
+                                    mUserObj.setEmail(userJson.getString("email"));
+                                }
+                                if (userJson.has("phone")) {
+                                    mUserObj.setContact_no(userJson.getString("phone"));
+                                }
+                                if (userJson.has("image")) {
+                                    mUserObj.setPro_img(UrlConstants.BASE_URL+userJson.getString("image"));
+                                }
+                                if (userJson.has("instagram")) {
+                                    mUserObj.setInstagram(userJson.getString("instagram"));
+                                }
+
+                                mUserObj.setUser_type(true,false);
+
+                            }
+                            //save the current user
+                            GlobalUtils.saveCurrentUser(mUserObj);
+
+                        } else {
+                            //parse errors
+                            parseErrors(params, jsonObject);
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
+
+                }
 
 
             }
@@ -305,6 +353,37 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
             String country = bundle.getString("country");
             et_country.setText(country);
         }
+    }
+
+
+    private void parseErrors(HashMap<String, Object> requestBody, JSONObject jObjError) {
+        try {
+            for (String key : requestBody.keySet()) {
+                if (jObjError.has(key)) {
+                    String error = null;
+                    error = jObjError.getJSONArray(key).get(0).toString();
+                    Log.e("Error ", this.getClass().getSimpleName() + error);
+                    GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                    return;
+                }
+            }
+            if (jObjError.has("non_field_errors")) {
+                String error = jObjError.getJSONArray("non_field_errors").get(0).toString();
+                if (error != null) {
+                    GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                    return;
+                }
+            }
+
+            if (jObjError.has("detail")) {
+                String error = jObjError.getString("detail");
+                GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                return;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
