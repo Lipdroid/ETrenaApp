@@ -14,6 +14,7 @@ public class UrlConstants {
     public static final String BANNER_URL = BASE_URL + "/api/v1/banners/";
     public static final String COUNTRY_URL = BASE_URL + "/api/v1/address/countries/";
     public static final String CITY_URL = BASE_URL + "/api/v1/address/cities/";
+    public static final String PRODUCTS_URL = BASE_URL + "/api/v1/products/";
 
 
 

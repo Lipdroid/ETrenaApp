@@ -150,6 +150,11 @@ public class RequestData {
                 REQUEST_DATA_URL = UrlConstants.CITY_URL
                         + "?" + Constants.PARAM_COUNTRY + "=" + parameters.get(Constants.PARAM_COUNTRY);
                 break;
+            case Constants.REQUEST_GET_PRODUCTS:
+                mRestType = Constants.REST_GET;
+                REQUEST_DATA_URL = UrlConstants.PRODUCTS_URL
+                        + "?" + Constants.PARAM_CATEGORY + "=" + parameters.get(Constants.PARAM_CATEGORY);
+                break;
             case Constants.REQUEST_LOGIN:
                 mRestType = Constants.REST_POST;
                 REQUEST_DATA_URL = UrlConstants.LOGIN_URL;

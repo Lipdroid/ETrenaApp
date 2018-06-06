@@ -19,6 +19,15 @@ public class UserObject implements Parcelable {
     private String instagram = null;
     private Boolean is_subscribed = false;
     private String user_type = null;
+    private StoreObject storeObject = null;
+
+    public StoreObject getStoreObject() {
+        return storeObject;
+    }
+
+    public void setStoreObject(StoreObject storeObject) {
+        this.storeObject = storeObject;
+    }
 
     public String getUser_type() {
         return user_type;

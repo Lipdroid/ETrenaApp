@@ -31,9 +31,9 @@ public class Constants {
     public static final int PROFILE = 4;
     public static final int DISSELECT_ALL = 5;
 
-    public static final String CATEGORY_ACCESSORIZE = "accesorize";
-    public static final String CATEGORY_CLOTHES = "clothes";
-    public static final String CATEGORY_PERFUME = "perfume";
+    public static final String CATEGORY_ACCESSORIZE = "1";
+    public static final String CATEGORY_CLOTHES = "2";
+    public static final String CATEGORY_PERFUME = "3";
 
     public static final String EXTRA_FROM_CHOOSE_PLAN = "from_choose_plan_page";
 
@@ -62,6 +62,7 @@ public class Constants {
     public static final int REQUEST_GET_BANNER = 7;
     public static final int REQUEST_GET_CITY = 8;
     public static final int REQUEST_GET_COUNTRY = 9;
+    public static final int REQUEST_GET_PRODUCTS = 10;
 
     //params
     public static final String PARAM_EMAIL = "email";
@@ -84,6 +85,7 @@ public class Constants {
     public static final String PARAM_PHONE = "phone";
     public static final String PARAM_SELLER = "is_seller";
     public static final String PARAM_BUYER = "is_buyer";
+    public static String PARAM_CATEGORY = "category";
 
     //prefs
     public static final String PREF_TOKEN = "prefs_token";

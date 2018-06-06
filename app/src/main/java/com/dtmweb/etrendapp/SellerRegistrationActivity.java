@@ -417,7 +417,11 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
                                 mStoreObj.setBank_acc_number(jsonObject.getString("account_number"));
                             }
 
-                            //save the seller
+                            mUserObj.setStoreObject(mStoreObj);
+
+                            //save the current user
+                            GlobalUtils.saveCurrentUser(mUserObj);
+                            //save the store
                             GlobalUtils.saveCurrentStore(mStoreObj);
                             //show popup success
                             GlobalUtils.showInfoDialog(mContext, "Registration", "The user has been successfully registered.", "OK", new DialogCallback() {
