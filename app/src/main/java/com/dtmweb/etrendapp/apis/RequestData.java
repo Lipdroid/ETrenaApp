@@ -141,6 +141,15 @@ public class RequestData {
                 mRestType = Constants.REST_GET;
                 REQUEST_DATA_URL = UrlConstants.BANNER_URL;
                 break;
+            case Constants.REQUEST_GET_COUNTRY:
+                mRestType = Constants.REST_GET;
+                REQUEST_DATA_URL = UrlConstants.COUNTRY_URL;
+                break;
+            case Constants.REQUEST_GET_CITY:
+                mRestType = Constants.REST_GET;
+                REQUEST_DATA_URL = UrlConstants.CITY_URL
+                        + "?" + Constants.PARAM_COUNTRY + "=" + parameters.get(Constants.PARAM_COUNTRY);
+                break;
             case Constants.REQUEST_LOGIN:
                 mRestType = Constants.REST_POST;
                 REQUEST_DATA_URL = UrlConstants.LOGIN_URL;

@@ -20,6 +20,7 @@ import com.dtmweb.etrendapp.apis.RequestAsyncTask;
 import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.constants.UrlConstants;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
+import com.dtmweb.etrendapp.models.PlaceObject;
 import com.dtmweb.etrendapp.models.UserObject;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
@@ -62,6 +63,8 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
     private static final String TAG = "BuyerRegistrationActivity";
     private UserObject mUserObj = null;
 
+    private PlaceObject countryObject = null;
+    private PlaceObject cityObject = null;
 
     @Override
     public void onBackPressed() {
@@ -139,8 +142,10 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
     }
 
     private void afterClickCity() {
-        moveToChoosenActivity(Constants.TYPE_CITY);
-    }
+        if (countryObject != null)
+            moveToChoosenActivity(Constants.TYPE_CITY);
+        else
+            GlobalUtils.showInfoDialog(mContext, "Info", "Please Select a country first!", "OK", null);    }
 
     private void afterClickCountry() {
         moveToChoosenActivity(Constants.TYPE_COUNTRY);
@@ -323,6 +328,7 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
                 break;
             case Constants.TYPE_CITY:
                 intent.putExtra("extra", Constants.TYPE_COUNTRY);
+                intent.putExtra("countryId", countryObject.getId());
                 break;
         }
 
@@ -341,17 +347,13 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
         }
 
         if (requestCode == Constants.TYPE_CITY) {
-            Bundle bundle = data.getExtras();
-            //WHAT TO DO TO GET THE BUNDLE VALUES//
-            String city = bundle.getString("city");
-            et_city.setText(city);
+            cityObject = data.getParcelableExtra(PlaceObject.class.toString());
+            et_city.setText(cityObject.getName());
         }
 
         if (requestCode == Constants.TYPE_COUNTRY) {
-            Bundle bundle = data.getExtras();
-            //WHAT TO DO TO GET THE BUNDLE VALUES//
-            String country = bundle.getString("country");
-            et_country.setText(country);
+            countryObject = data.getParcelableExtra(PlaceObject.class.toString());
+            et_country.setText(countryObject.getName());
         }
     }
 

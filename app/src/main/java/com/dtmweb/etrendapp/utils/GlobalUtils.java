@@ -17,7 +17,6 @@ import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.customViews.CustomDialog;
 import com.dtmweb.etrendapp.customViews.CustomProgressDialog;
 import com.dtmweb.etrendapp.interfaces.DialogCallback;
-import com.dtmweb.etrendapp.models.SellerObject;
 import com.dtmweb.etrendapp.models.StoreObject;
 import com.dtmweb.etrendapp.models.UserObject;
 

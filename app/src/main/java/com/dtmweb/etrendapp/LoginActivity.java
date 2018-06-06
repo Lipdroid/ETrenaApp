@@ -13,10 +13,7 @@ import android.widget.TextView;
 
 import com.dtmweb.etrendapp.apis.RequestAsyncTask;
 import com.dtmweb.etrendapp.constants.Constants;
-import com.dtmweb.etrendapp.constants.UrlConstants;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
-import com.dtmweb.etrendapp.interfaces.DialogCallback;
-import com.dtmweb.etrendapp.models.SellerObject;
 import com.dtmweb.etrendapp.models.UserObject;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
@@ -176,7 +173,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 if (userJson.has("is_buyer")) {
                                     is_buyer = userJson.getBoolean("is_buyer");
                                 }
-                                if (userJson.has("is_seller ")) {
+                                if (userJson.has("is_seller")) {
                                     is_seller = userJson.getBoolean("is_seller");
                                 }
 
@@ -228,94 +225,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void requestToGetUserDetails(){
-        HashMap<String, Object> params = new HashMap<String, Object>();
-
-        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_SELLER_PROFILE, params, new AsyncCallback() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void done(String result) {
-                Log.e(TAG, result);
-                GlobalUtils.dismissLoadingProgress();
-                if (result != null) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        if (jsonObject.has("success") && jsonObject.getString("success").equals("true")) {
-                            SellerObject mUserObj = new SellerObject();
-                            if (jsonObject.has("seller")) {
-                                String userId = jsonObject.getString("id");
-                                String userName = jsonObject.getString("username");
-                                String email = jsonObject.getString("email");
-                                mUserObj.setUserId(userId);
-                                mUserObj.setUsername(userName);
-                                mUserObj.setEmail(email);
-                                mUserObj.setUser_type(Constants.CATEGORY_SELLER);
-
-                                if(jsonObject.has("seller")){
-                                    JSONArray jsonArray = jsonObject.getJSONArray("seller");
-                                    JSONObject jsonSelller = jsonArray.getJSONObject(0);
-                                    String pro_img = jsonSelller.getString("seller");
-                                    String store_name = jsonSelller.getString("store_name");
-                                    String bank_name = jsonSelller.getString("bank_name");
-                                    String bank_acc_name = jsonSelller.getString("bank_acc_name");
-                                    String bank_acc_number = jsonSelller.getString("bank_acc_number");
-                                    String country = jsonSelller.getString("country");
-                                    String city = jsonSelller.getString("city");
-                                    String address = jsonSelller.getString("address");
-                                    String store_owner = jsonSelller.getString("store_owner");
-                                    String contact_no = jsonSelller.getString("contact_no");
-                                    String instagram = jsonSelller.getString("instagram");
-
-                                    mUserObj.setPro_img(pro_img);
-                                    mUserObj.setStore_name(store_name);
-                                    mUserObj.setBank_name(bank_name);
-                                    mUserObj.setBank_acc_name(bank_acc_name);
-                                    mUserObj.setBank_acc_number(bank_acc_number);
-                                    mUserObj.setCountry(country);
-                                    mUserObj.setCity(city);
-                                    mUserObj.setAddress(address);
-                                    mUserObj.setStore_owner(store_owner);
-                                    mUserObj.setContact_no(contact_no);
-                                    mUserObj.setInstagram(instagram);
-
-                                }
-
-                                //GlobalUtils.sa(mUserObj);
-                            }
-                            afterClickBack();
-
-                        } else if (jsonObject.has("success") && jsonObject.get("success").equals("false")) {
-                            String error = jsonObject.getString("error_message");
-                            GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
-
-                }
-            }
-
-            @Override
-            public void progress() {
-                GlobalUtils.showLoadingProgress(mContext);
-            }
-
-            @Override
-            public void onInterrupted(Exception e) {
-                GlobalUtils.dismissLoadingProgress();
-
-            }
-
-            @Override
-            public void onException(Exception e) {
-
-                GlobalUtils.dismissLoadingProgress();
-
-            }
-        });
-
-        mRequestAsync.execute();
-    }
 }

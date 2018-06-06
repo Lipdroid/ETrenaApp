@@ -9,16 +9,13 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,7 +26,7 @@ import com.dtmweb.etrendapp.constants.UrlConstants;
 import com.dtmweb.etrendapp.customViews.CircleImageView;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
 import com.dtmweb.etrendapp.interfaces.DialogCallback;
-import com.dtmweb.etrendapp.models.SellerObject;
+import com.dtmweb.etrendapp.models.PlaceObject;
 import com.dtmweb.etrendapp.models.StoreObject;
 import com.dtmweb.etrendapp.models.UserObject;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
@@ -37,28 +34,12 @@ import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.ImageUtils;
 import com.dtmweb.etrendapp.utils.SharedPreferencesUtils;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class SellerRegistrationActivity extends AppCompatActivity implements View.OnClickListener {
     private CorrectSizeUtil mCorrectSize = null;
@@ -102,6 +83,8 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
     private int MY_REQUEST_CODE = 111;
     private StoreObject mStoreObj = null;
     private UserObject mUserObj = null;
+    private PlaceObject countryObject = null;
+    private PlaceObject cityObject = null;
 
     @Override
     public void onBackPressed() {
@@ -178,7 +161,10 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
     }
 
     private void afterClickCity() {
-        moveToChoosenActivity(Constants.TYPE_CITY);
+        if (countryObject != null)
+            moveToChoosenActivity(Constants.TYPE_CITY);
+        else
+            GlobalUtils.showInfoDialog(mContext, "Info", "Please Select a country first!", "OK", null);
     }
 
     private void afterClickCountry() {
@@ -327,13 +313,13 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
                                     mUserObj.setContact_no(userJson.getString("phone"));
                                 }
                                 if (userJson.has("image")) {
-                                    mUserObj.setPro_img(UrlConstants.BASE_URL+userJson.getString("image"));
+                                    mUserObj.setPro_img(UrlConstants.BASE_URL + userJson.getString("image"));
                                 }
                                 if (userJson.has("instagram")) {
                                     mUserObj.setInstagram(userJson.getString("instagram"));
                                 }
 
-                                mUserObj.setUser_type(false,true);
+                                mUserObj.setUser_type(false, true);
 
                             }
                             //save the current user
@@ -510,6 +496,7 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
                 break;
             case Constants.TYPE_CITY:
                 intent.putExtra("extra", Constants.TYPE_COUNTRY);
+                intent.putExtra("countryId", countryObject.getId());
                 break;
         }
 
@@ -527,17 +514,13 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
         }
 
         if (requestCode == Constants.TYPE_CITY) {
-            Bundle bundle = data.getExtras();
-            //WHAT TO DO TO GET THE BUNDLE VALUES//
-            String city = bundle.getString("city");
-            et_city.setText(city);
+            cityObject = data.getParcelableExtra(PlaceObject.class.toString());
+            et_city.setText(cityObject.getName());
         }
 
         if (requestCode == Constants.TYPE_COUNTRY) {
-            Bundle bundle = data.getExtras();
-            //WHAT TO DO TO GET THE BUNDLE VALUES//
-            String country = bundle.getString("country");
-            et_country.setText(country);
+            countryObject = data.getParcelableExtra(PlaceObject.class.toString());
+            et_country.setText(countryObject.getName());
         }
 
         if (resultCode == Activity.RESULT_OK) {

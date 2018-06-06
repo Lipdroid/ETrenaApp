@@ -60,7 +60,8 @@ public class Constants {
     public static final int REQUEST_LOGOUT = 5;
     public static final int REQUEST_GET_USER = 6;
     public static final int REQUEST_GET_BANNER = 7;
-
+    public static final int REQUEST_GET_CITY = 8;
+    public static final int REQUEST_GET_COUNTRY = 9;
 
     //params
     public static final String PARAM_EMAIL = "email";
@@ -87,5 +88,5 @@ public class Constants {
     //prefs
     public static final String PREF_TOKEN = "prefs_token";
 
-
+    public static final String DATA = "data";
 }

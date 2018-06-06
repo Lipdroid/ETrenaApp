@@ -43,6 +43,7 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -206,13 +207,12 @@ public class JsonParser {
 
             HttpEntity httpEntity = httpResponse.getEntity();
             mJson = EntityUtils.toString(httpEntity);
-            //check for the [] braces and remove it
-            // converting String to StringBuilder
-            StringBuilder builder = new StringBuilder(mJson);
+            //check for the [] braces and create a new jsonObject from the array
             if(mJson.startsWith("[") && mJson.endsWith("]")){
-                builder.deleteCharAt(mJson.length() - 1);
-                builder.deleteCharAt(0);
-                mJson = builder.toString();
+                JSONArray jsonArray = new JSONArray(mJson);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put(Constants.DATA,jsonArray);
+                mJson = jsonObject.toString();
             }
             Log.e("jsonResponse:", mJson);
             mJObj = new JSONObject(mJson);

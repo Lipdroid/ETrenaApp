@@ -34,14 +34,12 @@ import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.customViews.CircleImageView;
 import com.dtmweb.etrendapp.fragments.BaseFragment;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
-import com.dtmweb.etrendapp.models.SellerObject;
 import com.dtmweb.etrendapp.models.UserObject;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.SharedPreferencesUtils;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -785,7 +783,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if (jsonObject.has("is_buyer")) {
                                 is_buyer = jsonObject.getBoolean("is_buyer");
                             }
-                            if (jsonObject.has("is_seller ")) {
+                            if (jsonObject.has("is_seller")) {
                                 is_seller = jsonObject.getBoolean("is_seller");
                             }
 
