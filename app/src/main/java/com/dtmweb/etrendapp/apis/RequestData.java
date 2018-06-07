@@ -73,6 +73,12 @@ public class RequestData {
                         (String) parameters.get(Constants.PARAM_SELLER)));
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_BUYER,
                         (String) parameters.get(Constants.PARAM_BUYER)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ADDRESS,
+                        (String) parameters.get(Constants.PARAM_ADDRESS)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_CITY,
+                        (String) parameters.get(Constants.PARAM_CITY)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_COUNTRY,
+                        (String) parameters.get(Constants.PARAM_COUNTRY)));
 
                 if (parameters.containsKey(Constants.PARAM_IMG)) {
                     // create hash map to save avatar bitmap
@@ -108,12 +114,6 @@ public class RequestData {
                         (String) parameters.get(Constants.PARAM_STORE_NAME)));
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ACC_NAME,
                         (String) parameters.get(Constants.PARAM_ACC_NAME)));
-                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ADDRESS,
-                        (String) parameters.get(Constants.PARAM_ADDRESS)));
-                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_CITY,
-                        (String) parameters.get(Constants.PARAM_CITY)));
-                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_COUNTRY,
-                        (String) parameters.get(Constants.PARAM_COUNTRY)));
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_BANK_NAME,
                         (String) parameters.get(Constants.PARAM_BANK_NAME)));
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ACC_NAME,
@@ -136,7 +136,24 @@ public class RequestData {
                 GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
 
                 break;
+            case Constants.REQUEST_GET_STORE:
+                mRestType = Constants.REST_GET;
+                REQUEST_DATA_URL = UrlConstants.STORE_DETAILS_URL;
 
+                GlobalUtils.addAditionalHeader = true;
+                GlobalUtils.additionalHeaderTag = "Authorization";
+                GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+
+                break;
+            case Constants.REQUEST_GET_STORE_PRODUCT_LIST:
+                mRestType = Constants.REST_GET;
+                REQUEST_DATA_URL = UrlConstants.STORE_PRODUCT_LIST_URL;
+
+                GlobalUtils.addAditionalHeader = true;
+                GlobalUtils.additionalHeaderTag = "Authorization";
+                GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+
+                break;
             case Constants.REQUEST_GET_BANNER:
                 mRestType = Constants.REST_GET;
                 REQUEST_DATA_URL = UrlConstants.BANNER_URL;
@@ -150,10 +167,19 @@ public class RequestData {
                 REQUEST_DATA_URL = UrlConstants.CITY_URL
                         + "?" + Constants.PARAM_COUNTRY + "=" + parameters.get(Constants.PARAM_COUNTRY);
                 break;
+            case Constants.REQUEST_GET_CATEGORY:
+                mRestType = Constants.REST_GET;
+                REQUEST_DATA_URL = UrlConstants.CATEGORY_LIST_URL;
+                break;
             case Constants.REQUEST_GET_PRODUCTS:
                 mRestType = Constants.REST_GET;
                 REQUEST_DATA_URL = UrlConstants.PRODUCTS_URL
                         + "?" + Constants.PARAM_CATEGORY + "=" + parameters.get(Constants.PARAM_CATEGORY);
+                break;
+            case Constants.REQUEST_GET_PRODUCT_DETAILS:
+                mRestType = Constants.REST_GET;
+                REQUEST_DATA_URL = UrlConstants.PRODUCT_DETAILS
+                        + "/" + parameters.get(Constants.PARAM_PRODUCT_ID);
                 break;
             case Constants.REQUEST_LOGIN:
                 mRestType = Constants.REST_POST;

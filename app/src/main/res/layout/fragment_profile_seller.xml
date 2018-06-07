@@ -10,20 +10,25 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/cover_image"
             android:layout_width="match_parent"
             android:layout_height="500px"
             android:scaleType="center"
-            android:src="@drawable/test_my_store_cover" />
+            android:src="@drawable/icon_no_cover" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:background="#D4D4D4" />
 
         <LinearLayout
             android:id="@+id/btn_search"
             android:layout_width="match_parent"
             android:layout_height="420px"
+            android:layout_marginBottom="0px"
             android:layout_marginLeft="50px"
             android:layout_marginRight="50px"
-            android:layout_marginTop="-100px"
-            android:layout_marginBottom="0px">
+            android:layout_marginTop="-100px">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -31,10 +36,11 @@
                 android:orientation="vertical">
 
                 <com.dtmweb.etrendapp.customViews.CircleImageView
+                    android:id="@+id/pro_image"
                     android:layout_width="200px"
                     android:layout_height="200px"
-                    android:layout_marginLeft="0px"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="0px"
                     android:src="@drawable/default_profile_image_shop" />
 
                 <LinearLayout
@@ -45,39 +51,42 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10px"
+                        android:layout_marginRight="10px"
                         android:fontFamily="@font/rubik"
+                        android:gravity="center"
                         android:singleLine="true"
                         android:tag="60"
-                        android:gravity="center"
-                        android:layout_marginRight="10px"
                         android:text="The Pefume Zone"
                         android:textColor="#666666"
                         android:textSize="60px"
-                        android:layout_marginBottom="10px"
                         android:typeface="normal" />
 
                     <TextView
+                        android:id="@+id/tv_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/rubik_light"
-                        android:singleLine="true"
-                        android:gravity="center"
                         android:layout_marginRight="10px"
+                        android:fontFamily="@font/rubik_light"
+                        android:gravity="center"
+                        android:singleLine="true"
                         android:tag="39"
                         android:text="+09 333 33 333"
                         android:textColor="#666666"
                         android:textSize="39px" />
 
                     <TextView
+                        android:id="@+id/tv_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/rubik_light"
-                        android:singleLine="true"
                         android:layout_marginRight="10px"
-                        android:tag="39"
+                        android:fontFamily="@font/rubik_light"
                         android:gravity="center"
+                        android:singleLine="true"
+                        android:tag="39"
                         android:text="33 King Road,Riyad"
                         android:textColor="#666666"
                         android:textSize="39px" />
@@ -87,19 +96,51 @@
 
         </LinearLayout>
 
-        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/gridview"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="40px"
-            android:layout_marginRight="40px"
-            android:gravity="center"
-            android:horizontalSpacing="10px"
-            android:numColumns="2"
-            android:scrollbars="none"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="20px" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/gridview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="40px"
+                android:gravity="center"
+                android:horizontalSpacing="10px"
+                android:numColumns="2"
+                android:scrollbars="none"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="20px" />
+
+            <Button
+                android:id="@+id/btn_add"
+                android:layout_width="match_parent"
+                android:layout_height="120px"
+                android:layout_marginLeft="60px"
+                android:layout_marginRight="60px"
+                android:visibility="gone"
+                android:layout_marginTop="60px"
+                android:background="@drawable/btn_gray_white_selector"
+                android:fontFamily="@font/roboto_light"
+                android:paddingLeft="33px"
+                android:tag="50"
+                android:text="ADD NEW PRODUCT"
+                android:textAllCaps="true"
+                android:textColor="@color/darker_gray"
+                android:textSize="50px" />
+        </RelativeLayout>
+
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="70px"
+        android:layout_height="70px"
+        android:layout_gravity="right"
+        android:layout_marginRight="60px"
+        android:layout_marginTop="60px"
+        android:scaleType="fitXY"
+        android:src="@drawable/icon_camera" />
 
 </FrameLayout>

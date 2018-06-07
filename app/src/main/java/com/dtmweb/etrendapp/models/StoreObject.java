@@ -13,9 +13,6 @@ public class StoreObject implements Parcelable {
     private String bank_name = null;
     private String bank_acc_name = null;
     private String bank_acc_number = null;
-    private String country = null;
-    private String city = null;
-    private String address =null;
     private String cover_photo = null;
     private Boolean is_Active = false;
     private Boolean is_subscribed = false;
@@ -51,31 +48,6 @@ public class StoreObject implements Parcelable {
     public void setBank_acc_number(String bank_acc_number) {
         this.bank_acc_number = bank_acc_number;
     }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getCover_photo() {
         return cover_photo;
     }

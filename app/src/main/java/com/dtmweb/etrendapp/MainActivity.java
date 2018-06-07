@@ -152,17 +152,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         } else {
-           clearData();
+            clearData();
         }
 
     }
 
-    private void clearData(){
+    private void clearData() {
         GlobalUtils.isLoggedIn = false;
         GlobalUtils.user_type = Constants.CATEGORY_NON_LOGGED;
         SharedPreferencesUtils.removeComponent(mContext, Constants.PREF_TOKEN);
         setUpHome(Constants.CATEGORY_NON_LOGGED);
         GlobalUtils.saveCurrentUser(null);
+        if(mBaseFrag != null)
+            mBaseFrag.changeTab(Constants.HOME);
     }
 
 
@@ -175,12 +177,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (mUserObj != null) {
             tv_username.setText(mUserObj.getUsername());
-            tv_phone.setText(mUserObj.getContact_no());
-            //tv_address.setText(mUserObj.getAd);
+            tv_phone.setText("+"+mUserObj.getContact_no());
+            tv_address.setText(mUserObj.getCity() + "," + mUserObj.getCountry());
             Picasso.get()
                     .load(mUserObj.getPro_img())
                     .placeholder(R.drawable.default_profile_image_shop)
-                    .error(R.drawable.default_profile_image_shop)
+                    .error(R.color.common_gray)
                     .into(pro_image);
         }
     }
@@ -776,6 +778,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if (jsonObject.has("instagram")) {
                                 mUserObj.setInstagram(jsonObject.getString("instagram"));
                             }
+                            if (jsonObject.has("address")) {
+                                mUserObj.setAddress(jsonObject.getString("address"));
+                            }
+                            if (jsonObject.has("city")) {
+                                mUserObj.setCity(jsonObject.getString("city"));
+                            }
+                            if (jsonObject.has("country")) {
+                                mUserObj.setCountry(jsonObject.getString("country"));
+                            }
 
                             //set the type
                             Boolean is_seller = false;
@@ -788,7 +799,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
 
 
-                            mUserObj.setUser_type(is_buyer,is_seller);
+                            mUserObj.setUser_type(is_buyer, is_seller);
                             //save the current user
                             GlobalUtils.saveCurrentUser(mUserObj);
                             setUpHome(mUserObj.getUser_type());

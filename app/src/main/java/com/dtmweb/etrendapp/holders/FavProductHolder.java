@@ -1,5 +1,6 @@
 package com.dtmweb.etrendapp.holders;
 
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 /**
@@ -9,4 +10,5 @@ import android.widget.LinearLayout;
 public class FavProductHolder {
     public LinearLayout main_root = null;
 
+    public ImageView icon;
 }

@@ -236,6 +236,9 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
         params.put(Constants.PARAM_STORE_NAME, fullname);
         params.put(Constants.PARAM_SELLER, "false");
         params.put(Constants.PARAM_BUYER, "true");
+        params.put(Constants.PARAM_ADDRESS, address);
+        params.put(Constants.PARAM_CITY, city);
+        params.put(Constants.PARAM_COUNTRY, country);
 
         RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REGISTER_USER, params, new AsyncCallback() {
             @SuppressLint("LongLogTag")
@@ -273,12 +276,24 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
                                 if (userJson.has("instagram")) {
                                     mUserObj.setInstagram(userJson.getString("instagram"));
                                 }
+                                if (userJson.has("address")) {
+                                    mUserObj.setAddress(jsonObject.getString("address"));
+                                }
+                                if (userJson.has("city")) {
+                                    mUserObj.setCity(jsonObject.getString("city"));
+                                }
+                                if (userJson.has("country")) {
+                                    mUserObj.setCountry(jsonObject.getString("country"));
+                                }
 
                                 mUserObj.setUser_type(true,false);
 
                             }
                             //save the current user
                             GlobalUtils.saveCurrentUser(mUserObj);
+
+                            //save the user type
+                            GlobalUtils.user_type = mUserObj.getUser_type();
 
                         } else {
                             //parse errors

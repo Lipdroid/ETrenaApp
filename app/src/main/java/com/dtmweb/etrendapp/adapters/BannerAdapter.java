@@ -80,8 +80,8 @@ public class BannerAdapter extends BaseAdapter {
             mHolder.banner_image.setVisibility(View.VISIBLE);
             Picasso.get()
                     .load(bannerObject.getImage())
-                    .placeholder(R.color.white)
-                    .error(R.color.white)
+                    .placeholder(R.color.common_gray)
+                    .error(R.color.common_gray)
                     .into(mHolder.banner_image);
         }else{
             mHolder.banner_image.setVisibility(View.GONE);

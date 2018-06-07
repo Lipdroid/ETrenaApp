@@ -2,69 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dtmweb.etrendapp.fragments.CategoryFragment">
+    tools:context="com.dtmweb.etrendapp.fragments.FavouriteFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/btn_accessorize"
+        <ListView
+            android:id="@+id/cate_lv"
             android:layout_width="match_parent"
-            android:layout_height="300px"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="640px"
-                android:layout_height="120px"
-                android:layout_marginLeft="50px"
-                android:src="@drawable/category_accesoriz" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1.5px"
-            android:background="#BDBDBD" />
-
-        <LinearLayout
-            android:id="@+id/btn_clothes"
-            android:layout_width="match_parent"
-            android:layout_height="300px"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="640px"
-                android:layout_height="120px"
-                android:layout_marginLeft="0px"
-                android:src="@drawable/category_clothes" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1.5px"
-            android:background="#BDBDBD" />
-
-        <LinearLayout
-            android:id="@+id/btn_perfumes"
-            android:layout_width="match_parent"
-            android:layout_height="300px"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="640px"
-                android:layout_height="120px"
-                android:layout_marginLeft="15px"
-                android:src="@drawable/category_perfume" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1.5px"
-            android:background="#BDBDBD" />
-
+            android:layout_height="match_parent"
+            android:divider="@null">
+        </ListView>
     </LinearLayout>
 
 </FrameLayout>

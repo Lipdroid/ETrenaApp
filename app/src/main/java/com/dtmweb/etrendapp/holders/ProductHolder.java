@@ -15,4 +15,6 @@ public class ProductHolder {
     public TextView tv_description = null;
     public TextView tv_price = null;
     public ImageView fav_icon = null;
+    public ImageView btn_delete = null;
+    public ImageView btn_edit = null;
 }

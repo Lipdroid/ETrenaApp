@@ -73,7 +73,7 @@ public class BrowseProductFragment extends Fragment {
             @Override
             public void done(String result) {
                 GlobalUtils.dismissLoadingProgress();
-                Log.e("Banner API", result);
+                Log.e("Products API", result);
                 if (result != null) {
                     try {
                         JSONObject jsonObject = new JSONObject(result);

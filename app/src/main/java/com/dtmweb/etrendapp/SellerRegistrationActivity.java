@@ -281,6 +281,9 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
         params.put(Constants.PARAM_IMG, pro_img);
         params.put(Constants.PARAM_SELLER, "true");
         params.put(Constants.PARAM_BUYER, "false");
+        params.put(Constants.PARAM_ADDRESS, address);
+        params.put(Constants.PARAM_CITY, city);
+        params.put(Constants.PARAM_COUNTRY, country);
 
         RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REGISTER_USER, params, new AsyncCallback() {
             @SuppressLint("LongLogTag")
@@ -318,12 +321,25 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
                                 if (userJson.has("instagram")) {
                                     mUserObj.setInstagram(userJson.getString("instagram"));
                                 }
+                                if (userJson.has("address")) {
+                                    mUserObj.setAddress(jsonObject.getString("address"));
+                                }
+                                if (userJson.has("city")) {
+                                    mUserObj.setCity(jsonObject.getString("city"));
+                                }
+                                if (userJson.has("country")) {
+                                    mUserObj.setCountry(jsonObject.getString("country"));
+                                }
 
                                 mUserObj.setUser_type(false, true);
 
                             }
                             //save the current user
                             GlobalUtils.saveCurrentUser(mUserObj);
+
+                            //save the user type
+                            GlobalUtils.user_type = mUserObj.getUser_type();
+
                             //create the store
                             createStoreAPI();
                         } else {
@@ -368,9 +384,6 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
     private void createStoreAPI() {
         final HashMap<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.PARAM_STORE_NAME, store_name);
-        params.put(Constants.PARAM_ADDRESS, address);
-        params.put(Constants.PARAM_CITY, city);
-        params.put(Constants.PARAM_COUNTRY, country);
         params.put(Constants.PARAM_BANK_NAME, bank_name);
         params.put(Constants.PARAM_ACC_NAME, bank_account_name);
         params.put(Constants.PARAM_ACC_NUMBER, bank_account_number);
@@ -397,15 +410,6 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
                             }
                             if (jsonObject.has("is_subscribed")) {
                                 mStoreObj.setIs_subscribed(jsonObject.getBoolean("is_subscribed"));
-                            }
-                            if (jsonObject.has("address")) {
-                                mStoreObj.setAddress(jsonObject.getString("address"));
-                            }
-                            if (jsonObject.has("city")) {
-                                mStoreObj.setCity(jsonObject.getString("city"));
-                            }
-                            if (jsonObject.has("country")) {
-                                mStoreObj.setCountry(jsonObject.getString("country"));
                             }
                             if (jsonObject.has("bank_name")) {
                                 mStoreObj.setBank_name(jsonObject.getString("bank_name"));

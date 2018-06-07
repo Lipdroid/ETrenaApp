@@ -63,6 +63,10 @@ public class Constants {
     public static final int REQUEST_GET_CITY = 8;
     public static final int REQUEST_GET_COUNTRY = 9;
     public static final int REQUEST_GET_PRODUCTS = 10;
+    public static final int REQUEST_GET_CATEGORY = 11;
+    public static final int REQUEST_GET_PRODUCT_DETAILS = 12;
+    public static final int REQUEST_GET_STORE = 13;
+    public static final int REQUEST_GET_STORE_PRODUCT_LIST = 14;
 
     //params
     public static final String PARAM_EMAIL = "email";
@@ -85,6 +89,7 @@ public class Constants {
     public static final String PARAM_PHONE = "phone";
     public static final String PARAM_SELLER = "is_seller";
     public static final String PARAM_BUYER = "is_buyer";
+    public static final String PARAM_PRODUCT_ID = "product_id";
     public static String PARAM_CATEGORY = "category";
 
     //prefs

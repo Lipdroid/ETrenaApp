@@ -2,6 +2,8 @@ package com.dtmweb.etrendapp.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.Image;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,6 +18,7 @@ import com.dtmweb.etrendapp.R;
 import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.holders.ProductHolder;
 import com.dtmweb.etrendapp.models.ProductObject;
+import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.MultipleScreen;
 import com.squareup.picasso.Picasso;
 
@@ -63,6 +66,8 @@ public class ProductGridAdapter extends BaseAdapter {
             mHolder.tv_description = (TextView) convertView.findViewById(R.id.tv_description);
             mHolder.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
             mHolder.fav_icon = (ImageView) convertView.findViewById(R.id.fav_icon);
+            mHolder.btn_delete = (ImageView) convertView.findViewById(R.id.btn_delete);
+            mHolder.btn_edit = (ImageView) convertView.findViewById(R.id.btn_edit);
 
             new MultipleScreen(mActivity);
             MultipleScreen.resizeAllView((ViewGroup) convertView);
@@ -75,18 +80,27 @@ public class ProductGridAdapter extends BaseAdapter {
         ProductObject productObject = mListData.get(position);
         mHolder.tv_title.setText(productObject.getTitle());
         mHolder.tv_description.setText(productObject.getShort_description());
-        mHolder.tv_price.setText("SAR "+productObject.getLowest_price());
+        mHolder.tv_price.setText("SAR " + productObject.getLowest_price());
         Picasso.get()
                 .load(productObject.getImage_url())
-                .placeholder(R.color.white)
-                .error(R.color.white)
+                .placeholder(R.color.common_gray)
+                .error(R.color.common_gray)
                 .into(mHolder.product_image);
         setListenersForViews(position);
-        if(productObject.getIs_favourite().equals("true")){
+        if (productObject.getIs_favourite().equals("true")) {
             mHolder.fav_icon.setImageResource(R.drawable.fav_selected);
-        }else {
+        } else {
             mHolder.fav_icon.setImageResource(R.drawable.fav_icon);
         }
+
+        if (GlobalUtils.user_type.equals(Constants.CATEGORY_SELLER)) {
+            mHolder.btn_edit.setVisibility(View.VISIBLE);
+            mHolder.btn_delete.setVisibility(View.VISIBLE);
+        } else {
+            mHolder.btn_edit.setVisibility(View.GONE);
+            mHolder.btn_delete.setVisibility(View.GONE);
+        }
+
 
         return convertView;
     }
@@ -97,6 +111,18 @@ public class ProductGridAdapter extends BaseAdapter {
             public void onClick(View view) {
                 ((MainActivity) mContext).addFrag(Constants.FRAG_PRODUCT_DETAILS, null);
 
+            }
+        });
+        mHolder.btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("Edit:", "Edit the product");
+            }
+        });
+        mHolder.btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("Delete:", "Delete the product");
             }
         });
     }

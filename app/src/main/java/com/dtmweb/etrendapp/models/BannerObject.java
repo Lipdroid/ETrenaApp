@@ -13,6 +13,15 @@ public class BannerObject implements Parcelable {
     private String title = null;
     private String text = null;
     private String shop = null;
+    private String product = null;
+
+    public String getProduct() {
+        return product;
+    }
+
+    public void setProduct(String product) {
+        this.product = product;
+    }
 
     public String getId() {
         return id;

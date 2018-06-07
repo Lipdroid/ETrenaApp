@@ -84,6 +84,7 @@ public class HomeFragment extends Fragment {
                                 bannerObject.setText(jsonBanner.getString("text"));
                                 bannerObject.setImage(jsonBanner.getString("image"));
                                 bannerObject.setShop(jsonBanner.getString("shop"));
+                                bannerObject.setProduct(jsonBanner.getString("product"));
 
                                 mListBanner.add(bannerObject);
                             }

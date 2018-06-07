@@ -70,4 +70,9 @@ public class ProductDetailsFragment extends Fragment {
             ImagesArray.add(IMAGES[i]);
         product_pager.setAdapter(new SlidingImage_Adapter(getActivity(), ImagesArray));
     }
+
+    private void requestToGetProductDetails(String product_id)
+    {
+
+    }
 }
