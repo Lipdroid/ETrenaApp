@@ -17,7 +17,6 @@ public class UserObject implements Parcelable {
     private String pro_img = null;
     private String contact_no = null;
     private String instagram = null;
-    private Boolean is_subscribed = false;
     private String user_type = null;
     private StoreObject storeObject = null;
     private String country = null;
@@ -119,13 +118,6 @@ public class UserObject implements Parcelable {
         this.instagram = instagram;
     }
 
-    public Boolean getIs_subscribed() {
-        return is_subscribed;
-    }
-
-    public void setIs_subscribed(Boolean is_subscribed) {
-        this.is_subscribed = is_subscribed;
-    }
 
     public UserObject(Parcel in) {
     }

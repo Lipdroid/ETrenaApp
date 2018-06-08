@@ -154,6 +154,13 @@ public class RequestData {
                 GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
 
                 break;
+            case Constants.REQUEST_GET_SUBSCRIPTION_RATE:
+                mRestType = Constants.REST_GET;
+                REQUEST_DATA_URL = UrlConstants.GET_SUBSCRIPTION_RATE_URL;
+                GlobalUtils.addAditionalHeader = true;
+                GlobalUtils.additionalHeaderTag = "Authorization";
+                GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+                break;
             case Constants.REQUEST_GET_BANNER:
                 mRestType = Constants.REST_GET;
                 REQUEST_DATA_URL = UrlConstants.BANNER_URL;

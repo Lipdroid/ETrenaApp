@@ -67,6 +67,7 @@ public class Constants {
     public static final int REQUEST_GET_PRODUCT_DETAILS = 12;
     public static final int REQUEST_GET_STORE = 13;
     public static final int REQUEST_GET_STORE_PRODUCT_LIST = 14;
+    public static final int REQUEST_GET_SUBSCRIPTION_RATE = 15;
 
     //params
     public static final String PARAM_EMAIL = "email";

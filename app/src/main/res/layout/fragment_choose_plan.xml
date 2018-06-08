@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:clickable="true"
-    android:background="@color/white"
-    tools:context="com.dtmweb.etrendapp.ChoosePlanActivity">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,11 +21,11 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.dtmweb.etrendapp.customViews.CircleImageView
+                android:id="@+id/pro_image"
                 android:layout_width="170px"
                 android:layout_height="170px"
                 android:layout_marginLeft="48px"
-                android:scaleType="fitXY"
                 android:src="@drawable/default_profile_image_shop" />
 
             <LinearLayout
@@ -37,34 +36,37 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:singleLine="true"
                     android:tag="54"
-                    android:text="The Fashion Shop"
+                    android:text=""
                     android:textColor="#474747"
                     android:textSize="54px"
                     android:typeface="normal" />
 
                 <TextView
+                    android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_light"
                     android:singleLine="true"
                     android:tag="39"
-                    android:text="+09 333 33 333"
+                    android:text=""
                     android:textColor="#474747"
                     android:textSize="39px"
                     android:typeface="normal" />
 
                 <TextView
+                    android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_light"
                     android:singleLine="true"
                     android:tag="39"
-                    android:text="Riyad,Saudi Arabia"
+                    android:text=""
                     android:textColor="#474747"
                     android:textSize="39px"
                     android:typeface="normal" />
@@ -87,6 +89,7 @@
             android:textSize="50px" />
 
         <TextView
+            android:id="@+id/subscription_rate"
             android:layout_width="match_parent"
             android:layout_height="120px"
             android:layout_marginLeft="50px"
@@ -98,7 +101,7 @@
             android:paddingLeft="30px"
             android:singleLine="true"
             android:tag="42"
-            android:text="SAR 300/Monthly"
+            android:text=""
             android:textColor="#FF0000"
             android:textSize="42px" />
     </LinearLayout>

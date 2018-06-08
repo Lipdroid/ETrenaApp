@@ -14,6 +14,15 @@ public class BannerObject implements Parcelable {
     private String text = null;
     private String shop = null;
     private String product = null;
+    private String banner_type = null;
+
+    public String getBanner_type() {
+        return banner_type;
+    }
+
+    public void setBanner_type(String banner_type) {
+        this.banner_type = banner_type;
+    }
 
     public String getProduct() {
         return product;
