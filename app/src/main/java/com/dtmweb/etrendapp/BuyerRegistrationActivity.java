@@ -20,6 +20,7 @@ import com.dtmweb.etrendapp.apis.RequestAsyncTask;
 import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.constants.UrlConstants;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
+import com.dtmweb.etrendapp.interfaces.DialogCallback;
 import com.dtmweb.etrendapp.models.PlaceObject;
 import com.dtmweb.etrendapp.models.UserObject;
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
@@ -180,7 +181,7 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
         password = et_password.getText().toString();
         password_retype = et_password_retype.getText().toString();
         country = et_country.getText().toString();
-        city = et_city.getText().toString();
+        city = cityObject.getId();
         address = et_address.getText().toString();
         email = et_mail.getText().toString();
         contact = et_contact.getText().toString();
@@ -261,8 +262,8 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
                                 if (userJson.has("id")) {
                                     mUserObj.setUserId(userJson.getString("id"));
                                 }
-                                if (jsonObject.has("name")) {
-                                    mUserObj.setUsername(jsonObject.getString("name"));
+                                if (userJson.has("name")) {
+                                    mUserObj.setUsername(userJson.getString("name"));
                                 }
                                 if (userJson.has("email")) {
                                     mUserObj.setEmail(userJson.getString("email"));
@@ -277,13 +278,27 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
                                     mUserObj.setInstagram(userJson.getString("instagram"));
                                 }
                                 if (userJson.has("address")) {
-                                    mUserObj.setAddress(jsonObject.getString("address"));
+                                    mUserObj.setAddress(userJson.getString("address"));
                                 }
                                 if (userJson.has("city")) {
-                                    mUserObj.setCity(jsonObject.getString("city"));
+                                    JSONObject jsonCity = userJson.getJSONObject("city");
+                                    if (jsonCity.has("name")) {
+                                        mUserObj.setCity(jsonCity.getString("name"));
+                                    }
+                                    if (jsonCity.has("country")) {
+                                        JSONObject jsonCountry = jsonCity.getJSONObject("country");
+                                        if (jsonCountry.has("name")) {
+                                            mUserObj.setCountry(jsonCountry.getString("name"));
+                                        }
+
+                                    }
                                 }
-                                if (userJson.has("country")) {
-                                    mUserObj.setCountry(jsonObject.getString("country"));
+                                if (userJson.has("is_subscribed")) {
+                                    if (!userJson.isNull("is_subscribed"))
+                                        mUserObj.setIs_subscribed(userJson.getBoolean("is_subscribed"));
+                                    else {
+                                        //store is not created yet
+                                    }
                                 }
 
                                 mUserObj.setUser_type(true,false);
@@ -294,6 +309,30 @@ public class BuyerRegistrationActivity extends AppCompatActivity implements View
 
                             //save the user type
                             GlobalUtils.user_type = mUserObj.getUser_type();
+
+                            //show popup success
+                            GlobalUtils.showInfoDialog(mContext, "Registration", "The user has been successfully registered.", "OK", new DialogCallback() {
+                                @Override
+                                public void onAction1() {
+                                    afterClickBack();
+                                }
+
+                                @Override
+                                public void onAction2() {
+
+                                }
+
+                                @Override
+                                public void onAction3() {
+
+                                }
+
+                                @Override
+                                public void onAction4() {
+
+                                }
+                            });
+
 
                         } else {
                             //parse errors

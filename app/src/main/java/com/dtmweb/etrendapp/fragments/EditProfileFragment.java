@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,6 +48,7 @@ public class EditProfileFragment extends Fragment {
                 ImageView btn_cross = (ImageView) root.findViewById(R.id.btn_cross);
                 ImageView btn_image_selection = (ImageView) root.findViewById(R.id.btn_image_selection);
                 Button btn_go = (Button) root.findViewById(R.id.btn_go);
+                LinearLayout pass_layout = (LinearLayout) root.findViewById(R.id.pass_layout);
                 RelativeLayout header = (RelativeLayout) root.findViewById(R.id.header);
                 EditText et_full_name = (EditText) root.findViewById(R.id.et_full_name);
                 EditText et_password = (EditText) root.findViewById(R.id.et_password);
@@ -66,6 +68,9 @@ public class EditProfileFragment extends Fragment {
                     et_password.setVisibility(View.GONE);
                     btn_cross.setVisibility(View.GONE);
                     header.setVisibility(View.GONE);
+                    pass_layout.setVisibility(View.GONE);
+                    //mail can not be editable
+                    et_mail.setEnabled(false);
                     //set the valuse to the view
                     et_full_name.setText(mUserObj.getUsername());
                     et_address.setText(mUserObj.getAddress());
@@ -74,7 +79,7 @@ public class EditProfileFragment extends Fragment {
                     et_mail.setText(mUserObj.getEmail());
                     et_contact.setText(mUserObj.getContact_no());
                     et_user_name.setText(mUserObj.getUsername());
-
+                    btn_go.setText("UPDATE");
                     btn_go.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -87,6 +92,7 @@ public class EditProfileFragment extends Fragment {
                 root = inflater.inflate(R.layout.activity_seller_registration, container, false);
                 btn_cross = (ImageView) root.findViewById(R.id.btn_cross);
                 header = (RelativeLayout) root.findViewById(R.id.header);
+                pass_layout = (LinearLayout) root.findViewById(R.id.pass_layout);
                 btn_image_selection = (CircleImageView) root.findViewById(R.id.btn_image_selection);
                 btn_go = (Button) root.findViewById(R.id.btn_go);
                 EditText et_store_name = (EditText) root.findViewById(R.id.et_store_name);
@@ -111,6 +117,9 @@ public class EditProfileFragment extends Fragment {
                     et_password.setVisibility(View.GONE);
                     btn_cross.setVisibility(View.GONE);
                     header.setVisibility(View.GONE);
+                    pass_layout.setVisibility(View.GONE);
+                    //mail can not be editable
+                    et_mail.setEnabled(false);
                     //set the valuse to the view
                     et_address.setText(mUserObj.getAddress());
                     et_city.setText(mUserObj.getCity());
@@ -124,6 +133,7 @@ public class EditProfileFragment extends Fragment {
                         et_bank_account_name.setText(mStoreObj.getBank_acc_name());
                         et_bank_account_number.setText(mStoreObj.getBank_acc_number());
                         et_bank_name.setText(mStoreObj.getBank_name());
+                        et_store_name.setText(mStoreObj.getStore_name());
 
                     }
 
@@ -133,6 +143,7 @@ public class EditProfileFragment extends Fragment {
                             .error(R.color.common_gray)
                             .into(btn_image_selection);
                 }
+                btn_go.setText("UPDATE");
                 btn_go.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

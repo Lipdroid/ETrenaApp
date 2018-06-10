@@ -21,7 +21,16 @@ public class UserObject implements Parcelable {
     private StoreObject storeObject = null;
     private String country = null;
     private String city = null;
-    private String address =null;
+    private String address = null;
+    private Boolean is_subscribed;
+
+    public Boolean getIs_subscribed() {
+        return is_subscribed;
+    }
+
+    public void setIs_subscribed(Boolean is_subscribed) {
+        this.is_subscribed = is_subscribed;
+    }
 
     public String getCountry() {
         return country;
@@ -59,12 +68,12 @@ public class UserObject implements Parcelable {
         return user_type;
     }
 
-    public void setUser_type(Boolean is_buyer ,Boolean is_seller) {
-        if(is_buyer){
+    public void setUser_type(Boolean is_buyer, Boolean is_seller) {
+        if (is_buyer) {
             this.user_type = Constants.CATEGORY_BUYER;
-        }else if(is_seller){
+        } else if (is_seller) {
             this.user_type = Constants.CATEGORY_SELLER;
-        }else {
+        } else {
             this.user_type = Constants.CATEGORY_NON_LOGGED;
         }
 

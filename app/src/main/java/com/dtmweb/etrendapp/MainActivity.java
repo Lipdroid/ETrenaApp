@@ -161,15 +161,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void checkSubscription() {
         if (mUserObj.getUser_type().equals(Constants.CATEGORY_SELLER)) {
-            if (mUserObj.getStoreObject() != null){
-                if (!mUserObj.getStoreObject().getIs_subscribed()) {
-                    addFrag(Constants.FRAG_CHOOSE_PLAN, null);
-                }
-            }else {
-                requestToGetStoreInfo();
+            if (mUserObj.getIs_subscribed() != null && !mUserObj.getIs_subscribed()) {
+                addFrag(Constants.FRAG_CHOOSE_PLAN, null);
             }
         }
     }
+
     private void requestToGetStoreInfo() {
         final HashMap<String, Object> params = new HashMap<String, Object>();
 
@@ -252,6 +249,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRequestAsync.execute();
 
     }
+
     private void parseErrors(HashMap<String, Object> requestBody, JSONObject jObjError) {
         try {
             for (String key : requestBody.keySet()) {
@@ -291,6 +289,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         GlobalUtils.saveCurrentUser(null);
         if (mBaseFrag != null)
             mBaseFrag.changeTab(Constants.HOME);
+            mBaseFrag.dismissAllFragmentStack();
     }
 
 
@@ -907,11 +906,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if (jsonObject.has("address")) {
                                 mUserObj.setAddress(jsonObject.getString("address"));
                             }
+
                             if (jsonObject.has("city")) {
-                                mUserObj.setCity(jsonObject.getString("city"));
+                                JSONObject jsonCity = jsonObject.getJSONObject("city");
+                                if(jsonCity.has("name")){
+                                    mUserObj.setCity(jsonCity.getString("name"));
+                                }
+                                if(jsonCity.has("country")){
+                                    JSONObject jsonCountry = jsonCity.getJSONObject("country");
+                                    if(jsonCountry.has("name")){
+                                        mUserObj.setCountry(jsonCountry.getString("name"));
+                                    }
+
+                                }
                             }
-                            if (jsonObject.has("country")) {
-                                mUserObj.setCountry(jsonObject.getString("country"));
+
+                            if (jsonObject.has("is_subscribed")) {
+                                if(!jsonObject.isNull("is_subscribed"))
+                                    mUserObj.setIs_subscribed(jsonObject.getBoolean("is_subscribed"));
+                                else{
+                                    //store is not created yet
+                                }
                             }
 
                             //set the type

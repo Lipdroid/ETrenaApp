@@ -197,7 +197,7 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
         bank_account_name = et_bank_account_name.getText().toString();
         bank_account_number = et_bank_account_number.getText().toString();
         country = et_country.getText().toString();
-        city = et_city.getText().toString();
+        city = cityObject.getId();
         address = et_address.getText().toString();
         store_owner_name = et_store_owner_name.getText().toString();
         store_owner_contact = et_store_owner_contact.getText().toString();
@@ -306,8 +306,8 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
                                 if (userJson.has("id")) {
                                     mUserObj.setUserId(userJson.getString("id"));
                                 }
-                                if (jsonObject.has("name")) {
-                                    mUserObj.setUsername(jsonObject.getString("name"));
+                                if (userJson.has("name")) {
+                                    mUserObj.setUsername(userJson.getString("name"));
                                 }
                                 if (userJson.has("email")) {
                                     mUserObj.setEmail(userJson.getString("email"));
@@ -322,13 +322,28 @@ public class SellerRegistrationActivity extends AppCompatActivity implements Vie
                                     mUserObj.setInstagram(userJson.getString("instagram"));
                                 }
                                 if (userJson.has("address")) {
-                                    mUserObj.setAddress(jsonObject.getString("address"));
+                                    mUserObj.setAddress(userJson.getString("address"));
                                 }
                                 if (userJson.has("city")) {
-                                    mUserObj.setCity(jsonObject.getString("city"));
+                                    JSONObject jsonCity = userJson.getJSONObject("city");
+                                    if (jsonCity.has("name")) {
+                                        mUserObj.setCity(jsonCity.getString("name"));
+                                    }
+                                    if (jsonCity.has("country")) {
+                                        JSONObject jsonCountry = jsonCity.getJSONObject("country");
+                                        if (jsonCountry.has("name")) {
+                                            mUserObj.setCountry(jsonCountry.getString("name"));
+                                        }
+
+                                    }
                                 }
-                                if (userJson.has("country")) {
-                                    mUserObj.setCountry(jsonObject.getString("country"));
+
+                                if (userJson.has("is_subscribed")) {
+                                    if (!userJson.isNull("is_subscribed"))
+                                        mUserObj.setIs_subscribed(userJson.getBoolean("is_subscribed"));
+                                    else {
+                                        //store is not created yet
+                                    }
                                 }
 
                                 mUserObj.setUser_type(false, true);

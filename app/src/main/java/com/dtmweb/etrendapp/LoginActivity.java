@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void afterClickSignUp() {
         startActivity(new Intent(mContext, UserCategoryActivity.class));
         overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+        finish();
     }
 
     private void afterClickForgetPassword() {
@@ -168,6 +169,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 if (userJson.has("image")) {
                                     mUserObj.setPro_img(userJson.getString("image"));
                                 }
+
+                                if (userJson.has("city")) {
+                                    JSONObject jsonCity = userJson.getJSONObject("city");
+                                    if (jsonCity.has("name")) {
+                                        mUserObj.setCity(jsonCity.getString("name"));
+                                    }
+                                    if (jsonCity.has("country")) {
+                                        JSONObject jsonCountry = jsonCity.getJSONObject("country");
+                                        if (jsonCountry.has("name")) {
+                                            mUserObj.setCountry(jsonCountry.getString("name"));
+                                        }
+
+                                    }
+                                }
+
+                                if (userJson.has("instagram")) {
+                                    mUserObj.setInstagram(userJson.getString("instagram"));
+                                }
+                                if (userJson.has("address")) {
+                                    mUserObj.setAddress(userJson.getString("address"));
+                                }
+
+                                if (userJson.has("is_subscribed")) {
+                                    if (!userJson.isNull("is_subscribed"))
+                                        mUserObj.setIs_subscribed(userJson.getBoolean("is_subscribed"));
+                                    else {
+                                        //store is not created yet
+                                    }
+                                }
+
                                 //set the type
                                 Boolean is_seller = false;
                                 Boolean is_buyer = false;
@@ -179,7 +210,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 }
 
 
-                                mUserObj.setUser_type(is_buyer,is_seller);
+                                mUserObj.setUser_type(is_buyer, is_seller);
 
                             }
                             //save the current user
@@ -193,7 +224,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         } else {
                             //parse errors
-                            GlobalUtils.parseErrors(mContext,params, jsonObject);
+                            GlobalUtils.parseErrors(mContext, params, jsonObject);
 
                         }
                     } catch (JSONException e) {

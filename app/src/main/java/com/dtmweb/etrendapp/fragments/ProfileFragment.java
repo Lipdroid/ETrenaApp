@@ -66,6 +66,15 @@ public class ProfileFragment extends Fragment {
         switch (GlobalUtils.user_type) {
             case Constants.CATEGORY_BUYER:
                 root = inflater.inflate(R.layout.fragment_profile_buyer, container, false);
+                tv_name = (TextView) root.findViewById(R.id.tv_name);
+                tv_phone = (TextView) root.findViewById(R.id.tv_phone);
+                tv_address = (TextView) root.findViewById(R.id.tv_address);
+                mUserObj = GlobalUtils.getCurrentUser();
+                if (mUserObj != null) {
+                    tv_name.setText(mUserObj.getUsername());
+                    tv_phone.setText("+" + mUserObj.getContact_no());
+                    tv_address.setText(mUserObj.getCity() + "," + mUserObj.getCountry());
+                }
                 break;
             case Constants.CATEGORY_SELLER:
                 root = inflater.inflate(R.layout.fragment_profile_seller, container, false);
@@ -95,17 +104,8 @@ public class ProfileFragment extends Fragment {
                         .into(pro_image);
                 break;
             case Constants.CATEGORY_NON_LOGGED:
+                //no need to implement anything here
                 root = inflater.inflate(R.layout.fragment_profile_buyer, container, false);
-                tv_name = (TextView) root.findViewById(R.id.tv_name);
-                tv_phone = (TextView) root.findViewById(R.id.tv_phone);
-                tv_address = (TextView) root.findViewById(R.id.tv_address);
-
-                mUserObj = GlobalUtils.getCurrentUser();
-                if (mUserObj != null) {
-                    tv_name.setText(mUserObj.getUsername());
-                    tv_phone.setText("+" + mUserObj.getContact_no());
-                    tv_address.setText(mUserObj.getCity() + "," + mUserObj.getCountry());
-                }
                 break;
         }
         new MultipleScreen(getActivity());

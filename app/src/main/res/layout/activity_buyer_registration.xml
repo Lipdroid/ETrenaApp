@@ -113,6 +113,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/pass_layout"
             android:layout_width="975px"
             android:layout_height="105px"
             android:layout_marginTop="30px"
