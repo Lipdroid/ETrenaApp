@@ -1,5 +1,6 @@
 package com.dtmweb.etrendapp.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.media.Image;
@@ -11,16 +12,24 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.dtmweb.etrendapp.MainActivity;
 import com.dtmweb.etrendapp.R;
+import com.dtmweb.etrendapp.apis.RequestAsyncTask;
 import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.holders.ProductHolder;
+import com.dtmweb.etrendapp.interfaces.AsyncCallback;
+import com.dtmweb.etrendapp.interfaces.DialogCallback;
 import com.dtmweb.etrendapp.models.ProductObject;
+import com.dtmweb.etrendapp.models.StoreObject;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.MultipleScreen;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by mdmunirhossain on 3/13/18.
@@ -125,6 +134,125 @@ public class ProductGridAdapter extends BaseAdapter {
                 Log.e("Delete:", "Delete the product");
             }
         });
+        mHolder.fav_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("Fav:", "toggle favourite");
+                ProductObject productObject = mListData.get(position);
+                requetToAddFavListBuyer(productObject.getId());
+
+            }
+        });
+    }
+
+    private void requetToAddFavListBuyer(String product_id){
+        final HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put(Constants.PARAM_PRODUCT,product_id);
+
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_ADD_IN_FAV_LIST_BUYER, params, new AsyncCallback() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void done(String result) {
+                GlobalUtils.dismissLoadingProgress();
+                Log.e("Buyer favourite", result);
+                if (result != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        JSONObject jsonProduct = jsonObject.getJSONObject("product");
+                        ProductObject productObject = new ProductObject();
+                        if(jsonProduct.has("id")) {
+                            productObject.setId(jsonProduct.getString("id"));
+                            productObject.setTitle(jsonProduct.getString("title"));
+                            productObject.setShort_description(jsonProduct.getString("short_description"));
+                            productObject.setIs_favourite(jsonProduct.getString("is_favourite"));
+                            productObject.setLowest_price(jsonProduct.getString("lowest_price"));
+                            productObject.setImage_url(jsonProduct.getString("image_url"));
+                        }
+                        //refresh the list
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
+
+                }
+
+
+            }
+
+            @Override
+            public void progress() {
+                GlobalUtils.showLoadingProgress(mContext);
+            }
+
+            @Override
+            public void onInterrupted(Exception e) {
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+        });
+
+        mRequestAsync.execute();
+    }
+
+
+    private void requestToggleFav(String is_fav,String product_id){
+        final HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put(Constants.PARAM_IS_FAVOURITE, is_fav);
+        params.put(Constants.PARAM_PRODUCT_ID,product_id);
+
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_UPDATE_IS_FAVOURITE, params, new AsyncCallback() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void done(String result) {
+                GlobalUtils.dismissLoadingProgress();
+                Log.e("update favourite", result);
+                if (result != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        //refresh the list
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
+
+                }
+
+
+            }
+
+            @Override
+            public void progress() {
+                GlobalUtils.showLoadingProgress(mContext);
+            }
+
+            @Override
+            public void onInterrupted(Exception e) {
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+        });
+
+        mRequestAsync.execute();
+
+
     }
 
 }

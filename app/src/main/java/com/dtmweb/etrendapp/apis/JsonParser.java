@@ -203,6 +203,49 @@ public class JsonParser {
                 }
                 //http execute
                 httpResponse = httpClient.execute(httpDelete);
+            } else if (restType == Constants.REST_PATCH){
+                HttpPatch httpPatch = new HttpPatch(url);
+                if (authStrEncoded != null) {
+                    httpPatch.addHeader("Authorization", "Basic " + authStrEncoded);
+                }
+                if (addExtraHeader) {
+                    GlobalUtils.addAditionalHeader = false;
+                    httpPatch.addHeader(GlobalUtils.additionalHeaderTag, GlobalUtils.additionalHeaderValue);
+                    Log.e("Header", GlobalUtils.additionalHeaderValue);
+                }
+
+                // httpPost.setEntity(new UrlEncodedFormEntity(params));
+                // set entity
+                ArrayList<NameValuePair> nameValuesParams = (ArrayList<NameValuePair>) multiParams
+                        .get(0);
+                ArrayList<Map.Entry<String, Bitmap>> bitmapParams = (ArrayList<Map.Entry<String, Bitmap>>) multiParams
+                        .get(1);
+
+                MultipartEntity multiEntity = new MultipartEntity();
+                for (int i = 0; i < nameValuesParams.size(); i++) {
+                    try {
+                        multiEntity.addPart(nameValuesParams.get(i).getName(),
+                                new StringBody(nameValuesParams.get(i).getValue()));
+                    } catch (Exception e) {
+
+                    }
+                }
+
+                // get bitmap params
+                for (int i = 0; i < bitmapParams.size(); i++) {
+                    try {
+                        Bitmap bm = bitmapParams.get(i).getValue();
+                        File file = ImageUtils.bitmapToFile(bm);
+
+                        multiEntity.addPart(bitmapParams.get(i).getKey(), new FileBody(file));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                // add entity
+                httpPatch.setEntity(multiEntity);
+                //http execute
+                httpResponse = httpClient.execute(httpPatch);
             }
 
             HttpEntity httpEntity = httpResponse.getEntity();

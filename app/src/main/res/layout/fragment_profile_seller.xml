@@ -135,6 +135,7 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/btn_change_cover"
         android:layout_width="70px"
         android:layout_height="70px"
         android:layout_gravity="right"

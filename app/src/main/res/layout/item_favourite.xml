@@ -16,17 +16,20 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/product_image"
             android:layout_width="200px"
             android:layout_height="300px"
             android:src="@drawable/demo_image_clothing" />
 
         <LinearLayout
+            android:layout_marginLeft="10px"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="60px"
                 android:fontFamily="@font/rufina"
@@ -40,6 +43,7 @@
                 android:textSize="50px" />
 
             <TextView
+                android:id="@+id/tv_description"
                 android:layout_width="match_parent"
                 android:layout_height="60px"
                 android:fontFamily="@font/rubik_light"
@@ -53,6 +57,7 @@
                 android:textSize="42px" />
 
             <TextView
+                android:id="@+id/tv_price"
                 android:layout_width="match_parent"
                 android:layout_height="60px"
                 android:layout_marginLeft="10px"
@@ -67,6 +72,7 @@
                 android:textSize="50px" />
 
             <TextView
+                android:id="@+id/btn_remove_fav"
                 android:layout_width="match_parent"
                 android:layout_height="50px"
                 android:fontFamily="@font/rubik_light"

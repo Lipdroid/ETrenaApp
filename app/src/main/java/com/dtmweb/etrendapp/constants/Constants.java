@@ -45,6 +45,7 @@ public class Constants {
     public static final int REST_GET = 1;
     public static final int REST_PUT = 2;
     public static final int REST_DELETE = 3;
+    public static int REST_PATCH = 4;
 
     public static final int TIME_OUT = 30000;
 
@@ -68,6 +69,15 @@ public class Constants {
     public static final int REQUEST_GET_STORE = 13;
     public static final int REQUEST_GET_STORE_PRODUCT_LIST = 14;
     public static final int REQUEST_GET_SUBSCRIPTION_RATE = 15;
+    public static final int REQUEST_UPDATE_COVER_PHOTO = 16;
+    public static final int REQUEST_GET_FAVURITE_LIST_BUYER = 17;
+    public static final int REQUEST_GET_FAVURITE_LIST_SELLER = 18;
+    public static final int REQUEST_UPDATE_IS_FAVOURITE = 19;
+    public static final int REQUEST_GET_FAVURITE_LIST = 20;
+
+    public static final int REQUEST_ADD_IN_FAV_LIST_BUYER = 21;
+    public static final int REQUEST_REMOVE_FROM_FAV_LIST_BUYER = 22;
+
 
     //params
     public static final String PARAM_EMAIL = "email";
@@ -91,7 +101,10 @@ public class Constants {
     public static final String PARAM_SELLER = "is_seller";
     public static final String PARAM_BUYER = "is_buyer";
     public static final String PARAM_PRODUCT_ID = "product_id";
-    public static String PARAM_CATEGORY = "category";
+    public static final String PARAM_CATEGORY = "category";
+    public static final String PARAM_COVER_IMAGE = "cover_photo";
+    public static final String PARAM_IS_FAVOURITE = "is_favourite";
+    public static final String PARAM_PRODUCT = "product";
 
     //prefs
     public static final String PREF_TOKEN = "prefs_token";

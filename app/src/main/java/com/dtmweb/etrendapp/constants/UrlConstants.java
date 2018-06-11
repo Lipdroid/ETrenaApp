@@ -18,8 +18,15 @@ public class UrlConstants {
     public static final String PRODUCTS_URL = BASE_URL + "/api/v1/products/";
     public static final String PRODUCT_DETAILS = BASE_URL + "/api/v1/products/";
     public static final String STORE_DETAILS_URL = BASE_URL + "/api/v1/seller/store/";
-    public static String STORE_PRODUCT_LIST_URL = BASE_URL + "/api/v1/seller/products/";
-    public static String GET_SUBSCRIPTION_RATE_URL = BASE_URL + "/api/v1/subscription-rate/";
+    public static final String STORE_PRODUCT_LIST_URL = BASE_URL + "/api/v1/seller/products/";
+    public static final String GET_SUBSCRIPTION_RATE_URL = BASE_URL + "/api/v1/subscription-rate/";
+    public static final String UPDATE_COVER_URL = BASE_URL + "/api/v1/seller/store/";
+    public static final String FAVOURITE_ITEM_LIST_URL_BUYER = BASE_URL + "/api/v1/buyer/favorite/";
+    public static final String FAVOURITE_ITEM_LIST_URL_SELLER = BASE_URL + "/api/v1/seller/products/";
+    public static final String FAVOURITE_ITEM_LIST_URL = BASE_URL + "/api/v1/products/";
+
+    public static final String ADD_IN_FAV_LIST_BUYER = BASE_URL + "/api/v1/buyer/favorite/";
+    public static final String REMOVE_FROM_FAV_LIST_BUYER = BASE_URL + "/api/v1/buyer/favorite/";
 
 
     public static String URL_SELLER_PROFILE = BASE_URL + "/api/v1/seller/profile/";
