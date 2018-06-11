@@ -269,12 +269,12 @@ public class RequestData {
                 mRestType = Constants.REST_GET;
                 REQUEST_DATA_URL = UrlConstants.FAVOURITE_ITEM_LIST_URL
                         + "?" + Constants.PARAM_IS_FAVOURITE + "=" + parameters.get(Constants.PARAM_IS_FAVOURITE);
-            case Constants.REQUEST_UPDATE_IS_FAVOURITE:
-//                mRestType = Constants.REST_PATCH;
-//                REQUEST_DATA_URL = UrlConstants.IS_FAV_UPDATE_URL
-//                        + "" + parameters.get(Constants.PARAM_PRODUCT_ID);
-//                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_IS_FAVOURITE,
-//                        (String) parameters.get(Constants.PARAM_IS_FAVOURITE)));
+            case Constants.REQUEST_ADD_IN_FAV_LIST_SELLER:
+                mRestType = Constants.REST_PATCH;
+                REQUEST_DATA_URL = UrlConstants.ADD_IN_FAV_LIST_SELLER
+                        + "" + parameters.get(Constants.PARAM_PRODUCT_ID)+"/";
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_IS_FAVOURITE,
+                        (String) parameters.get(Constants.PARAM_IS_FAVOURITE)));
                 GlobalUtils.addAditionalHeader = true;
                 GlobalUtils.additionalHeaderTag = "Authorization";
                 GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);

@@ -28,6 +28,9 @@ public class UrlConstants {
     public static final String ADD_IN_FAV_LIST_BUYER = BASE_URL + "/api/v1/buyer/favorite/";
     public static final String REMOVE_FROM_FAV_LIST_BUYER = BASE_URL + "/api/v1/buyer/favorite/";
 
+    public static final String ADD_IN_FAV_LIST_SELLER = BASE_URL + "//api/v1/seller/products/";
+    public static final String REMOVE_FROM_FAV_LIST_SELLER = BASE_URL + "/api/v1/seller/products/";
+
 
     public static String URL_SELLER_PROFILE = BASE_URL + "/api/v1/seller/profile/";
 

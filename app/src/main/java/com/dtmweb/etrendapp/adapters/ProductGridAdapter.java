@@ -105,9 +105,13 @@ public class ProductGridAdapter extends BaseAdapter {
         if (GlobalUtils.user_type.equals(Constants.CATEGORY_SELLER)) {
             mHolder.btn_edit.setVisibility(View.VISIBLE);
             mHolder.btn_delete.setVisibility(View.VISIBLE);
+        } else if (GlobalUtils.user_type.equals(Constants.CATEGORY_BUYER)) {
+            mHolder.btn_edit.setVisibility(View.GONE);
+            mHolder.btn_delete.setVisibility(View.GONE);
         } else {
             mHolder.btn_edit.setVisibility(View.GONE);
             mHolder.btn_delete.setVisibility(View.GONE);
+            mHolder.fav_icon.setVisibility(View.GONE);
         }
 
 
@@ -139,15 +143,25 @@ public class ProductGridAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Log.e("Fav:", "toggle favourite");
                 ProductObject productObject = mListData.get(position);
-                requetToAddFavListBuyer(productObject.getId());
+                if (GlobalUtils.getCurrentUser().getUser_type().equals(Constants.CATEGORY_BUYER)) {
+                    requetToAddFavListBuyer(productObject.getId());
+                } else {
+                    //toogle update the product is favourite
+                    String is_fav = "false";
+                    if (productObject.getIs_favourite().equals("false"))
+                        is_fav = "true";
+                    else
+                        is_fav = "false";
+                    requestToggleFav(is_fav, productObject.getId());
+                }
 
             }
         });
     }
 
-    private void requetToAddFavListBuyer(String product_id){
+    private void requetToAddFavListBuyer(final String product_id) {
         final HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.PARAM_PRODUCT,product_id);
+        params.put(Constants.PARAM_PRODUCT, product_id);
 
         RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_ADD_IN_FAV_LIST_BUYER, params, new AsyncCallback() {
             @SuppressLint("LongLogTag")
@@ -158,9 +172,26 @@ public class ProductGridAdapter extends BaseAdapter {
                 if (result != null) {
                     try {
                         JSONObject jsonObject = new JSONObject(result);
+
+                        //parse errors
+                        parseErrors(params, jsonObject);
+                        //if not error then update
+                        for (ProductObject product : mListData
+                                ) {
+                            if (product.getId().equals(product_id)) {
+                                //toogle update the product is favourite
+                                if (product.getIs_favourite().equals("false"))
+                                    product.setIs_favourite("true");
+                                else
+                                    product.setIs_favourite("false");
+                                notifyDataSetChanged();
+                            }
+
+                        }
+
                         JSONObject jsonProduct = jsonObject.getJSONObject("product");
                         ProductObject productObject = new ProductObject();
-                        if(jsonProduct.has("id")) {
+                        if (jsonProduct.has("id")) {
                             productObject.setId(jsonProduct.getString("id"));
                             productObject.setTitle(jsonProduct.getString("title"));
                             productObject.setShort_description(jsonProduct.getString("short_description"));
@@ -168,7 +199,7 @@ public class ProductGridAdapter extends BaseAdapter {
                             productObject.setLowest_price(jsonProduct.getString("lowest_price"));
                             productObject.setImage_url(jsonProduct.getString("image_url"));
                         }
-                        //refresh the list
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -204,12 +235,12 @@ public class ProductGridAdapter extends BaseAdapter {
     }
 
 
-    private void requestToggleFav(String is_fav,String product_id){
+    private void requestToggleFav(final String is_fav, final String product_id) {
         final HashMap<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.PARAM_IS_FAVOURITE, is_fav);
-        params.put(Constants.PARAM_PRODUCT_ID,product_id);
+        params.put(Constants.PARAM_PRODUCT_ID, product_id);
 
-        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_UPDATE_IS_FAVOURITE, params, new AsyncCallback() {
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_ADD_IN_FAV_LIST_SELLER, params, new AsyncCallback() {
             @SuppressLint("LongLogTag")
             @Override
             public void done(String result) {
@@ -218,7 +249,18 @@ public class ProductGridAdapter extends BaseAdapter {
                 if (result != null) {
                     try {
                         JSONObject jsonObject = new JSONObject(result);
-                        //refresh the list
+                        //parse errors
+                        parseErrors(params, jsonObject);
+                        //if not error then update
+                        for (ProductObject product : mListData
+                                ) {
+                            if (product.getId().equals(product_id)) {
+                                //toogle update the product is favourite
+                                product.setIs_favourite(is_fav);
+                                notifyDataSetChanged();
+                            }
+
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -254,5 +296,36 @@ public class ProductGridAdapter extends BaseAdapter {
 
 
     }
+
+    private void parseErrors(HashMap<String, Object> requestBody, JSONObject jObjError) {
+        try {
+            for (String key : requestBody.keySet()) {
+                if (jObjError.has(key)) {
+                    String error = null;
+                    error = jObjError.getJSONArray(key).get(0).toString();
+                    Log.e("Error ", this.getClass().getSimpleName() + error);
+                    GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                    return;
+                }
+            }
+            if (jObjError.has("non_field_errors")) {
+                String error = jObjError.getJSONArray("non_field_errors").get(0).toString();
+                if (error != null) {
+                    GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                    return;
+                }
+            }
+
+            if (jObjError.has("detail")) {
+                String error = jObjError.getString("detail");
+                GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                return;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }

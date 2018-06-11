@@ -102,12 +102,18 @@ public class FavProductAdapter extends BaseAdapter {
             public void onClick(View view) {
                 //remove from list
                 ProductObject productObject = mListData.get(position);
-                removeProductFromFavListBuyer(productObject.getId());
+                if (GlobalUtils.getCurrentUser().getUser_type().equals(Constants.CATEGORY_BUYER)) {
+                    removeProductFromFavListBuyer(productObject.getId());
+                } else {
+                    //toogle update the product is favourite
+                    String is_fav = "false";
+                    requestToggleFav(is_fav, productObject.getId());
+                }
             }
         });
     }
 
-    private void removeProductFromFavListBuyer(String product_id){
+    private void removeProductFromFavListBuyer(final String product_id) {
         final HashMap<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.PARAM_PRODUCT_ID, product_id);
 
@@ -120,19 +126,30 @@ public class FavProductAdapter extends BaseAdapter {
                 if (result != null) {
                     try {
                         JSONObject jsonObject = new JSONObject(result);
-                        JSONArray jsonArray = jsonObject.getJSONArray(Constants.DATA);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject json = jsonArray.getJSONObject(i);
-                            JSONObject jsonProduct = json.getJSONObject("product");
-                            ProductObject productObject = new ProductObject();
-                            productObject.setId(jsonProduct.getString("id"));
-                            productObject.setTitle(jsonProduct.getString("title"));
-                            productObject.setShort_description(jsonProduct.getString("short_description"));
-                            productObject.setIs_favourite(jsonProduct.getString("is_favourite"));
-                            productObject.setLowest_price(jsonProduct.getString("lowest_price"));
-                            productObject.setImage_url(jsonProduct.getString("image_url"));
+                        //parse errors
+                        parseErrors(params, jsonObject);
+                        //if not error remove
+                        for (ProductObject product : mListData
+                                ) {
+                            if (product.getId().equals(product_id)) {
+                                //remove the product and refresh the list
+                                mListData.remove(product);
+                                notifyDataSetChanged();
+                            }
+
                         }
-                        //remove the product and refresh the list
+//                        JSONArray jsonArray = jsonObject.getJSONArray(Constants.DATA);
+//                        for (int i = 0; i < jsonArray.length(); i++) {
+//                            JSONObject json = jsonArray.getJSONObject(i);
+//                            JSONObject jsonProduct = json.getJSONObject("product");
+//                            ProductObject productObject = new ProductObject();
+//                            productObject.setId(jsonProduct.getString("id"));
+//                            productObject.setTitle(jsonProduct.getString("title"));
+//                            productObject.setShort_description(jsonProduct.getString("short_description"));
+//                            productObject.setIs_favourite(jsonProduct.getString("is_favourite"));
+//                            productObject.setLowest_price(jsonProduct.getString("lowest_price"));
+//                            productObject.setImage_url(jsonProduct.getString("image_url"));
+//                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -166,14 +183,14 @@ public class FavProductAdapter extends BaseAdapter {
 
         mRequestAsync.execute();
 
-}
+    }
 
-    private void requestToggleFav(String is_fav, String product_id){
+    private void requestToggleFav(final String is_fav, final String product_id) {
         final HashMap<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.PARAM_IS_FAVOURITE, is_fav);
         params.put(Constants.PARAM_PRODUCT_ID, product_id);
 
-        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_UPDATE_IS_FAVOURITE, params, new AsyncCallback() {
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_ADD_IN_FAV_LIST_SELLER, params, new AsyncCallback() {
             @SuppressLint("LongLogTag")
             @Override
             public void done(String result) {
@@ -181,17 +198,20 @@ public class FavProductAdapter extends BaseAdapter {
                 Log.e("update favourite", result);
                 if (result != null) {
                     try {
-                        JSONObject jsonProduct = new JSONObject(result);
-                        if(jsonProduct.has("id")) {
-                            ProductObject productObject = new ProductObject();
-                            productObject.setId(jsonProduct.getString("id"));
-                            productObject.setTitle(jsonProduct.getString("title"));
-                            productObject.setShort_description(jsonProduct.getString("short_description"));
-                            productObject.setIs_favourite(jsonProduct.getString("is_favourite"));
-                            productObject.setLowest_price(jsonProduct.getString("lowest_price"));
-                            productObject.setImage_url(jsonProduct.getString("image_url"));
+                        JSONObject jsonObject = new JSONObject(result);
+                        //parse errors
+                        parseErrors(params, jsonObject);
+                        //if not error then update
+                        for (ProductObject product : mListData
+                                ) {
+                            if (product.getId().equals(product_id)) {
+                                //toogle update the product is favourite
+                                //remove the product and refresh the list
+                                mListData.remove(product);
+                                notifyDataSetChanged();
+                            }
+
                         }
-                        //refresh the list
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -225,6 +245,37 @@ public class FavProductAdapter extends BaseAdapter {
 
         mRequestAsync.execute();
 
+
+    }
+
+
+    private void parseErrors(HashMap<String, Object> requestBody, JSONObject jObjError) {
+        try {
+            for (String key : requestBody.keySet()) {
+                if (jObjError.has(key)) {
+                    String error = null;
+                    error = jObjError.getJSONArray(key).get(0).toString();
+                    Log.e("Error ", this.getClass().getSimpleName() + error);
+                    GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                    return;
+                }
+            }
+            if (jObjError.has("non_field_errors")) {
+                String error = jObjError.getJSONArray("non_field_errors").get(0).toString();
+                if (error != null) {
+                    GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                    return;
+                }
+            }
+
+            if (jObjError.has("detail")) {
+                String error = jObjError.getString("detail");
+                GlobalUtils.showInfoDialog(mContext, "Failed", error, "OK", null);
+                return;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
