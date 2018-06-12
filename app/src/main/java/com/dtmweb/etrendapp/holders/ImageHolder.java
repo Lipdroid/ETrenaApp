@@ -1,5 +1,6 @@
 package com.dtmweb.etrendapp.holders;
 
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -11,5 +12,5 @@ import com.dtmweb.etrendapp.customViews.CircleImageView;
 
 public class ImageHolder {
     public RelativeLayout main_root = null;
-    public CircleImageView image = null;
+    public ImageView image = null;
 }

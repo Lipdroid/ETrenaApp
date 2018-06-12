@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -60,7 +61,7 @@ public class ImageListAdapter extends BaseAdapter {
             convertView = mActivity.getLayoutInflater().inflate(R.layout.item_image, viewGroup, false);
             mHolder = new ImageHolder();
             mHolder.main_root = (RelativeLayout) convertView.findViewById(R.id.main_root);
-            mHolder.image = (CircleImageView) convertView.findViewById(R.id.image);
+            mHolder.image = (ImageView) convertView.findViewById(R.id.image);
 
             new MultipleScreen(mActivity);
             MultipleScreen.resizeAllView((ViewGroup) convertView);
