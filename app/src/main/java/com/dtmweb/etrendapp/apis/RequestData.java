@@ -182,6 +182,9 @@ public class RequestData {
                 mRestType = Constants.REST_GET;
                 REQUEST_DATA_URL = UrlConstants.PRODUCTS_URL
                         + "?" + Constants.PARAM_CATEGORY + "=" + parameters.get(Constants.PARAM_CATEGORY);
+                GlobalUtils.addAditionalHeader = true;
+                GlobalUtils.additionalHeaderTag = "Authorization";
+                GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
                 break;
             case Constants.REQUEST_GET_PRODUCT_DETAILS:
                 mRestType = Constants.REST_GET;
@@ -248,41 +251,16 @@ public class RequestData {
                 GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
                 break;
 
-            case Constants.REQUEST_GET_FAVURITE_LIST_BUYER:
-                mRestType = Constants.REST_GET;
-                REQUEST_DATA_URL = UrlConstants.FAVOURITE_ITEM_LIST_URL_BUYER;
-
-                GlobalUtils.addAditionalHeader = true;
-                GlobalUtils.additionalHeaderTag = "Authorization";
-                GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
-                break;
-            case Constants.REQUEST_GET_FAVURITE_LIST_SELLER:
-                mRestType = Constants.REST_GET;
-                REQUEST_DATA_URL = UrlConstants.FAVOURITE_ITEM_LIST_URL_SELLER
-                        + "?" + Constants.PARAM_IS_FAVOURITE + "=" + parameters.get(Constants.PARAM_IS_FAVOURITE);
-
-                GlobalUtils.addAditionalHeader = true;
-                GlobalUtils.additionalHeaderTag = "Authorization";
-                GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
-                break;
             case Constants.REQUEST_GET_FAVURITE_LIST:
                 mRestType = Constants.REST_GET;
-                REQUEST_DATA_URL = UrlConstants.FAVOURITE_ITEM_LIST_URL
-                        + "?" + Constants.PARAM_IS_FAVOURITE + "=" + parameters.get(Constants.PARAM_IS_FAVOURITE);
-            case Constants.REQUEST_ADD_IN_FAV_LIST_SELLER:
-                mRestType = Constants.REST_PATCH;
-                REQUEST_DATA_URL = UrlConstants.ADD_IN_FAV_LIST_SELLER
-                        + "" + parameters.get(Constants.PARAM_PRODUCT_ID)+"/";
-                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_IS_FAVOURITE,
-                        (String) parameters.get(Constants.PARAM_IS_FAVOURITE)));
+                REQUEST_DATA_URL = UrlConstants.FAVOURITE_ITEM_LIST_URL;
                 GlobalUtils.addAditionalHeader = true;
                 GlobalUtils.additionalHeaderTag = "Authorization";
                 GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
                 break;
-
-            case Constants.REQUEST_ADD_IN_FAV_LIST_BUYER:
+            case Constants.REQUEST_ADD_IN_FAV_LIST:
                 mRestType = Constants.REST_POST;
-                REQUEST_DATA_URL = UrlConstants.ADD_IN_FAV_LIST_BUYER;
+                REQUEST_DATA_URL = UrlConstants.ADD_IN_FAVOURITE_ITEM_LIST;
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_PRODUCT,
                         (String) parameters.get(Constants.PARAM_PRODUCT)));
                 GlobalUtils.addAditionalHeader = true;
@@ -290,10 +268,44 @@ public class RequestData {
                 GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
                 break;
 
-            case Constants.REQUEST_REMOVE_FROM_FAV_LIST_BUYER:
+
+            case Constants.REQUEST_REMOVE_FROM_FAV_LIST:
                 mRestType = Constants.REST_DELETE;
-                REQUEST_DATA_URL = UrlConstants.REMOVE_FROM_FAV_LIST_BUYER
-                        + parameters.get(Constants.PARAM_PRODUCT_ID)+"/";
+                REQUEST_DATA_URL = UrlConstants.REMOVE_FROM_FAV_LIST
+                        + parameters.get(Constants.PARAM_PRODUCT_ID) + "/";
+                GlobalUtils.addAditionalHeader = true;
+                GlobalUtils.additionalHeaderTag = "Authorization";
+                GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+                break;
+
+            case Constants.REQUEST_UPLOAD_PRODUCT_IMAGE:
+                mRestType = Constants.REST_POST;
+                REQUEST_DATA_URL = UrlConstants.UPLOAD_PRODUCT_IMAGE_URL;
+                if (parameters.containsKey(Constants.PARAM_IMG)) {
+                    // create hash map to save avatar bitmap
+                    Map.Entry<String, Bitmap> hashIcon = new Map.Entry<String, Bitmap>() {
+
+                        @Override
+                        public String getKey() {
+                            // TODO Auto-generated method stub
+                            return Constants.PARAM_IMG;
+                        }
+
+                        @Override
+                        public Bitmap getValue() {
+                            // TODO Auto-generated method stub
+                            return (Bitmap) parameters.get(Constants.PARAM_IMG);
+                        }
+
+                        @Override
+                        public Bitmap setValue(Bitmap object) {
+                            // TODO Auto-generated method stub
+                            return (Bitmap) parameters.get(Constants.PARAM_IMG);
+                        }
+                    };
+
+                    bitmapParams.add(hashIcon);
+                }
                 GlobalUtils.addAditionalHeader = true;
                 GlobalUtils.additionalHeaderTag = "Authorization";
                 GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);

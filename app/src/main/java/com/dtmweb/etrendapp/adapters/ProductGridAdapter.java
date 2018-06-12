@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,12 +23,14 @@ import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.holders.ProductHolder;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
 import com.dtmweb.etrendapp.interfaces.DialogCallback;
+import com.dtmweb.etrendapp.models.ImageObject;
 import com.dtmweb.etrendapp.models.ProductObject;
 import com.dtmweb.etrendapp.models.StoreObject;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.MultipleScreen;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -88,13 +91,16 @@ public class ProductGridAdapter extends BaseAdapter {
 
         ProductObject productObject = mListData.get(position);
         mHolder.tv_title.setText(productObject.getTitle());
-        mHolder.tv_description.setText(productObject.getShort_description());
-        mHolder.tv_price.setText("SAR " + productObject.getLowest_price());
-        Picasso.get()
-                .load(productObject.getImage_url())
-                .placeholder(R.color.common_gray)
-                .error(R.color.common_gray)
-                .into(mHolder.product_image);
+        mHolder.tv_description.setText(productObject.getDetails());
+        mHolder.tv_price.setText("SAR " + productObject.getDiscounted_price());
+        if (productObject.getImages().size() > 0) {
+            ImageObject image = productObject.getImages().get(0);
+            Picasso.get()
+                    .load(image.getUrl())
+                    .placeholder(R.color.common_gray)
+                    .error(R.color.common_gray)
+                    .into(mHolder.product_image);
+        }
         setListenersForViews(position);
         if (productObject.getIs_favourite().equals("true")) {
             mHolder.fav_icon.setImageResource(R.drawable.fav_selected);
@@ -143,17 +149,8 @@ public class ProductGridAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Log.e("Fav:", "toggle favourite");
                 ProductObject productObject = mListData.get(position);
-                if (GlobalUtils.getCurrentUser().getUser_type().equals(Constants.CATEGORY_BUYER)) {
-                    requetToAddFavListBuyer(productObject.getId());
-                } else {
-                    //toogle update the product is favourite
-                    String is_fav = "false";
-                    if (productObject.getIs_favourite().equals("false"))
-                        is_fav = "true";
-                    else
-                        is_fav = "false";
-                    requestToggleFav(is_fav, productObject.getId());
-                }
+                requetToAddFavListBuyer(productObject.getId());
+
 
             }
         });
@@ -163,7 +160,7 @@ public class ProductGridAdapter extends BaseAdapter {
         final HashMap<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.PARAM_PRODUCT, product_id);
 
-        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_ADD_IN_FAV_LIST_BUYER, params, new AsyncCallback() {
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_ADD_IN_FAV_LIST, params, new AsyncCallback() {
             @SuppressLint("LongLogTag")
             @Override
             public void done(String result) {
@@ -172,35 +169,53 @@ public class ProductGridAdapter extends BaseAdapter {
                 if (result != null) {
                     try {
                         JSONObject jsonObject = new JSONObject(result);
+                        if (jsonObject.has("product")) {
+                            JSONObject jsonProduct = jsonObject.getJSONObject("product");
+                            ProductObject productObject = new ProductObject();
 
-                        //parse errors
-                        parseErrors(params, jsonObject);
-                        //if not error then update
-                        for (ProductObject product : mListData
-                                ) {
-                            if (product.getId().equals(product_id)) {
-                                //toogle update the product is favourite
-                                if (product.getIs_favourite().equals("false"))
-                                    product.setIs_favourite("true");
-                                else
-                                    product.setIs_favourite("false");
-                                notifyDataSetChanged();
+                            if (jsonProduct.has("id")) {
+                                productObject.setId(jsonProduct.getString("id"));
+                            }
+                            if (jsonProduct.has("title")) {
+                                productObject.setTitle(jsonProduct.getString("title"));
+                            }
+                            if (jsonProduct.has("details")) {
+                                productObject.setDetails(jsonProduct.getString("details"));
+                            }
+                            if (jsonProduct.has("is_fav")) {
+                                productObject.setIs_favourite(jsonProduct.getString("is_fav"));
+                            }
+                            if (jsonProduct.has("discounted_price")) {
+                                productObject.setDiscounted_price(jsonProduct.getString("discounted_price"));
+                            }
+                            if (jsonProduct.has("images")) {
+                                JSONArray imagesArray = jsonProduct.getJSONArray("images");
+                                List<ImageObject> images = new ArrayList<>();
+                                for (int j = 0; j < imagesArray.length(); j++) {
+                                    JSONObject jsonObjectImage = imagesArray.getJSONObject(j);
+                                    ImageObject image = new ImageObject();
+                                    image.setId(jsonObjectImage.getString("id"));
+                                    image.setUrl(jsonObjectImage.getString("image"));
+                                    images.add(image);
+                                }
+                                productObject.setImages(images);
+
                             }
 
+                            //if not error then update
+                            for (ProductObject product : mListData
+                                    ) {
+                                if (product.getId().equals(product_id)) {
+                                    //toogle update the product is favourite
+                                    product.setIs_favourite(productObject.getIs_favourite());
+                                    notifyDataSetChanged();
+                                }
+
+                            }
+                        } else {
+                            //parse errors
+                            parseErrors(params, jsonObject);
                         }
-
-                        JSONObject jsonProduct = jsonObject.getJSONObject("product");
-                        ProductObject productObject = new ProductObject();
-                        if (jsonProduct.has("id")) {
-                            productObject.setId(jsonProduct.getString("id"));
-                            productObject.setTitle(jsonProduct.getString("title"));
-                            productObject.setShort_description(jsonProduct.getString("short_description"));
-                            productObject.setIs_favourite(jsonProduct.getString("is_favourite"));
-                            productObject.setLowest_price(jsonProduct.getString("lowest_price"));
-                            productObject.setImage_url(jsonProduct.getString("image_url"));
-                        }
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -234,68 +249,6 @@ public class ProductGridAdapter extends BaseAdapter {
         mRequestAsync.execute();
     }
 
-
-    private void requestToggleFav(final String is_fav, final String product_id) {
-        final HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.PARAM_IS_FAVOURITE, is_fav);
-        params.put(Constants.PARAM_PRODUCT_ID, product_id);
-
-        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_ADD_IN_FAV_LIST_SELLER, params, new AsyncCallback() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void done(String result) {
-                GlobalUtils.dismissLoadingProgress();
-                Log.e("update favourite", result);
-                if (result != null) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        //parse errors
-                        parseErrors(params, jsonObject);
-                        //if not error then update
-                        for (ProductObject product : mListData
-                                ) {
-                            if (product.getId().equals(product_id)) {
-                                //toogle update the product is favourite
-                                product.setIs_favourite(is_fav);
-                                notifyDataSetChanged();
-                            }
-
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
-
-                }
-
-
-            }
-
-            @Override
-            public void progress() {
-                GlobalUtils.showLoadingProgress(mContext);
-            }
-
-            @Override
-            public void onInterrupted(Exception e) {
-                GlobalUtils.dismissLoadingProgress();
-
-            }
-
-            @Override
-            public void onException(Exception e) {
-
-                GlobalUtils.dismissLoadingProgress();
-
-            }
-        });
-
-        mRequestAsync.execute();
-
-
-    }
 
     private void parseErrors(HashMap<String, Object> requestBody, JSONObject jObjError) {
         try {

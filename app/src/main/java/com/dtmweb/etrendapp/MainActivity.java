@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mUserObj = GlobalUtils.getCurrentUser();
             if (mUserObj != null) {
                 setUpHome(mUserObj.getUser_type());
-                checkSubscription();
+                //checkSubscription();
             } else {
                 //get User
                 requestGetUserAPI();

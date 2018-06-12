@@ -5,7 +5,7 @@ package com.dtmweb.etrendapp.constants;
  */
 
 public class UrlConstants {
-    public static final String BASE_URL = "http://206.189.209.193:2595";
+    public static final String BASE_URL = "http://206.189.209.193:51097";
     public static final String REGISTRATION_URL = BASE_URL + "/api/v1/auth/registration/";
     public static final String SELLER_CREATE_URL = BASE_URL + "/api/v1/seller/";
     public static final String URL_GET_USER = BASE_URL + "/api/v1/auth/user/";
@@ -21,18 +21,15 @@ public class UrlConstants {
     public static final String STORE_PRODUCT_LIST_URL = BASE_URL + "/api/v1/seller/products/";
     public static final String GET_SUBSCRIPTION_RATE_URL = BASE_URL + "/api/v1/subscription-rate/";
     public static final String UPDATE_COVER_URL = BASE_URL + "/api/v1/seller/store/";
-    public static final String FAVOURITE_ITEM_LIST_URL_BUYER = BASE_URL + "/api/v1/buyer/favorite/";
-    public static final String FAVOURITE_ITEM_LIST_URL_SELLER = BASE_URL + "/api/v1/seller/products/";
-    public static final String FAVOURITE_ITEM_LIST_URL = BASE_URL + "/api/v1/products/";
 
-    public static final String ADD_IN_FAV_LIST_BUYER = BASE_URL + "/api/v1/buyer/favorite/";
-    public static final String REMOVE_FROM_FAV_LIST_BUYER = BASE_URL + "/api/v1/buyer/favorite/";
+    public static final String FAVOURITE_ITEM_LIST_URL = BASE_URL + "/api/v1/favourite-products/";
+    public static final String ADD_IN_FAVOURITE_ITEM_LIST = BASE_URL + "/api/v1/favourite-products/";
+    public static final String REMOVE_FROM_FAV_LIST = BASE_URL + "/api/v1/favourite-products/";
 
-    public static final String ADD_IN_FAV_LIST_SELLER = BASE_URL + "//api/v1/seller/products/";
-    public static final String REMOVE_FROM_FAV_LIST_SELLER = BASE_URL + "/api/v1/seller/products/";
 
 
     public static String URL_SELLER_PROFILE = BASE_URL + "/api/v1/seller/profile/";
 
+    public static String UPLOAD_PRODUCT_IMAGE_URL = BASE_URL + "/api/v1/seller/products/images/";
 
 }

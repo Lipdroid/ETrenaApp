@@ -170,7 +170,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     mUserObj.setPro_img(userJson.getString("image"));
                                 }
 
-                                if (userJson.has("city")) {
+                                if (userJson.has("city") && !userJson.isNull("city")) {
                                     JSONObject jsonCity = userJson.getJSONObject("city");
                                     if (jsonCity.has("name")) {
                                         mUserObj.setCity(jsonCity.getString("name"));

@@ -27,12 +27,14 @@ import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import com.dtmweb.etrendapp.MainActivity;
 import com.dtmweb.etrendapp.R;
 import com.dtmweb.etrendapp.adapters.ProductGridAdapter;
 import com.dtmweb.etrendapp.apis.RequestAsyncTask;
 import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
 import com.dtmweb.etrendapp.interfaces.DialogCallback;
+import com.dtmweb.etrendapp.models.ImageObject;
 import com.dtmweb.etrendapp.models.PlaceObject;
 import com.dtmweb.etrendapp.models.ProductObject;
 import com.dtmweb.etrendapp.models.StoreObject;
@@ -127,6 +129,12 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         afterClickImage();
+                    }
+                });
+                btn_add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((MainActivity) mContext).addFrag(Constants.FRAG_ADD_PRODUCT, null);
                     }
                 });
                 break;
@@ -243,12 +251,35 @@ public class ProfileFragment extends Fragment {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonProduct = jsonArray.getJSONObject(i);
                                 ProductObject productObject = new ProductObject();
-                                productObject.setId(jsonProduct.getString("id"));
-                                productObject.setTitle(jsonProduct.getString("title"));
-                                productObject.setShort_description(jsonProduct.getString("short_description"));
-                                productObject.setIs_favourite(jsonProduct.getString("is_favourite"));
-                                productObject.setLowest_price(jsonProduct.getString("lowest_price"));
-                                productObject.setImage_url(jsonProduct.getString("image_url"));
+                                if (jsonProduct.has("id")) {
+                                    productObject.setId(jsonProduct.getString("id"));
+                                }
+                                if (jsonProduct.has("title")) {
+                                    productObject.setTitle(jsonProduct.getString("title"));
+                                }
+                                if (jsonProduct.has("details")) {
+                                    productObject.setDetails(jsonProduct.getString("details"));
+                                }
+                                if (jsonProduct.has("is_fav")) {
+                                    productObject.setIs_favourite(jsonProduct.getString("is_fav"));
+                                }
+                                if (jsonProduct.has("discounted_price")) {
+                                    productObject.setDiscounted_price(jsonProduct.getString("discounted_price"));
+                                }
+                                if (jsonProduct.has("images")) {
+                                    JSONArray imagesArray = jsonProduct.getJSONArray("images");
+                                    List<ImageObject> images = new ArrayList<>();
+                                    for (int j = 0; j < imagesArray.length(); j++) {
+                                        JSONObject jsonObjectImage = imagesArray.getJSONObject(j);
+                                        ImageObject image = new ImageObject();
+                                        image.setId(jsonObjectImage.getString("id"));
+                                        image.setUrl(jsonObjectImage.getString("image"));
+                                        images.add(image);
+                                    }
+                                    productObject.setImages(images);
+
+                                }
+
 
                                 mListProduct.add(productObject);
                             }

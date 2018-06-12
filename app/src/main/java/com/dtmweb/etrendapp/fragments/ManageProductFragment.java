@@ -44,7 +44,7 @@ public class ManageProductFragment extends Fragment {
         gridview = (GridView) root.findViewById(R.id.gridview);
         btn_add = (Button) root.findViewById(R.id.btn_add);
         mContext = getActivity();
-        populateList();
+        //populateList();
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

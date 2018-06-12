@@ -34,5 +34,8 @@ dependencies {
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     //for image
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //horizontal list
+    compile project(':devsmartAndroid')
+
 
 }

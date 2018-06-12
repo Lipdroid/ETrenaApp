@@ -1,0 +1,2 @@
+com.devsmart.android.test
+int drawable icon 0x7f010000

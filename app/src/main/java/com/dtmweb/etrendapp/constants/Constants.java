@@ -70,13 +70,10 @@ public class Constants {
     public static final int REQUEST_GET_STORE_PRODUCT_LIST = 14;
     public static final int REQUEST_GET_SUBSCRIPTION_RATE = 15;
     public static final int REQUEST_UPDATE_COVER_PHOTO = 16;
-    public static final int REQUEST_GET_FAVURITE_LIST_BUYER = 17;
-    public static final int REQUEST_GET_FAVURITE_LIST_SELLER = 18;
-    public static final int REQUEST_ADD_IN_FAV_LIST_SELLER = 19;
-    public static final int REQUEST_GET_FAVURITE_LIST = 20;
-
-    public static final int REQUEST_ADD_IN_FAV_LIST_BUYER = 21;
-    public static final int REQUEST_REMOVE_FROM_FAV_LIST_BUYER = 22;
+    public static final int REQUEST_GET_FAVURITE_LIST = 17;
+    public static final int REQUEST_ADD_IN_FAV_LIST = 18;
+    public static final int REQUEST_REMOVE_FROM_FAV_LIST = 19;
+    public static final int REQUEST_UPLOAD_PRODUCT_IMAGE = 20;
 
 
     //params

@@ -3,17 +3,52 @@ package com.dtmweb.etrendapp.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by mdmunirhossain on 3/13/18.
  */
 
 public class ProductObject implements Parcelable {
     private String id = null;
-    private String image_url = null;
     private String title = null;
-    private String short_description = null;
-    private String is_favourite = null;
-    private String lowest_price = null;
+    private String details = null;
+    private String discounted_price = null;
+    private List<ImageObject> images = null;
+    private String is_favourite = "false";
+    private String favourite_id = null;
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public String getDiscounted_price() {
+        return discounted_price;
+    }
+
+    public void setDiscounted_price(String discounted_price) {
+        this.discounted_price = discounted_price;
+    }
+
+    public List<ImageObject> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ImageObject> images) {
+        this.images = images;
+    }
+
+    public String getFavourite_id() {
+        return favourite_id;
+    }
+
+    public void setFavourite_id(String favourite_id) {
+        this.favourite_id = favourite_id;
+    }
 
     public String getId() {
         return id;
@@ -21,14 +56,6 @@ public class ProductObject implements Parcelable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getImage_url() {
-        return image_url;
-    }
-
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
     }
 
     public String getTitle() {
@@ -39,28 +66,12 @@ public class ProductObject implements Parcelable {
         this.title = title;
     }
 
-    public String getShort_description() {
-        return short_description;
-    }
-
-    public void setShort_description(String short_description) {
-        this.short_description = short_description;
-    }
-
     public String getIs_favourite() {
         return is_favourite;
     }
 
     public void setIs_favourite(String is_favourite) {
         this.is_favourite = is_favourite;
-    }
-
-    public String getLowest_price() {
-        return lowest_price;
-    }
-
-    public void setLowest_price(String lowest_price) {
-        this.lowest_price = lowest_price;
     }
 
     protected ProductObject(Parcel in) {

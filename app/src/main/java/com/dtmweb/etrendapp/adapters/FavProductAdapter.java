@@ -17,6 +17,7 @@ import com.dtmweb.etrendapp.apis.RequestAsyncTask;
 import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.holders.FavProductHolder;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
+import com.dtmweb.etrendapp.models.ImageObject;
 import com.dtmweb.etrendapp.models.ProductObject;
 import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.MultipleScreen;
@@ -84,13 +85,16 @@ public class FavProductAdapter extends BaseAdapter {
 
         ProductObject productObject = mListData.get(position);
         mHolder.tv_title.setText(productObject.getTitle());
-        mHolder.tv_description.setText(productObject.getShort_description());
-        mHolder.tv_price.setText("SAR " + productObject.getLowest_price());
-        Picasso.get()
-                .load(productObject.getImage_url())
-                .placeholder(R.color.common_gray)
-                .error(R.color.common_gray)
-                .into(mHolder.product_image);
+        mHolder.tv_description.setText(productObject.getDetails());
+        mHolder.tv_price.setText("SAR " + productObject.getDiscounted_price());
+        if (productObject.getImages().size() > 0) {
+            ImageObject image = productObject.getImages().get(0);
+            Picasso.get()
+                    .load(image.getUrl())
+                    .placeholder(R.color.common_gray)
+                    .error(R.color.common_gray)
+                    .into(mHolder.product_image);
+        }
 
         setListenersForViews(position);
         return convertView;
@@ -102,22 +106,17 @@ public class FavProductAdapter extends BaseAdapter {
             public void onClick(View view) {
                 //remove from list
                 ProductObject productObject = mListData.get(position);
-                if (GlobalUtils.getCurrentUser().getUser_type().equals(Constants.CATEGORY_BUYER)) {
-                    removeProductFromFavListBuyer(productObject.getId());
-                } else {
-                    //toogle update the product is favourite
-                    String is_fav = "false";
-                    requestToggleFav(is_fav, productObject.getId());
-                }
+                removeProductFromFavListBuyer(productObject.getId());
+
             }
         });
     }
 
-    private void removeProductFromFavListBuyer(final String product_id) {
+    private void removeProductFromFavListBuyer(final String fav_id) {
         final HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.PARAM_PRODUCT_ID, product_id);
+        params.put(Constants.PARAM_PRODUCT_ID, fav_id);
 
-        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REMOVE_FROM_FAV_LIST_BUYER, params, new AsyncCallback() {
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REMOVE_FROM_FAV_LIST, params, new AsyncCallback() {
             @SuppressLint("LongLogTag")
             @Override
             public void done(String result) {
@@ -131,7 +130,7 @@ public class FavProductAdapter extends BaseAdapter {
                         //if not error remove
                         for (ProductObject product : mListData
                                 ) {
-                            if (product.getId().equals(product_id)) {
+                            if (product.getFavourite_id().equals(fav_id)) {
                                 //remove the product and refresh the list
                                 mListData.remove(product);
                                 notifyDataSetChanged();
@@ -182,69 +181,6 @@ public class FavProductAdapter extends BaseAdapter {
         });
 
         mRequestAsync.execute();
-
-    }
-
-    private void requestToggleFav(final String is_fav, final String product_id) {
-        final HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.PARAM_IS_FAVOURITE, is_fav);
-        params.put(Constants.PARAM_PRODUCT_ID, product_id);
-
-        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_ADD_IN_FAV_LIST_SELLER, params, new AsyncCallback() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void done(String result) {
-                GlobalUtils.dismissLoadingProgress();
-                Log.e("update favourite", result);
-                if (result != null) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        //parse errors
-                        parseErrors(params, jsonObject);
-                        //if not error then update
-                        for (ProductObject product : mListData
-                                ) {
-                            if (product.getId().equals(product_id)) {
-                                //toogle update the product is favourite
-                                //remove the product and refresh the list
-                                mListData.remove(product);
-                                notifyDataSetChanged();
-                            }
-
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
-
-                }
-
-
-            }
-
-            @Override
-            public void progress() {
-                GlobalUtils.showLoadingProgress(mContext);
-            }
-
-            @Override
-            public void onInterrupted(Exception e) {
-                GlobalUtils.dismissLoadingProgress();
-
-            }
-
-            @Override
-            public void onException(Exception e) {
-
-                GlobalUtils.dismissLoadingProgress();
-
-            }
-        });
-
-        mRequestAsync.execute();
-
 
     }
 

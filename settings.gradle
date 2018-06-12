@@ -1,1 +1,3 @@
 include ':app'
+include ':devsmartAndroid'
+project(':devsmartAndroid').projectDir = new File('/Users/lipuhossain/Documents/AndroidProjects/ETrenaApp/devsmartAndroid')
