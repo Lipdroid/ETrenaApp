@@ -49,12 +49,13 @@ public class BrowseProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_browse_product, container, false);
+        mContext = getActivity();
+
         if (getArguments().getString(String.class.toString()) != null) {
             category = getArguments().getString(String.class.toString());
             requestProductsApi(category);
         }
         gridview = (GridView) root.findViewById(R.id.gridview);
-        mContext = getActivity();
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;

@@ -74,6 +74,8 @@ public class Constants {
     public static final int REQUEST_ADD_IN_FAV_LIST = 18;
     public static final int REQUEST_REMOVE_FROM_FAV_LIST = 19;
     public static final int REQUEST_UPLOAD_PRODUCT_IMAGE = 20;
+    public static final int REQUEST_UPDATE_USER = 21;
+    public static final int REQUEST_UPDATE_STORE = 22;
 
 
     //params

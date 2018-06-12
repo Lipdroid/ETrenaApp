@@ -112,9 +112,9 @@ public class FavProductAdapter extends BaseAdapter {
         });
     }
 
-    private void removeProductFromFavListBuyer(final String fav_id) {
+    private void removeProductFromFavListBuyer(final String product_id) {
         final HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.PARAM_PRODUCT_ID, fav_id);
+        params.put(Constants.PARAM_PRODUCT_ID, product_id);
 
         RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REMOVE_FROM_FAV_LIST, params, new AsyncCallback() {
             @SuppressLint("LongLogTag")
@@ -122,40 +122,20 @@ public class FavProductAdapter extends BaseAdapter {
             public void done(String result) {
                 GlobalUtils.dismissLoadingProgress();
                 Log.e("remove favourite", result);
-                if (result != null) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        //parse errors
-                        parseErrors(params, jsonObject);
-                        //if not error remove
-                        for (ProductObject product : mListData
-                                ) {
-                            if (product.getFavourite_id().equals(fav_id)) {
-                                //remove the product and refresh the list
-                                mListData.remove(product);
-                                notifyDataSetChanged();
-                            }
-
+                try {
+                    //if not error remove
+                    for (ProductObject product : mListData
+                            ) {
+                        if (product.getId().equals(product_id)) {
+                            //remove the product and refresh the list
+                            mListData.remove(product);
+                            notifyDataSetChanged();
                         }
-//                        JSONArray jsonArray = jsonObject.getJSONArray(Constants.DATA);
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            JSONObject json = jsonArray.getJSONObject(i);
-//                            JSONObject jsonProduct = json.getJSONObject("product");
-//                            ProductObject productObject = new ProductObject();
-//                            productObject.setId(jsonProduct.getString("id"));
-//                            productObject.setTitle(jsonProduct.getString("title"));
-//                            productObject.setShort_description(jsonProduct.getString("short_description"));
-//                            productObject.setIs_favourite(jsonProduct.getString("is_favourite"));
-//                            productObject.setLowest_price(jsonProduct.getString("lowest_price"));
-//                            productObject.setImage_url(jsonProduct.getString("image_url"));
-//                        }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                } else {
-                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
 
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
 

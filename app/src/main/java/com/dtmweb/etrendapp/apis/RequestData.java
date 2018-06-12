@@ -182,9 +182,12 @@ public class RequestData {
                 mRestType = Constants.REST_GET;
                 REQUEST_DATA_URL = UrlConstants.PRODUCTS_URL
                         + "?" + Constants.PARAM_CATEGORY + "=" + parameters.get(Constants.PARAM_CATEGORY);
-                GlobalUtils.addAditionalHeader = true;
-                GlobalUtils.additionalHeaderTag = "Authorization";
-                GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+                String token = SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+                if (token != null) {
+                    GlobalUtils.addAditionalHeader = true;
+                    GlobalUtils.additionalHeaderTag = "Authorization";
+                    GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+                }
                 break;
             case Constants.REQUEST_GET_PRODUCT_DETAILS:
                 mRestType = Constants.REST_GET;
@@ -233,14 +236,6 @@ public class RequestData {
                 GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
                 break;
 
-            case Constants.REQUEST_SELLER_PROFILE:
-                mRestType = Constants.REST_GET;
-                REQUEST_DATA_URL = UrlConstants.URL_SELLER_PROFILE;
-
-                GlobalUtils.addAditionalHeader = true;
-                GlobalUtils.additionalHeaderTag = "Authorization";
-                GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
-                break;
 
             case Constants.REQUEST_LOGOUT:
                 mRestType = Constants.REST_POST;
@@ -309,6 +304,73 @@ public class RequestData {
                 GlobalUtils.addAditionalHeader = true;
                 GlobalUtils.additionalHeaderTag = "Authorization";
                 GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+                break;
+
+            case Constants.REQUEST_UPDATE_USER:
+                mRestType = Constants.REST_PATCH;
+                REQUEST_DATA_URL = UrlConstants.URL_UPDATE_USER;
+
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_PHONE,
+                        (String) parameters.get(Constants.PARAM_PHONE)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_STORE_NAME,
+                        (String) parameters.get(Constants.PARAM_STORE_NAME)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_INSTAGRAM,
+                        (String) parameters.get(Constants.PARAM_INSTAGRAM)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ADDRESS,
+                        (String) parameters.get(Constants.PARAM_ADDRESS)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_CITY,
+                        (String) parameters.get(Constants.PARAM_CITY)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_COUNTRY,
+                        (String) parameters.get(Constants.PARAM_COUNTRY)));
+
+                if (parameters.containsKey(Constants.PARAM_IMG)) {
+                    // create hash map to save avatar bitmap
+                    Map.Entry<String, Bitmap> hashIcon = new Map.Entry<String, Bitmap>() {
+
+                        @Override
+                        public String getKey() {
+                            // TODO Auto-generated method stub
+                            return Constants.PARAM_IMG;
+                        }
+
+                        @Override
+                        public Bitmap getValue() {
+                            // TODO Auto-generated method stub
+                            return (Bitmap) parameters.get(Constants.PARAM_IMG);
+                        }
+
+                        @Override
+                        public Bitmap setValue(Bitmap object) {
+                            // TODO Auto-generated method stub
+                            return (Bitmap) parameters.get(Constants.PARAM_IMG);
+                        }
+                    };
+
+                    bitmapParams.add(hashIcon);
+                }
+                GlobalUtils.addAditionalHeader = true;
+                GlobalUtils.additionalHeaderTag = "Authorization";
+                GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+                break;
+
+            case Constants.REQUEST_UPDATE_STORE:
+                mRestType = Constants.REST_PATCH;
+                REQUEST_DATA_URL = UrlConstants.URL_UPDATE_STORE;
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_STORE_NAME,
+                        (String) parameters.get(Constants.PARAM_STORE_NAME)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ACC_NAME,
+                        (String) parameters.get(Constants.PARAM_ACC_NAME)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_BANK_NAME,
+                        (String) parameters.get(Constants.PARAM_BANK_NAME)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ACC_NAME,
+                        (String) parameters.get(Constants.PARAM_ACC_NAME)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ACC_NUMBER,
+                        (String) parameters.get(Constants.PARAM_ACC_NUMBER)));
+
+                GlobalUtils.addAditionalHeader = true;
+                GlobalUtils.additionalHeaderTag = "Authorization";
+                GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+
                 break;
 
 
