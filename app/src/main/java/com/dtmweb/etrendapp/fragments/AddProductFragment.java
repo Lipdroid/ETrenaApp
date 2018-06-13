@@ -495,6 +495,13 @@ public class AddProductFragment extends Fragment implements View.OnClickListener
 
                             }
 
+                            if(jsonProduct.has("store")){
+                                JSONObject jsonStore = jsonProduct.getJSONObject("store");
+                                productObject.setStore_id(jsonStore.getString("id"));
+                                productObject.setStore_name(jsonStore.getString("name"));
+
+                            }
+
 
                             if (jsonProduct.has("attribute_value")) {
                                 JSONArray attrArray = jsonProduct.getJSONArray("attribute_value");

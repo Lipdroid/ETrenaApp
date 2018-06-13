@@ -410,6 +410,18 @@ public class RequestData {
 
                 break;
 
+            case Constants.REQUEST_GET_PRODUCT:
+                mRestType = Constants.REST_GET;
+                REQUEST_DATA_URL = UrlConstants.URL_GET_PRODUCT
+                        + parameters.get(Constants.PARAM_PRODUCT_ID) + "/";
+                token = SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+                if (token != null) {
+                    GlobalUtils.addAditionalHeader = true;
+                    GlobalUtils.additionalHeaderTag = "Authorization";
+                    GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+                }
+                break;
+
 
 //
 //            case Constants.REQUEST_SUBMIT_POST:

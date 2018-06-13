@@ -27,7 +27,7 @@
         android:layout_weight="1"
         android:editable="false"
         android:fontFamily="@font/raleway"
-        android:hint="SIZE"
+        android:hint="QUANTITY"
         android:background="@null"
         android:paddingLeft="0px"
         android:tag="45"

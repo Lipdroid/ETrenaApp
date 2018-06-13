@@ -16,4 +16,5 @@ public class ImageHolder {
     public ImageView image = null;
     public EditText et_attribute = null;
     public ImageView btn_cross = null;
+    public CircleImageView image_circle = null;
 }

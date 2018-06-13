@@ -128,7 +128,8 @@ public class ProductGridAdapter extends BaseAdapter {
         mHolder.main_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) mContext).addFrag(Constants.FRAG_PRODUCT_DETAILS, null);
+                ProductObject productObject = mListData.get(position);
+                ((MainActivity) mContext).addFrag(Constants.FRAG_PRODUCT_DETAILS, productObject.getId());
 
             }
         });

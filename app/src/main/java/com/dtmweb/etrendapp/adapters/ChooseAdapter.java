@@ -74,6 +74,9 @@ public class ChooseAdapter extends BaseAdapter {
         }else if(object instanceof CategoryObject){
             CategoryObject categoryObject = (CategoryObject) object;
             mHolder.tv_name.setText(categoryObject.getName());
+        }else if (object instanceof String){
+            String data = (String)object;
+            mHolder.tv_name.setText(data);
         }
         return convertView;
     }

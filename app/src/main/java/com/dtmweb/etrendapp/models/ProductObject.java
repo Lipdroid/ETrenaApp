@@ -22,6 +22,24 @@ public class ProductObject implements Parcelable {
     private String quantity = null;
     private List<String> attributeValues = null;
     private List<ImageObject> images = null;
+    private String store_id = null;
+    private String store_name = null;
+
+    public String getStore_id() {
+        return store_id;
+    }
+
+    public void setStore_id(String store_id) {
+        this.store_id = store_id;
+    }
+
+    public String getStore_name() {
+        return store_name;
+    }
+
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
+    }
 
     public String getWeight() {
         return weight;

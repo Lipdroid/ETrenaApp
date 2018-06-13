@@ -66,6 +66,16 @@ public class ChoosenActivity extends AppCompatActivity implements View.OnClickLi
         } else if (mType == Constants.TYPE_CATEGORY) {
             header_title.setText("Choose Category");
             requestCategories();
+        } else if (mType == Constants.TYPE_ATTRIBUTE) {
+            header_title.setText("Choose");
+            ArrayList<String> extra = getIntent().getExtras().getStringArrayList("list");
+            mListData = new ArrayList<>();
+            for (Object dataObj : extra
+                    ) {
+                mListData.add(dataObj);
+
+            }
+            populateList(mListData);
         }
 
         mCorrectSize = CorrectSizeUtil.getInstance(this);
@@ -94,7 +104,7 @@ public class ChoosenActivity extends AppCompatActivity implements View.OnClickLi
                                 categoryObject.setName(jsonCategory.getString("name"));
                                 categoryObject.setIcon(jsonCategory.getString("icon"));
 
-                                if(jsonCategory.has("attribute")){
+                                if (jsonCategory.has("attribute")) {
                                     JSONObject jsonAttr = jsonCategory.getJSONObject("attribute");
                                     categoryObject.setAttribute_id(jsonAttr.getString("id"));
                                     categoryObject.setAttribute_name(jsonAttr.getString("name"));
@@ -157,6 +167,8 @@ public class ChoosenActivity extends AppCompatActivity implements View.OnClickLi
                     CategoryObject categoryObject = (CategoryObject) selectedFromList;
                     i.putExtra(CategoryObject.class.toString(),
                             categoryObject);
+                } else if(selectedFromList instanceof String){
+                    i.putExtra("attribute",(String)selectedFromList);
                 }
                 setResult(Activity.RESULT_OK, i);
                 finish();

@@ -54,6 +54,7 @@ public class Constants {
     public static final int TYPE_COUNTRY = 0;
     public static final int TYPE_CITY = 1;
     public static final int TYPE_CATEGORY = 2;
+    public static final int TYPE_ATTRIBUTE = 3;
 
 
     //Requests
@@ -80,6 +81,7 @@ public class Constants {
     public static final int REQUEST_UPDATE_USER = 21;
     public static final int REQUEST_UPDATE_STORE = 22;
     public static final int REQUEST_CREATE_PRODUCT = 23;
+    public static final int REQUEST_GET_PRODUCT = 25;
 
 
     //params

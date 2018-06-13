@@ -30,4 +30,6 @@ public class UrlConstants {
 
 
     public static String URL_CREATE_PRODUCT = BASE_URL + "/api/v1/seller/products/";
+    public static String URL_GET_PRODUCT = BASE_URL + "/api/v1/products/";
+
 }

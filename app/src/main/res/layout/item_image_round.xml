@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/main_root"
+    android:layout_height="match_parent">
+
+    <com.dtmweb.etrendapp.customViews.CircleImageView
+        android:id="@+id/image"
+        android:layout_width="120px"
+        android:layout_marginRight="20px"
+        android:layout_marginTop="10px"
+        android:layout_marginBottom="10px"
+        android:layout_height="120px"/>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/btn_cross"
+        android:layout_width="55px"
+        android:layout_height="55px"
+        android:layout_marginLeft="115px"
+        android:layout_marginTop="-5px"
+        android:src="@drawable/black_cross"/>
+
+</RelativeLayout>

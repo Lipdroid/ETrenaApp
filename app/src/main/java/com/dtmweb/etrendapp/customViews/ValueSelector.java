@@ -52,6 +52,10 @@ public class ValueSelector extends RelativeLayout {
         });
     }
 
+    public void setCenterText(String text){
+        valueTextView.setText(text);
+    }
+
     private void incrementValue() {
         int currentVal = value;
         if (currentVal < maxValue) {

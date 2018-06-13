@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.dtmweb.etrendapp.R;
+import com.dtmweb.etrendapp.models.ImageObject;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by mdmunirhossain on 3/19/18.
@@ -19,14 +22,14 @@ import com.dtmweb.etrendapp.R;
 public class SlidingImage_Adapter extends PagerAdapter {
 
 
-    private ArrayList<Integer> IMAGES;
+    private List<ImageObject> images;
     private LayoutInflater inflater;
     private Context context;
 
 
-    public SlidingImage_Adapter(Context context, ArrayList<Integer> IMAGES) {
+    public SlidingImage_Adapter(Context context, List<ImageObject> images) {
         this.context = context;
-        this.IMAGES = IMAGES;
+        this.images = images;
         inflater = LayoutInflater.from(context);
     }
 
@@ -37,7 +40,7 @@ public class SlidingImage_Adapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return IMAGES.size();
+        return images.size();
     }
 
     @Override
@@ -48,8 +51,12 @@ public class SlidingImage_Adapter extends PagerAdapter {
         final ImageView imageView = (ImageView) imageLayout
                 .findViewById(R.id.image);
 
-
-        imageView.setImageResource(IMAGES.get(position));
+        ImageObject imageObject = images.get(position);
+        Picasso.get()
+                .load(imageObject.getUrl())
+                .placeholder(R.color.common_gray)
+                .error(R.color.common_gray)
+                .into(imageView);
 
         view.addView(imageLayout, 0);
 
