@@ -13,6 +13,7 @@ import com.dtmweb.etrendapp.R;
 import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.holders.FavProductHolder;
 import com.dtmweb.etrendapp.holders.PlaceHolder;
+import com.dtmweb.etrendapp.models.CategoryObject;
 import com.dtmweb.etrendapp.models.PlaceObject;
 import com.dtmweb.etrendapp.models.ProductObject;
 import com.dtmweb.etrendapp.utils.MultipleScreen;
@@ -26,7 +27,7 @@ import java.util.List;
 public class ChooseAdapter extends BaseAdapter {
     private Context mContext = null;
     private Activity mActivity = null;
-    private List<PlaceObject> mListData = null;
+    private List<Object> mListData = null;
     private PlaceHolder mHolder = null;
 
 
@@ -35,7 +36,7 @@ public class ChooseAdapter extends BaseAdapter {
         return mListData.size();
     }
 
-    public ChooseAdapter(Context mContext, List<PlaceObject> mListData) {
+    public ChooseAdapter(Context mContext, List<Object> mListData) {
         this.mContext = mContext;
         mActivity = (Activity) mContext;
         this.mListData = mListData;
@@ -66,9 +67,14 @@ public class ChooseAdapter extends BaseAdapter {
         } else {
             mHolder = (PlaceHolder) convertView.getTag();
         }
-
-        PlaceObject placeObject = mListData.get(position);
-        mHolder.tv_name.setText(placeObject.getName());
+        Object object = mListData.get(position);
+        if(object instanceof PlaceObject) {
+            PlaceObject placeObject = (PlaceObject)object;
+            mHolder.tv_name.setText(placeObject.getName());
+        }else if(object instanceof CategoryObject){
+            CategoryObject categoryObject = (CategoryObject) object;
+            mHolder.tv_name.setText(categoryObject.getName());
+        }
         return convertView;
     }
 }

@@ -14,9 +14,56 @@ public class ProductObject implements Parcelable {
     private String title = null;
     private String details = null;
     private String discounted_price = null;
-    private List<ImageObject> images = null;
     private String is_favourite = "false";
     private String favourite_id = null;
+    private CategoryObject categoryObject = null;
+    private String weight = null;
+    private String discount = null;
+    private String quantity = null;
+    private List<String> attributeValues = null;
+    private List<ImageObject> images = null;
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public List<String> getAttributeValues() {
+        return attributeValues;
+    }
+
+    public void setAttributeValues(List<String> attributeValues) {
+        this.attributeValues = attributeValues;
+    }
+
+
+
+    public CategoryObject getCategoryObject() {
+        return categoryObject;
+    }
+
+    public void setCategoryObject(CategoryObject categoryObject) {
+        this.categoryObject = categoryObject;
+    }
 
     public String getDetails() {
         return details;

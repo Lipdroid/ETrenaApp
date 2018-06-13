@@ -21,6 +21,7 @@ import com.dtmweb.etrendapp.adapters.ChooseAdapter;
 import com.dtmweb.etrendapp.apis.RequestAsyncTask;
 import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
+import com.dtmweb.etrendapp.models.CategoryObject;
 import com.dtmweb.etrendapp.models.PlaceObject;
 import com.dtmweb.etrendapp.models.ProductObject;
 import com.dtmweb.etrendapp.models.UserObject;
@@ -43,7 +44,7 @@ public class ChoosenActivity extends AppCompatActivity implements View.OnClickLi
     private ListView listView = null;
     private int mType = 2;
     private static final String TAG = "ChoosenActivity";
-    private List<PlaceObject> mListPlace = null;
+    private List<Object> mListData = null;
     private ChooseAdapter adapter = null;
 
     @Override
@@ -53,7 +54,7 @@ public class ChoosenActivity extends AppCompatActivity implements View.OnClickLi
         mContext = this;
         findViews();
         initListenersForViews();
-        mType = getIntent().getIntExtra(Integer.class.toString(), 2);
+        mType = getIntent().getIntExtra(Integer.class.toString(), 3);
 
         if (mType == Constants.TYPE_CITY) {
             header_title.setText("Choose City");
@@ -62,27 +63,108 @@ public class ChoosenActivity extends AppCompatActivity implements View.OnClickLi
         } else if (mType == Constants.TYPE_COUNTRY) {
             header_title.setText("Choose Country");
             requestForCountries();
+        } else if (mType == Constants.TYPE_CATEGORY) {
+            header_title.setText("Choose Category");
+            requestCategories();
         }
 
         mCorrectSize = CorrectSizeUtil.getInstance(this);
         mCorrectSize.correctSize();
     }
 
+    private void requestCategories() {
+        final HashMap<String, Object> params = new HashMap<String, Object>();
+
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_GET_CATEGORY, params, new AsyncCallback() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void done(String result) {
+                GlobalUtils.dismissLoadingProgress();
+                Log.e("CategoryFragment", result);
+                if (result != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        if (jsonObject.has(Constants.DATA)) {
+                            mListData = new ArrayList<>();
+                            JSONArray jsonArray = jsonObject.getJSONArray(Constants.DATA);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonCategory = jsonArray.getJSONObject(i);
+                                CategoryObject categoryObject = new CategoryObject();
+                                categoryObject.setId(jsonCategory.getString("id"));
+                                categoryObject.setName(jsonCategory.getString("name"));
+                                categoryObject.setIcon(jsonCategory.getString("icon"));
+
+                                if(jsonCategory.has("attribute")){
+                                    JSONObject jsonAttr = jsonCategory.getJSONObject("attribute");
+                                    categoryObject.setAttribute_id(jsonAttr.getString("id"));
+                                    categoryObject.setAttribute_name(jsonAttr.getString("name"));
+                                }
+
+                                mListData.add(categoryObject);
+                            }
+                            populateList(mListData);
+
+                        } else {
+                            //parse errors
+                            GlobalUtils.parseErrors(mContext, params, jsonObject);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
+
+                }
+
+
+            }
+
+            @Override
+            public void progress() {
+                GlobalUtils.showLoadingProgress(mContext);
+            }
+
+            @Override
+            public void onInterrupted(Exception e) {
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+        });
+
+        mRequestAsync.execute();
+    }
+
+
     private void initListenersForViews() {
         btn_left_back.setOnClickListener(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                PlaceObject selectedFromList = mListPlace.get(pos);
+                Object selectedFromList = mListData.get(pos);
                 Intent i = new Intent();
-                i.putExtra(PlaceObject.class.toString(),
-                        selectedFromList);
+                if (selectedFromList instanceof PlaceObject) {
+                    PlaceObject placeObject = (PlaceObject) selectedFromList;
+                    i.putExtra(PlaceObject.class.toString(),
+                            placeObject);
+                } else if (selectedFromList instanceof CategoryObject) {
+                    CategoryObject categoryObject = (CategoryObject) selectedFromList;
+                    i.putExtra(CategoryObject.class.toString(),
+                            categoryObject);
+                }
                 setResult(Activity.RESULT_OK, i);
                 finish();
                 overridePendingTransition(R.anim.anim_slide_in_bottom,
                         R.anim.anim_slide_out_bottom);
             }
         });
+
 
     }
 
@@ -120,16 +202,16 @@ public class ChoosenActivity extends AppCompatActivity implements View.OnClickLi
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         if (jsonObject.has(Constants.DATA)) {
-                            mListPlace = new ArrayList<>();
+                            mListData = new ArrayList<>();
                             JSONArray jsonArray = jsonObject.getJSONArray(Constants.DATA);
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonCountry = jsonArray.getJSONObject(i);
                                 PlaceObject placeObject = new PlaceObject();
                                 placeObject.setId(jsonCountry.getString("id"));
                                 placeObject.setName(jsonCountry.getString("name"));
-                                mListPlace.add(placeObject);
+                                mListData.add(placeObject);
                             }
-                            populateList(mListPlace);
+                            populateList(mListData);
 
                         } else {
                             //parse errors
@@ -183,16 +265,16 @@ public class ChoosenActivity extends AppCompatActivity implements View.OnClickLi
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         if (jsonObject.has(Constants.DATA)) {
-                            mListPlace = new ArrayList<>();
+                            mListData = new ArrayList<>();
                             JSONArray jsonArray = jsonObject.getJSONArray(Constants.DATA);
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonCity = jsonArray.getJSONObject(i);
                                 PlaceObject placeObject = new PlaceObject();
                                 placeObject.setId(jsonCity.getString("id"));
                                 placeObject.setName(jsonCity.getString("name"));
-                                mListPlace.add(placeObject);
+                                mListData.add(placeObject);
                             }
-                            populateList(mListPlace);
+                            populateList(mListData);
 
                         } else {
                             //parse errors
@@ -233,8 +315,8 @@ public class ChoosenActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    private void populateList(List<PlaceObject> mListPlace) {
-        adapter = new ChooseAdapter(mContext, mListPlace);
+    private void populateList(List<Object> mListData) {
+        adapter = new ChooseAdapter(mContext, mListData);
         listView.setAdapter(adapter);
     }
 }

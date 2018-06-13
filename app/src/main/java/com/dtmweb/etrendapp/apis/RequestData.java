@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -366,6 +367,42 @@ public class RequestData {
                         (String) parameters.get(Constants.PARAM_ACC_NAME)));
                 nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ACC_NUMBER,
                         (String) parameters.get(Constants.PARAM_ACC_NUMBER)));
+
+                GlobalUtils.addAditionalHeader = true;
+                GlobalUtils.additionalHeaderTag = "Authorization";
+                GlobalUtils.additionalHeaderValue = "JWT " + SharedPreferencesUtils.getString(mContex, Constants.PREF_TOKEN, null);
+
+                break;
+
+            case Constants.REQUEST_CREATE_PRODUCT:
+                mRestType = Constants.REST_POST;
+                REQUEST_DATA_URL = UrlConstants.URL_CREATE_PRODUCT;
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_TITLE,
+                        (String) parameters.get(Constants.PARAM_TITLE)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_DETAILS,
+                        (String) parameters.get(Constants.PARAM_DETAILS)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_PRICE,
+                        (String) parameters.get(Constants.PARAM_PRICE)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_DISCOUNT_PRICE,
+                        (String) parameters.get(Constants.PARAM_DISCOUNT_PRICE)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_QUANTITY,
+                        (String) parameters.get(Constants.PARAM_QUANTITY)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ATTRIBUTE,
+                        (String) parameters.get(Constants.PARAM_ATTRIBUTE)));
+
+                List<String> attribute = (List<String>) parameters.get(Constants.PARAM_ATTRIBUTE_VALUE);
+                for (int i = 0; i < attribute.size(); i++) {
+                    nameValueParams.add(new BasicNameValuePair(Constants.PARAM_ATTRIBUTE_VALUE + "[" + i + "]", attribute.get(i)));
+                }
+
+                List<String> images = (List<String>) parameters.get(Constants.PARAM_IMAGES);
+                for (int i = 0; i < images.size(); i++) {
+                    nameValueParams.add(new BasicNameValuePair(Constants.PARAM_IMAGES + "[" + i + "]", images.get(i)));
+                }
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_CATEGORY,
+                        (String) parameters.get(Constants.PARAM_CATEGORY)));
+                nameValueParams.add(new BasicNameValuePair(Constants.PARAM_WEIGHT,
+                        (String) parameters.get(Constants.PARAM_WEIGHT)));
 
                 GlobalUtils.addAditionalHeader = true;
                 GlobalUtils.additionalHeaderTag = "Authorization";

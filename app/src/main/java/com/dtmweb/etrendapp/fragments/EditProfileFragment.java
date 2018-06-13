@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -145,16 +146,20 @@ public class EditProfileFragment extends Fragment {
                             updateProfile();
                         }
                     });
-                    et_city.setOnClickListener(new View.OnClickListener() {
+                    et_country.setOnTouchListener(new View.OnTouchListener() {
                         @Override
-                        public void onClick(View view) {
-                            afterClickCity();
+                        public boolean onTouch(View view, MotionEvent motionEvent) {
+                            if (motionEvent.getAction() == MotionEvent.ACTION_UP)
+                                afterClickCountry();
+                            return false;
                         }
                     });
-                    et_country.setOnClickListener(new View.OnClickListener() {
+                    et_city.setOnTouchListener(new View.OnTouchListener() {
+
                         @Override
-                        public void onClick(View view) {
-                            afterClickCountry();
+                        public boolean onTouch(View view, MotionEvent motionEvent) {
+                            if (motionEvent.getAction() == MotionEvent.ACTION_UP) afterClickCity();
+                            return false;
                         }
                     });
                 }
@@ -203,7 +208,7 @@ public class EditProfileFragment extends Fragment {
                     if (mStoreObj != null) {
                         setUpStoreView();
 
-                    }else{
+                    } else {
                         //get the store
                         requestToGetStoreInfo();
                     }
@@ -221,18 +226,21 @@ public class EditProfileFragment extends Fragment {
                         afterClickImage();
                     }
                 });
-                et_city.setOnClickListener(new View.OnClickListener() {
+                et_country.setOnTouchListener(new View.OnTouchListener() {
                     @Override
-                    public void onClick(View view) {
-                        afterClickCity();
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        if (motionEvent.getAction() == MotionEvent.ACTION_UP) afterClickCountry();
+                        return false;
                     }
                 });
-                et_country.setOnClickListener(new View.OnClickListener() {
+                et_city.setOnTouchListener(new View.OnTouchListener() {
                     @Override
-                    public void onClick(View view) {
-                        afterClickCountry();
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        if (motionEvent.getAction() == MotionEvent.ACTION_UP) afterClickCity();
+                        return false;
                     }
                 });
+
                 btn_go.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -697,6 +705,7 @@ public class EditProfileFragment extends Fragment {
         }
 
     }
+
     private void requestToGetStoreInfo() {
         final HashMap<String, Object> params = new HashMap<String, Object>();
 

@@ -29,4 +29,5 @@ public class UrlConstants {
     public static final String URL_UPDATE_STORE = BASE_URL + "/api/v1/seller/store/";
 
 
+    public static String URL_CREATE_PRODUCT = BASE_URL + "/api/v1/seller/products/";
 }

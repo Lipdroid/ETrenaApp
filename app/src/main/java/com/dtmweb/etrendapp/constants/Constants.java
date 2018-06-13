@@ -47,11 +47,14 @@ public class Constants {
     public static final int REST_DELETE = 3;
     public static int REST_PATCH = 4;
 
+
     public static final int TIME_OUT = 30000;
 
     public static final String PARAM_JSON_DATA = "jsonData";
     public static final int TYPE_COUNTRY = 0;
     public static final int TYPE_CITY = 1;
+    public static final int TYPE_CATEGORY = 2;
+
 
     //Requests
     public static final int REQUEST_REGISTER_USER = 1;
@@ -76,6 +79,7 @@ public class Constants {
     public static final int REQUEST_UPLOAD_PRODUCT_IMAGE = 20;
     public static final int REQUEST_UPDATE_USER = 21;
     public static final int REQUEST_UPDATE_STORE = 22;
+    public static final int REQUEST_CREATE_PRODUCT = 23;
 
 
     //params
@@ -104,6 +108,15 @@ public class Constants {
     public static final String PARAM_COVER_IMAGE = "cover_photo";
     public static final String PARAM_IS_FAVOURITE = "is_favourite";
     public static final String PARAM_PRODUCT = "product";
+    public static final String PARAM_TITLE = "title";
+    public static final String PARAM_PRICE = "price";
+    public static final String PARAM_DISCOUNT_PRICE = "discount";
+    public static final String PARAM_QUANTITY = "quantity";
+    public static final String PARAM_DETAILS = "details";
+    public static final String PARAM_ATTRIBUTE = "attribute";
+    public static final String PARAM_WEIGHT = "weight";
+    public static final String PARAM_ATTRIBUTE_VALUE = "attribute_value";
+    public static final String PARAM_IMAGES = "images";
 
     //prefs
     public static final String PREF_TOKEN = "prefs_token";

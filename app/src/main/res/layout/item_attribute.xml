@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/main_root"
+        android:layout_width="500px"
+        android:layout_marginTop="10px"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20px">
+
+        <EditText
+            android:id="@+id/et_attribute"
+            android:layout_width="975px"
+            android:layout_height="105px"
+            android:editable="false"
+            android:background="@drawable/gray_rounded_corner"
+            android:fontFamily="@font/roboto"
+            android:hint=""
+            android:paddingLeft="30px"
+            android:tag="45"
+            android:textColor="@color/colorAccent"
+            android:textSize="45px"
+            android:typeface="normal" />
+
+
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/btn_cross"
+        android:layout_width="55px"
+        android:layout_height="55px"
+        android:layout_marginLeft="470px"
+        android:layout_marginTop="-10px"
+        android:src="@drawable/black_cross"/>
+</RelativeLayout>

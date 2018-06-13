@@ -16,6 +16,7 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/et_title"
                 android:layout_width="975px"
                 android:layout_height="105px"
                 android:layout_marginTop="50px"
@@ -36,12 +37,14 @@
                 android:weightSum="2">
 
                 <RelativeLayout
+                    android:id="@+id/btn_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10px"
                     android:layout_weight="1">
 
                     <EditText
+                        android:id="@+id/et_category"
                         android:layout_width="975px"
                         android:layout_height="105px"
                         android:background="@drawable/gray_rounded_corner"
@@ -79,10 +82,10 @@
                     android:layout_weight="1">
 
                     <EditText
+                        android:id="@+id/et_price"
                         android:layout_width="975px"
                         android:layout_height="105px"
                         android:background="@drawable/gray_rounded_corner"
-                        android:editable="false"
                         android:fontFamily="@font/roboto"
                         android:hint="Product Price"
                         android:paddingLeft="30px"
@@ -101,12 +104,12 @@
                     android:layout_weight="1">
 
                     <EditText
+                        android:id="@+id/et_offer_price"
                         android:layout_width="975px"
                         android:layout_height="105px"
                         android:layout_marginLeft="10px"
                         android:layout_weight="1"
                         android:background="@drawable/gray_rounded_corner"
-                        android:editable="false"
                         android:fontFamily="@font/roboto"
                         android:hint="Offer Price"
                         android:paddingLeft="30px"
@@ -136,7 +139,7 @@
                 android:weightSum="2">
 
                 <EditText
-                    android:id="@+id/et_password"
+                    android:id="@+id/et_quantity"
                     android:layout_width="975px"
                     android:layout_height="105px"
                     android:layout_marginRight="10px"
@@ -220,10 +223,10 @@
                     android:layout_marginRight="10px">
 
                     <EditText
+                        android:id="@+id/et_size"
                         android:layout_width="975px"
                         android:layout_height="105px"
                         android:background="@drawable/gray_rounded_corner"
-                        android:editable="false"
                         android:fontFamily="@font/roboto"
                         android:hint="Size"
                         android:paddingLeft="30px"
@@ -237,6 +240,7 @@
 
 
                 <ImageView
+                    android:id="@+id/add_attribute"
                     android:layout_width="105px"
                     android:layout_height="105px"
                     android:layout_gravity="left"
@@ -246,8 +250,23 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/attribute_ln"
+                android:layout_width="975px"
+                android:layout_height="150px"
+                android:visibility="gone"
+                android:layout_marginTop="30px"
+                android:orientation="vertical">
 
+                <com.devsmart.android.ui.HorizontalListView
+                    android:id="@+id/lv_list_attribute"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="0px" />
+            </LinearLayout>
             <EditText
+                android:id="@+id/et_details"
                 android:layout_width="975px"
                 android:layout_height="230px"
                 android:layout_marginTop="50px"

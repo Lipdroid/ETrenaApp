@@ -11,6 +11,7 @@
         android:layout_marginTop="10px"
         android:layout_height="120px"/>
     <ImageView
+        android:id="@+id/btn_cross"
         android:layout_width="55px"
         android:layout_height="55px"
         android:layout_marginLeft="115px"

@@ -11,6 +11,24 @@ public class CategoryObject implements Parcelable {
     private String id = null;
     private String name = null;
     private String icon = null;
+    private String attribute_id = null;
+    private String attribute_name = null;
+
+    public String getAttribute_id() {
+        return attribute_id;
+    }
+
+    public void setAttribute_id(String attribute_id) {
+        this.attribute_id = attribute_id;
+    }
+
+    public String getAttribute_name() {
+        return attribute_name;
+    }
+
+    public void setAttribute_name(String attribute_name) {
+        this.attribute_name = attribute_name;
+    }
 
     public String getId() {
         return id;
@@ -37,6 +55,7 @@ public class CategoryObject implements Parcelable {
     }
 
     protected CategoryObject(Parcel in) {
+        readFromParcel(in);
     }
 
     public CategoryObject() {
@@ -60,6 +79,19 @@ public class CategoryObject implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    public void writeToParcel(Parcel dest, int i) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(icon);
+        dest.writeString(attribute_id);
+        dest.writeString(attribute_name);
+    }
+
+    public void readFromParcel(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.icon = in.readString();
+        this.attribute_id = in.readString();
+        this.attribute_name = in.readString();
     }
 }
