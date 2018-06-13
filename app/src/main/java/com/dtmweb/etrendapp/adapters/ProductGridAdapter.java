@@ -149,12 +149,68 @@ public class ProductGridAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Log.e("Fav:", "toggle favourite");
                 ProductObject productObject = mListData.get(position);
-                requetToAddFavListBuyer(productObject.getId());
+                if(productObject.getIs_favourite().equals("false")) {
+                    requetToAddFavListBuyer(productObject.getId());
+                }else{
+                    removeProductFromFavListBuyer(productObject.getId());
+                }
 
 
             }
         });
     }
+
+    private void removeProductFromFavListBuyer(final String product_id) {
+        final HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put(Constants.PARAM_PRODUCT_ID, product_id);
+
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_REMOVE_FROM_FAV_LIST, params, new AsyncCallback() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void done(String result) {
+                GlobalUtils.dismissLoadingProgress();
+                Log.e("remove favourite", result);
+                try {
+                    for (ProductObject product : mListData
+                            ) {
+                        if (product.getId().equals(product_id)) {
+                            //set is fav false
+                            product.setIs_favourite("false");
+                            notifyDataSetChanged();
+                        }
+
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void progress() {
+                GlobalUtils.showLoadingProgress(mContext);
+            }
+
+            @Override
+            public void onInterrupted(Exception e) {
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+        });
+
+        mRequestAsync.execute();
+
+    }
+
 
     private void requetToAddFavListBuyer(final String product_id) {
         final HashMap<String, Object> params = new HashMap<String, Object>();

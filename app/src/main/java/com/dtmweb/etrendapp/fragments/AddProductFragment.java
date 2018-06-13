@@ -442,7 +442,7 @@ public class AddProductFragment extends Fragment implements View.OnClickListener
         params.put(Constants.PARAM_QUANTITY, quantity);
         params.put(Constants.PARAM_DETAILS, details);
         params.put(Constants.PARAM_ATTRIBUTE, attribute_id);
-        params.put(Constants.PARAM_WEIGHT, "1");
+        params.put(Constants.PARAM_WEIGHT, "0");
         params.put(Constants.PARAM_ATTRIBUTE_VALUE, mListAtributes);
         params.put(Constants.PARAM_IMAGES, mListImageIds);
 
