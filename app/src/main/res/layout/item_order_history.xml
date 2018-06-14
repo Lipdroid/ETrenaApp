@@ -1,192 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="wrap_content">
+
     <LinearLayout
+        android:id="@+id/main_root"
         android:layout_width="match_parent"
-        android:layout_height="370px"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="30px"
-        android:layout_marginLeft="50px"
-        android:layout_marginRight="50px"
+        android:layout_marginLeft="30px"
+        android:layout_marginRight="30px"
         android:layout_marginTop="30px"
-        android:background="@drawable/gray_rounded_corner_bg"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="200px"
+            android:layout_height="350px"
+            android:layout_marginRight="20px"
+            android:src="@drawable/demo_image_clothing" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10px"
-                android:layout_marginLeft="30px"
-                android:layout_marginTop="20px"
-                android:layout_weight=".7"
-                android:fontFamily="@font/roboto"
-                android:gravity="left"
-                android:singleLine="true"
-                android:tag="42"
-                android:text="Order no"
-                android:textColor="#555555"
-                android:textSize="42px"
-                android:typeface="normal" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10px"
-                android:layout_marginRight="30px"
-                android:layout_marginTop="20px"
-                android:layout_weight="1.3"
-                android:fontFamily="@font/roboto"
-                android:gravity="left"
-                android:singleLine="true"
-                android:tag="42"
-                android:text="AA021"
-                android:textColor="#555555"
-                android:textSize="42px"
-                android:typeface="normal" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1.5px"
-            android:background="#DBDBDB" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10px"
-                android:layout_marginLeft="30px"
-                android:layout_marginTop="10px"
-                android:layout_weight=".7"
-                android:fontFamily="@font/roboto_light"
-                android:gravity="left"
-                android:singleLine="true"
-                android:tag="42"
-                android:text="Invoice no"
-                android:textColor="#555555"
-                android:textSize="42px"
-                android:typeface="normal" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10px"
-                android:layout_marginRight="30px"
-                android:layout_marginTop="10px"
-                android:layout_weight="1.3"
-                android:fontFamily="@font/roboto_light"
-                android:gravity="left"
-                android:singleLine="true"
-                android:tag="42"
-                android:text="110 1211 432"
-                android:textColor="#555555"
-                android:textSize="42px"
-                android:typeface="normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10px"
-                android:layout_marginLeft="30px"
-                android:layout_marginTop="0px"
-                android:layout_weight=".7"
-                android:fontFamily="@font/roboto_light"
-                android:gravity="left"
-                android:singleLine="true"
-                android:tag="42"
-                android:text="Date"
-                android:textColor="#555555"
-                android:textSize="42px"
-                android:typeface="normal" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10px"
-                android:layout_marginRight="30px"
-                android:layout_marginTop="0px"
-                android:layout_weight="1.3"
-                android:fontFamily="@font/roboto_light"
-                android:gravity="left"
-                android:singleLine="true"
-                android:tag="42"
-                android:text="12 May 18"
-                android:textColor="#555555"
-                android:textSize="42px"
-                android:typeface="normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10px"
-                android:layout_marginLeft="30px"
-                android:layout_marginTop="0px"
-                android:layout_weight=".7"
-                android:fontFamily="@font/roboto_light"
-                android:gravity="left"
-                android:singleLine="true"
-                android:tag="42"
-                android:text="SAR"
-                android:textColor="#555555"
-                android:textSize="42px"
-                android:typeface="normal" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10px"
-                android:layout_marginRight="30px"
-                android:layout_marginTop="0px"
-                android:layout_weight="1.3"
-                android:fontFamily="@font/roboto_light"
-                android:gravity="left"
-                android:singleLine="true"
-                android:tag="42"
-                android:text="520"
-                android:textColor="#555555"
-                android:textSize="42px"
-                android:typeface="normal" />
-
-        </LinearLayout>
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/gray_bottom_rounded_corner"
-            android:text="Paid"
-            android:textColor="@color/white"
-            android:textSize="42px"
-            android:tag="42"
             android:gravity="center"
-            />
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_marginBottom="10px"
+                android:layout_marginLeft="20px"
+                android:layout_marginRight="45px"
+                android:fontFamily="@font/rufina"
+                android:singleLine="true"
+                android:tag="50"
+                android:text="BOTTEGA VENETA"
+                android:textColor="@color/black"
+                android:textSize="50px" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_marginBottom="10px"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="0px"
+                    android:layout_height="60px"
+                    android:layout_marginBottom="10px"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="25px"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/rubik_light"
+                    android:singleLine="true"
+                    android:tag="48"
+                    android:text="10May 2019"
+                    android:textColor="#666666"
+                    android:textSize="48px" />
+
+                <TextView
+                    android:id="@+id/tv_attribute"
+                    android:layout_width="0px"
+                    android:layout_height="60px"
+                    android:layout_marginBottom="10px"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="25px"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/rubik_light"
+                    android:singleLine="true"
+                    android:gravity="right"
+                    android:tag="48"
+                    android:text="Size:18"
+                    android:textColor="#404040"
+                    android:textSize="48px" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10px"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="0px"
+                    android:layout_height="60px"
+                    android:layout_marginBottom="10px"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="25px"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/rubik_light"
+                    android:singleLine="true"
+                    android:tag="48"
+                    android:text="SAR 1200"
+                    android:textColor="#757575"
+                    android:textSize="48px" />
+
+                <TextView
+                    android:id="@+id/tv_quantity"
+                    android:layout_width="0px"
+                    android:layout_height="60px"
+                    android:layout_marginBottom="10px"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="25px"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/rubik_light"
+                    android:singleLine="true"
+                    android:gravity="right"
+                    android:tag="48"
+                    android:text="Quantity: 02"
+                    android:textColor="#404040"
+                    android:textSize="48px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10px"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/tv_order"
+                    android:layout_width="0px"
+                    android:layout_height="60px"
+                    android:layout_marginBottom="10px"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="25px"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/rubik_light"
+                    android:singleLine="true"
+                    android:tag="48"
+                    android:text="Order no: 10001"
+                    android:textColor="#666666"
+                    android:textSize="48px" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="0px"
+                    android:layout_height="60px"
+                    android:layout_marginBottom="10px"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="25px"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/rubik_light"
+                    android:singleLine="true"
+                    android:gravity="right"
+                    android:tag="48"
+                    android:text="Paid"
+                    android:textColor="#000000"
+                    android:textSize="48px" />
+            </LinearLayout>
+
+
+        </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5px"
+        android:layout_below="@+id/main_root"
+        android:background="#D6D6D6" />
 </RelativeLayout>

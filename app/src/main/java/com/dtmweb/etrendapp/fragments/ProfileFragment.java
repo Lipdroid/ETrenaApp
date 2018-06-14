@@ -110,21 +110,15 @@ public class ProfileFragment extends Fragment {
                 ImageView btn_change_cover = (ImageView) root.findViewById(R.id.btn_change_cover);
                 mContext = getActivity();
                 mUserObj = GlobalUtils.getCurrentUser();
-                if (mUserObj != null)
-                    mStoreObj = mUserObj.getStoreObject();
-                if (mStoreObj != null) {
-                    setUpStoreView();
-                } else {
-                    requestToGetStoreInfo();
+                if (mUserObj != null) {
+                    tv_phone.setText("+" + mUserObj.getContact_no());
+                    tv_address.setText(mUserObj.getCity() + "," + mUserObj.getCountry());
+                    Picasso.get()
+                            .load(mUserObj.getPro_img())
+                            .placeholder(R.drawable.default_profile_image_shop)
+                            .error(R.color.common_gray)
+                            .into(pro_image);
                 }
-                requestToGetProductList();
-                tv_phone.setText("+" + mUserObj.getContact_no());
-                tv_address.setText(mUserObj.getCity() + "," + mUserObj.getCountry());
-                Picasso.get()
-                        .load(mUserObj.getPro_img())
-                        .placeholder(R.drawable.default_profile_image_shop)
-                        .error(R.color.common_gray)
-                        .into(pro_image);
                 btn_change_cover.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -559,4 +553,17 @@ public class ProfileFragment extends Fragment {
     }
 
 
+    public void requestAPIs() {
+        mUserObj = GlobalUtils.getCurrentUser();
+        if (mUserObj != null && mUserObj.getUser_type().equals(Constants.CATEGORY_SELLER)) {
+            mStoreObj = mUserObj.getStoreObject();
+            if (mStoreObj != null) {
+                setUpStoreView();
+            } else {
+                requestToGetStoreInfo();
+            }
+            requestToGetProductList();
+        }
+
+    }
 }

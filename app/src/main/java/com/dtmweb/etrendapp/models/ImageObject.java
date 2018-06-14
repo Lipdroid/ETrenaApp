@@ -7,6 +7,15 @@ package com.dtmweb.etrendapp.models;
 public class ImageObject {
     private String id = null;
     private String url = null;
+    private Boolean selected = false;
+
+    public Boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
+    }
 
     public String getId() {
         return id;

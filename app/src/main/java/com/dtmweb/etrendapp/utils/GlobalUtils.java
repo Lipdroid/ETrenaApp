@@ -23,6 +23,9 @@ import com.dtmweb.etrendapp.models.UserObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,6 +43,7 @@ public class GlobalUtils {
     private static StoreObject mStoreObject = null;
     private static UserObject mUserObj = null;
     public static Boolean isLoggedIn = false;
+    public static Boolean isAppFirstOpen = false;
 
     public static boolean isNetworkConnected() {
         try {
@@ -188,6 +192,21 @@ public class GlobalUtils {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public static String formatDate(String dateInString){
+        String returnStr = "";
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter2 = new SimpleDateFormat("dd MMM yyyy");
+
+        try {
+            Date date = formatter.parse(dateInString);
+            returnStr = formatter2.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return returnStr;
 
     }
 }

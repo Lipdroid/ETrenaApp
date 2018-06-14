@@ -53,7 +53,7 @@ public class SlidingImage_Adapter extends PagerAdapter {
 
         ImageObject imageObject = images.get(position);
         Picasso.get()
-                .load(imageObject.getUrl())
+                .load("http://placehold.it/120x120&text=image1")
                 .placeholder(R.color.common_gray)
                 .error(R.color.common_gray)
                 .into(imageView);

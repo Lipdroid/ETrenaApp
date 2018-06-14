@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.ProgressBar;
 
 import com.dtmweb.etrendapp.utils.CorrectSizeUtil;
+import com.dtmweb.etrendapp.utils.GlobalUtils;
 
 public class SplashActivity extends AppCompatActivity {
     private CorrectSizeUtil mCorrectSize = null;
@@ -23,6 +24,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         mContext = this;
+        GlobalUtils.isAppFirstOpen = true;
         TAG = this.getClass().getSimpleName();
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         new Thread(myThread).start();

@@ -37,6 +37,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
     private FragmentTransaction fragTransaction = null;
     private MainActivity activity = null;
     private ViewPager mViewPager = null;
+    private MainPagerAdapter mAdapter = null;
 
     public BaseFragment() {
         // Required empty public constructor
@@ -65,8 +66,8 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
         btn_profile.setOnClickListener(this);
 
         /** set the adapter for ViewPager */
-        mViewPager.setAdapter(new MainPagerAdapter(
-                getChildFragmentManager()));
+        mAdapter = new MainPagerAdapter(getChildFragmentManager());
+        mViewPager.setAdapter(mAdapter);
 
         if(activity.gotExtraData){
             addSecondStageFragment(Constants.FRAG_CHOOSE_PLAN,null);
@@ -99,6 +100,12 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 mViewPager.setCurrentItem(Constants.HOME);
                 dismissAllFragmentStack();
                 activity.changeHeaderLayout(Constants.FRAG_HOME);
+
+                Fragment fragment = (Fragment) mAdapter.instantiateItem(mViewPager, Constants.HOME);
+                if(fragment != null && fragment instanceof HomeFragment){
+                    HomeFragment homeFragment = (HomeFragment)fragment;
+                    homeFragment.requestAPIs();
+                }
                 break;
             case R.id.btn_category:
                 activity.currentTabItemSelected = Constants.CATEGORY;
@@ -106,6 +113,12 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 mViewPager.setCurrentItem(Constants.CATEGORY);
                 dismissAllFragmentStack();
                 activity.changeHeaderLayout(Constants.FRAG_HOME);
+
+                fragment = (Fragment) mAdapter.instantiateItem(mViewPager, Constants.CATEGORY);
+                if(fragment != null && fragment instanceof CategoryFragment){
+                    CategoryFragment categoryFragment = (CategoryFragment)fragment;
+                    categoryFragment.requestAPIs();
+                }
                 break;
             case R.id.btn_fav:
                 activity.currentTabItemSelected = Constants.FAVOURITE;
@@ -113,6 +126,12 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 mViewPager.setCurrentItem(Constants.FAVOURITE);
                 dismissAllFragmentStack();
                 activity.changeHeaderLayout(Constants.FRAG_HOME);
+
+                fragment = (Fragment) mAdapter.instantiateItem(mViewPager, Constants.FAVOURITE);
+                if(fragment != null && fragment instanceof FavouriteFragment){
+                    FavouriteFragment favouriteFragment = (FavouriteFragment)fragment;
+                    favouriteFragment.requestAPIs();
+                }
                 break;
             case R.id.btn_cart:
                 activity.currentTabItemSelected = Constants.CART;
@@ -120,6 +139,12 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 mViewPager.setCurrentItem(Constants.CART);
                 dismissAllFragmentStack();
                 activity.changeHeaderLayout(Constants.FRAG_HOME);
+
+                fragment = (Fragment) mAdapter.instantiateItem(mViewPager, Constants.CART);
+                if(fragment != null && fragment instanceof CartFragment){
+                    CartFragment cartFragment = (CartFragment)fragment;
+                    cartFragment.requestAPIs();
+                }
                 break;
             case R.id.btn_profile:
                 if(!GlobalUtils.user_type.equals(Constants.CATEGORY_NON_LOGGED)) {
@@ -128,6 +153,12 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                     mViewPager.setCurrentItem(Constants.PROFILE);
                     dismissAllFragmentStack();
                     activity.changeHeaderLayout(Constants.FRAG_HOME);
+
+                    fragment = (Fragment) mAdapter.instantiateItem(mViewPager, Constants.PROFILE);
+                    if(fragment != null && fragment instanceof ProfileFragment){
+                        ProfileFragment profileFragment = (ProfileFragment)fragment;
+                        profileFragment.requestAPIs();
+                    }
                 }else{
                     //Show Login Screens
                     startActivity(new Intent(activity, LoginActivity.class));
@@ -249,6 +280,11 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
                 break;
             case Constants.FRAG_PRODUCT_DETAILS:
                 frag = new ProductDetailsFragment();
+                activity.setUpHeaderRightButton(1);
+                activity.LockRightDrawer();
+                break;
+            case Constants.FRAG_SHOP_DETAILS:
+                frag = new StoreDetailsFragment();
                 activity.setUpHeaderRightButton(1);
                 activity.LockRightDrawer();
                 break;

@@ -6,17 +6,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * Created by mdmunirhossain on 3/14/18.
+ * Created by lipuhossain on 6/14/18.
  */
 
-public class OrderHistoryHolder {
+public class CartHolder {
     public LinearLayout main_root = null;
     public TextView tv_title = null;
-    public TextView tv_date = null;
+    public TextView tv_details = null;
     public TextView tv_price = null;
-    public TextView tv_attribute = null;
+    public TextView tv_attribute_name = null;
+    public TextView tv_attribute_value = null;
+    public EditText et_quantity = null;
     public ImageView image = null;
-    public TextView tv_quantity = null;
-    public TextView tv_order = null;
-    public TextView tv_status = null;
 }

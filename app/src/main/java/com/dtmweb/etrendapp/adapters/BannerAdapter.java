@@ -100,7 +100,12 @@ public class BannerAdapter extends BaseAdapter {
         mHolder.main_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //((MainActivity) mContext).addFrag(Constants.FRAG_PRODUCT_DETAILS, null);
+                BannerObject bannerObject = mListData.get(position);
+                if(bannerObject.getBanner_type().equals(Constants.PRODUCT_TYPE)) {
+                    ((MainActivity) mContext).addFrag(Constants.FRAG_PRODUCT_DETAILS, bannerObject.getProduct());
+                }else{
+                    ((MainActivity) mContext).addFrag(Constants.FRAG_SHOP_DETAILS, bannerObject.getShop());
+                }
 
             }
         });

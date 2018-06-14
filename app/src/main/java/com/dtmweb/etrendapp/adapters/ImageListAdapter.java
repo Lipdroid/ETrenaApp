@@ -2,6 +2,7 @@ package com.dtmweb.etrendapp.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -67,6 +68,7 @@ public class ImageListAdapter extends BaseAdapter {
             } else {
                 convertView = mActivity.getLayoutInflater().inflate(R.layout.item_image_round, viewGroup, false);
                 mHolder.image_circle = (CircleImageView) convertView.findViewById(R.id.image);
+                mHolder.image_circle.setBorderWidth(0);
             }
             mHolder.main_root = (RelativeLayout) convertView.findViewById(R.id.main_root);
             mHolder.btn_cross = (ImageView) convertView.findViewById(R.id.btn_cross);
@@ -87,10 +89,16 @@ public class ImageListAdapter extends BaseAdapter {
                     .into(mHolder.image);
         } else {
             Picasso.get()
-                    .load(imageObject.getUrl())
+                    .load("http://placehold.it/120x120&text=image1")
                     .placeholder(R.color.common_gray)
                     .error(R.color.common_gray)
                     .into(mHolder.image_circle);
+            if(imageObject.getSelected()){
+                mHolder.image_circle.setBorderWidth(3);
+                mHolder.image_circle.setBorderColor(Color.parseColor("#FFFFFF"));
+            }else{
+                mHolder.image_circle.setBorderWidth(0);
+            }
         }
 
 

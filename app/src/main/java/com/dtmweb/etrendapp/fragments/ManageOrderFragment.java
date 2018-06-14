@@ -1,20 +1,33 @@
 package com.dtmweb.etrendapp.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.dtmweb.etrendapp.R;
 import com.dtmweb.etrendapp.adapters.OrderHistoryAdapter;
-import com.dtmweb.etrendapp.models.OrderObject;
+import com.dtmweb.etrendapp.apis.RequestAsyncTask;
+import com.dtmweb.etrendapp.constants.Constants;
+import com.dtmweb.etrendapp.interfaces.AsyncCallback;
+import com.dtmweb.etrendapp.models.CartObject;
+import com.dtmweb.etrendapp.models.ImageObject;
+import com.dtmweb.etrendapp.utils.GlobalUtils;
 import com.dtmweb.etrendapp.utils.MultipleScreen;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,7 +35,7 @@ import com.dtmweb.etrendapp.utils.MultipleScreen;
 public class ManageOrderFragment extends Fragment {
 
     private ListView order_lv = null;
-    private List<OrderObject> mListOrder = null;
+    private List<CartObject> mListOrder = null;
     private OrderHistoryAdapter adapter = null;
     private Context mContext = null;
 
@@ -38,13 +51,135 @@ public class ManageOrderFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_manage_order, container, false);
         order_lv = (ListView) root.findViewById(R.id.order_lv);
         mContext = getActivity();
-        populateList();
+        requestGetOrders();
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;
     }
-    private void populateList() {
-        adapter = new OrderHistoryAdapter(mContext, mListOrder);
+    private void populateList(List<CartObject> mListOrder) {
+        adapter = new OrderHistoryAdapter(mContext, this.mListOrder);
         order_lv.setAdapter(adapter);
     }
+
+    private void requestGetOrders() {
+        final HashMap<String, Object> params = new HashMap<String, Object>();
+        int requestCode = Constants.REQUEST_GET_CART;
+        if (GlobalUtils.getCurrentUser().getUser_type().equals(Constants.CATEGORY_SELLER)){
+             requestCode = Constants.REQUEST_GET_SELLER_ORDER;
+        }else{
+            requestCode = Constants.REQUEST_GET_CART;
+            params.put(Constants.PARAM_IS_ORDERED, "true");
+        }
+
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, requestCode, params, new AsyncCallback() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void done(String result) {
+                GlobalUtils.dismissLoadingProgress();
+                Log.e("Get Cart", result);
+                if (result != null) {
+                    try {
+                        JSONObject responeJson = new JSONObject(result);
+                        if (responeJson.has(Constants.DATA)) {
+                            mListOrder = new ArrayList<>();
+                            JSONArray jsonArray = responeJson.getJSONArray(Constants.DATA);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                if (jsonObject.has("id")) {
+                                    CartObject cartObject = new CartObject();
+                                    cartObject.setCart_id(jsonObject.getString("id"));
+                                    if (jsonObject.has("product")) {
+                                        JSONObject jsonProduct = jsonObject.getJSONObject("product");
+                                        if (jsonProduct.has("id")) {
+                                            cartObject.setId(jsonProduct.getString("id"));
+                                        }
+                                        if (jsonProduct.has("title")) {
+                                            cartObject.setTitle(jsonProduct.getString("title"));
+                                        }
+                                        if (jsonProduct.has("details")) {
+                                            cartObject.setDetails(jsonProduct.getString("details"));
+                                        }
+                                    }
+
+                                    if (jsonObject.has("product_image")) {
+                                        JSONObject jsonProductImage = jsonObject.getJSONObject("product_image");
+                                        ImageObject imageObject = new ImageObject();
+                                        imageObject.setId(jsonProductImage.getString("id"));
+                                        imageObject.setUrl(jsonProductImage.getString("image"));
+                                        cartObject.setImage(imageObject);
+                                    }
+
+                                    if (jsonObject.has("discounted_price")) {
+                                        cartObject.setDiscounted_price(jsonObject.getString("discounted_price"));
+                                    }
+                                    if (jsonObject.has("discount")) {
+                                        cartObject.setDiscount(jsonObject.getString("discount"));
+                                    }
+                                    if (jsonObject.has("quantity")) {
+                                        cartObject.setQuantity(jsonObject.getString("quantity"));
+                                    }
+
+                                    if (jsonObject.has("attribute")) {
+                                        JSONObject jsonAttribute = jsonObject.getJSONObject("attribute");
+                                        cartObject.setAttribute_id(jsonAttribute.getString("id"));
+                                        cartObject.setAttribute_name(jsonAttribute.getString("name"));
+                                    }
+
+
+                                    if (jsonObject.has("attribute_value")) {
+                                        cartObject.setAttributeValue(jsonObject.getString("attribute_value"));
+                                    }
+
+                                    if (jsonObject.has("is_ordered")) {
+                                        cartObject.setIs_ordered(jsonObject.getString("is_ordered"));
+                                    }
+
+                                    if (jsonObject.has("is_paid")) {
+                                        cartObject.setIs_paid(jsonObject.getString("is_paid"));
+                                    }
+                                    if (jsonObject.has("created")) {
+                                        cartObject.setCreated(jsonObject.getString("created"));
+                                    }
+                                    mListOrder.add(cartObject);
+                                }
+                            }
+                            populateList(mListOrder);
+                        }else{
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    GlobalUtils.showInfoDialog(mContext, "Failed", "Something went wrong please try again", "OK", null);
+
+                }
+
+
+            }
+
+            @Override
+            public void progress() {
+                GlobalUtils.showLoadingProgress(mContext);
+            }
+
+            @Override
+            public void onInterrupted(Exception e) {
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+        });
+
+        mRequestAsync.execute();
+
+    }
+
 }

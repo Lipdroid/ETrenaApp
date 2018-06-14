@@ -31,5 +31,11 @@ public class UrlConstants {
 
     public static String URL_CREATE_PRODUCT = BASE_URL + "/api/v1/seller/products/";
     public static String URL_GET_PRODUCT = BASE_URL + "/api/v1/products/";
+    public static String URL_ADD_CART = BASE_URL + "/api/v1/buyer/carts/";
+    public static String URL_GET_CART = BASE_URL + "/api/v1/buyer/carts/";
+    public static String URL_GET_SELLER_ORDER = BASE_URL+"/api/v1/seller/orders/";
+
+    public static String URL_GET_STORE_DETAILS = BASE_URL+"/api/v1/stores/";
+    public static final String URL_GET_STORE_PRODUCT_LIST_BY_STORE = BASE_URL+"/api/v1/products/";
 
 }

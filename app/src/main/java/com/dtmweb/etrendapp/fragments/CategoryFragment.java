@@ -56,7 +56,6 @@ public class CategoryFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_category, container, false);
         mContext = getActivity();
         cate_lv = (ListView) root.findViewById(R.id.cate_lv);
-        requestCategories();
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;
@@ -130,5 +129,9 @@ public class CategoryFragment extends Fragment {
     private void populateList(ArrayList<CategoryObject> mList) {
         adapter = new CategoryAdapter(mContext, mList);
         cate_lv.setAdapter(adapter);
+    }
+
+    public void requestAPIs() {
+        requestCategories();
     }
 }

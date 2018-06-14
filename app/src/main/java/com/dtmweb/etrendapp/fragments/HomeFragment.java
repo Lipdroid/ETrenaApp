@@ -42,6 +42,10 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public void requestAPIs(){
+        requestBannerApi();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +54,10 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         banner_lv = (ListView) root.findViewById(R.id.banner_lv);
         mContext = getActivity();
-        requestBannerApi();
+        if(GlobalUtils.isAppFirstOpen) {
+            requestAPIs();
+            GlobalUtils.isAppFirstOpen = !GlobalUtils.isAppFirstOpen;
+        }
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;

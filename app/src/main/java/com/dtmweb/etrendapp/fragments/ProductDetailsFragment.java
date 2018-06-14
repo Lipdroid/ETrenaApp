@@ -32,6 +32,7 @@ import com.dtmweb.etrendapp.apis.RequestAsyncTask;
 import com.dtmweb.etrendapp.constants.Constants;
 import com.dtmweb.etrendapp.customViews.ValueSelector;
 import com.dtmweb.etrendapp.interfaces.AsyncCallback;
+import com.dtmweb.etrendapp.models.CartObject;
 import com.dtmweb.etrendapp.models.CategoryObject;
 import com.dtmweb.etrendapp.models.ImageObject;
 import com.dtmweb.etrendapp.models.ProductObject;
@@ -136,6 +137,7 @@ public class ProductDetailsFragment extends Fragment {
 
                 } else {
                     //add to cart
+                    afterClickCart();
                 }
             }
         });
@@ -143,6 +145,7 @@ public class ProductDetailsFragment extends Fragment {
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;
     }
+
 
     private void afterClickAttribute() {
         if (productObject != null) {
@@ -210,6 +213,10 @@ public class ProductDetailsFragment extends Fragment {
                                     ImageObject image = new ImageObject();
                                     image.setId(jsonObjectImage.getString("id"));
                                     image.setUrl(jsonObjectImage.getString("image"));
+                                    //for only first item
+                                    if (j == 0) {
+                                        image.setSelected(true);
+                                    }
                                     images.add(image);
                                 }
                                 productObject.setImages(images);
@@ -487,15 +494,185 @@ public class ProductDetailsFragment extends Fragment {
         mRequestAsync.execute();
     }
 
-    private void populateSideImageList(List<ImageObject> images){
-        adapter = new ImageListAdapter(mContext,images,null);
+    private void populateSideImageList(final List<ImageObject> images) {
+        adapter = new ImageListAdapter(mContext, images, null);
         list_images.setAdapter(adapter);
         list_images.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //remove all selected
+                for (ImageObject image : images) {
+                    image.setSelected(false);
+                }
+                //then selected one
+                images.get(position).setSelected(true);
+                adapter.notifyDataSetChanged();
                 product_pager.setCurrentItem(position);
             }
         });
+
+        product_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //remove all selected
+                for (ImageObject image : images) {
+                    image.setSelected(false);
+                }
+                //then selected one
+                images.get(position).setSelected(true);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private String product_image_id = null;
+    private String quantity = null;
+    private String attribute_id = null;
+    private String attribute_value = null;
+
+    private void afterClickCart() {
+        if (productObject != null) {
+            product_id = productObject.getId();
+            for (ImageObject image : productObject.getImages()) {
+                if (image.getSelected())
+                    product_image_id = image.getId();
+            }
+            if (!et_attribute.getText().toString().equals(productObject.getCategoryObject().getAttribute_name())) {
+                attribute_id = productObject.getCategoryObject().getAttribute_id();
+                attribute_value = et_attribute.getText().toString();
+            } else {
+                //select a attribute first
+                return;
+            }
+
+            if (!valueSelector_quantity.getStringValue().equals("QUANTITY")) {
+                quantity = valueSelector_quantity.getStringValue();
+            } else {
+                //select a quantity first
+                return;
+            }
+            requestAddToCart();
+
+        }
+    }
+
+    private void requestAddToCart() {
+        final HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put(Constants.PARAM_PRODUCT, product_id);
+        params.put(Constants.PARAM_PRODUCT_IMAGE, product_image_id);
+        params.put(Constants.PARAM_QUANTITY, quantity);
+        params.put(Constants.PARAM_ATTRIBUTE, attribute_id);
+        params.put(Constants.PARAM_ATTRIBUTE_VALUE, attribute_value);
+
+        RequestAsyncTask mRequestAsync = new RequestAsyncTask(mContext, Constants.REQUEST_ADD_CART, params, new AsyncCallback() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void done(String result) {
+                GlobalUtils.dismissLoadingProgress();
+                Log.e("Add Cart", result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    if (jsonObject.has("id")) {
+                        CartObject cartObject = new CartObject();
+                        cartObject.setCart_id(jsonObject.getString("id"));
+                        if (jsonObject.has("product")) {
+                            JSONObject jsonProduct = jsonObject.getJSONObject("product");
+                            if (jsonProduct.has("id")) {
+                                cartObject.setId(jsonProduct.getString("id"));
+                            }
+                            if (jsonProduct.has("title")) {
+                                cartObject.setTitle(jsonProduct.getString("title"));
+                            }
+                            if (jsonProduct.has("details")) {
+                                cartObject.setDetails(jsonProduct.getString("details"));
+                            }
+                        }
+
+                        if (jsonObject.has("product_image")) {
+                            JSONObject jsonProductImage = jsonObject.getJSONObject("product_image");
+                            ImageObject imageObject = new ImageObject();
+                            imageObject.setId(jsonProductImage.getString("id"));
+                            imageObject.setUrl(jsonProductImage.getString("image"));
+                            cartObject.setImage(imageObject);
+                        }
+
+                        if (jsonObject.has("discounted_price")) {
+                            cartObject.setDiscounted_price(jsonObject.getString("discounted_price"));
+                        }
+                        if (jsonObject.has("discount")) {
+                            cartObject.setDiscount(jsonObject.getString("discount"));
+                        }
+                        if (jsonObject.has("quantity")) {
+                            cartObject.setQuantity(jsonObject.getString("quantity"));
+                        }
+
+                        if (jsonObject.has("attribute")) {
+                            JSONObject jsonAttribute = jsonObject.getJSONObject("attribute");
+                            cartObject.setAttribute_id(jsonAttribute.getString("id"));
+                            cartObject.setAttribute_name(jsonAttribute.getString("name"));
+                        }
+
+
+                        if (jsonObject.has("attribute_value")) {
+                            cartObject.setAttributeValue(jsonObject.getString("attribute_value"));
+                        }
+
+                        if (jsonObject.has("is_ordered")) {
+                            cartObject.setIs_ordered(jsonObject.getString("is_ordered"));
+                        }
+
+                        if (jsonObject.has("is_paid")) {
+                            cartObject.setIs_paid(jsonObject.getString("is_paid"));
+                        }
+                        if (jsonObject.has("created")) {
+                            cartObject.setCreated(jsonObject.getString("created"));
+                        }
+
+                        GlobalUtils.showInfoDialog(mContext, "Success", "Product is successfully added to your cart.", "OK", null);
+
+
+                    } else {
+                        //parse errors
+                        parseErrors(params, jsonObject);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void progress() {
+                GlobalUtils.showLoadingProgress(mContext);
+            }
+
+            @Override
+            public void onInterrupted(Exception e) {
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+                GlobalUtils.dismissLoadingProgress();
+
+            }
+        });
+
+        mRequestAsync.execute();
+
     }
 
 }

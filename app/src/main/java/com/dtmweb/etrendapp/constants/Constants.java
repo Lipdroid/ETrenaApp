@@ -18,6 +18,7 @@ public class Constants {
     public static final int FRAG_BILLING_ADDRESS = 11;
     public static final int FRAG_MY_PLAN = 12;
     public static final int FRAG_CHOOSE_PLAN = 13;
+    public static final int FRAG_SHOP_DETAILS = 14;
 
 
     public static final String CATEGORY_BUYER = "buyerType" ;
@@ -82,7 +83,11 @@ public class Constants {
     public static final int REQUEST_UPDATE_STORE = 22;
     public static final int REQUEST_CREATE_PRODUCT = 23;
     public static final int REQUEST_GET_PRODUCT = 25;
-
+    public static final int REQUEST_ADD_CART = 26;
+    public static final int REQUEST_GET_CART = 27;
+    public static final int REQUEST_GET_SELLER_ORDER = 28;
+    public static final int REQUEST_GET_STORE_DETAILS = 29;
+    public static final int REQUEST_GET_STORE_PRODUCT_LIST_BY_STORE = 30;
 
     //params
     public static final String PARAM_EMAIL = "email";
@@ -119,9 +124,15 @@ public class Constants {
     public static final String PARAM_WEIGHT = "weight";
     public static final String PARAM_ATTRIBUTE_VALUE = "attribute_value";
     public static final String PARAM_IMAGES = "images";
+    public static final String PARAM_PRODUCT_IMAGE = "product_image";
+    public static String PARAM_IS_ORDERED = "is_ordered";
+    public static final String PARAM_STORE_ID = "store";
 
     //prefs
     public static final String PREF_TOKEN = "prefs_token";
-
     public static final String DATA = "data";
+
+    public static final String PRODUCT_TYPE = "0";
+    public static final String SHOP_TYPE = "1";
+
 }

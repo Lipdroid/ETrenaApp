@@ -75,6 +75,10 @@ public class ValueSelector extends RelativeLayout {
     private int minValue = 0;
     private int maxValue = Integer.MAX_VALUE;
 
+    public String getStringValue(){
+        return valueTextView.getText().toString();
+    }
+
     public int getMinValue() {
         return minValue;
     }

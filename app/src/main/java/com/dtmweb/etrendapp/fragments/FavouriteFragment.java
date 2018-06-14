@@ -51,7 +51,6 @@ public class FavouriteFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_favourite, container, false);
         fav_lv = (ListView) root.findViewById(R.id.fav_lv);
         mContext = getActivity();
-        requestForFavouriteList();
         new MultipleScreen(getActivity());
         MultipleScreen.resizeAllView((ViewGroup) root);
         return root;
@@ -149,5 +148,9 @@ public class FavouriteFragment extends Fragment {
 
         mRequestAsync.execute();
 
+    }
+
+    public void requestAPIs() {
+        requestForFavouriteList();
     }
 }
